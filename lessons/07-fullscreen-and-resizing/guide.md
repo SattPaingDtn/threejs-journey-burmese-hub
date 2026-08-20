@@ -1,41 +1,36 @@
-# 🖥️ Three.js Journey - Lesson 07: Fullscreen and Resizing (ဖန်သားပြင် အပြည့်နှင့် Responsive ချိန်ညှိခြင်း)
+# 🖥️ Three.js Journey - Lesson 07: Fullscreen and Resizing (ဖန်သားပြင် အပြည့်နှင့် Resize)
 
 > **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 07: Fullscreen and Resizing](https://threejs-journey.com/lessons/fullscreen-and-resizing)  
 > **Course Instructor**: Bruno Simon  
-> **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity  
-> **ချဉ်းကပ်မှုပုံစံ**: Medium / Balanced Deep Dive (Responsive Viewport, Pixel Ratio နှင့် Fullscreen API)
+> **ဘာသာပြန်နှင့် စနစ်တကျ ပြုစုသူ**: Antigravity  
+> **အဆင့်**: အခြေခံ (Beginner Friendly)
 
 ---
 
-## 📑 မာတိကာ (Table of Contents)
-
-1. [မိတ်ဆက်နှင့် ရည်ရွယ်ချက်](#၁-မိတ်ဆက်နှင့်-ရည်ရွယ်ချက်)
-2. [CSS ဖြင့် Full Viewport အပြည့် နေရာချထားခြင်း (Fit in Viewport)](#၂-css-ဖြင့်-full-viewport-အပြည့်-နေရာချထားခြင်း)
-3. [Window Resize Event ကို ကိုင်တွယ်ဖြေရှင်းခြင်း (Handle Resize)](#၃-window-resize-event-ကို-ကိုင်တွယ်ဖြေရှင်းခြင်း)
-   - Sizes Update ပြုလုပ်ခြင်း
-   - Camera Aspect Ratio နှင့် `updateProjectionMatrix()`
-   - Renderer Viewport ပြန်ချိန်ခြင်း
-4. [Device Pixel Ratio (DPR) နှင့် Performance ထိန်းသိမ်းနည်း](#၄-device-pixel-ratio-dpr-နှင့်-performance-ထိန်းသိမ်းနည်း)
-   - Retina Display ဆိုတာ ဘာလဲ?
-   - `Math.min(window.devicePixelRatio, 2)` ဘာကြောင့် သုံးရသလဲ?
-5. [Fullscreen API ဖြင့် မျက်နှာပြင်အပြည့် ဖွင့်ခြင်း (Handle Fullscreen)](#၅-fullscreen-api-ဖြင့်-မျက်နှာပြင်အပြည့်-ဖွင့်ခြင်း)
-   - Double Click Event ဖြင့် ဖွင့်/ပိတ်ခြင်း
-   - Safari / Webkit Compatibility
-6. [အမြန်မှတ်စု (Lesson 07 Memo & Code Boilerplate)](#၆-အမြန်မှတ်စု-lesson-07-memo)
+## 🎯 ဤသင်ခန်းစာ၏ အဓိက ရည်ရွယ်ချက်
+Browser မျက်နှာပြင် အပြည့် (Full Viewport) ပြသနည်း၊ Window Resize ဖြစ်သည့်အခါ ပုံမပျက်ဘဲ အလိုအလျောက် ချိန်ညှိနည်း၊ Retina/Mobile Screens များအတွက် **Pixel Ratio (DPR)** ထိန်းသိမ်းနည်းနှင့် **Fullscreen API** အသုံးပြုနည်းတို့ကို ရှင်းလင်းစွာ တတ်မြောက်စေရန် ဖြစ်ပါသည်။
 
 ---
 
-# ၁။ မိတ်ဆက်နှင့် ရည်ရွယ်ချက်
+## 💡 Mental Model: Responsive Canvas & Pixel Ratio (DPR)
 
-လက်တွေ့ Web Development တွင် 3D Scene များကို Fixed Size (ဥပမာ `800x600`) ဖြင့်သာ ပြသလေ့မရှိဘဲ၊ **Device မျက်နှာပြင် အပြည့် (Full Viewport)** ဖြင့် ပြသကြသည်။
+```
+┌────────────────────────────────────────┐      ┌────────────────────────────────────────┐
+│     📱 DPR = 1 (Standard Display)      │      │     ✨ DPR = 2 (Retina Display)        │
+├────────────────────────────────────────┤      ├────────────────────────────────────────┤
+│ • 1 CSS Pixel = 1 Physical Pixel       │      │ • 1 CSS Pixel = 4 Physical Pixels      │
+│ • ပုံမှန် အကြည်ဓာတ်                     │      │ • အလွန်ကြည်လင် တောက်ပသည်                │
+└────────────────────────────────────────┘      └────────────────────────────────────────┘
+```
 
-ထို့အပြင် Desktop, Tablet, Mobile စသည့် Screen အမျိုးမျိုးတွင် ပုံပျက်သွားခြင်း မရှိဘဲ ချောမွေ့စွာ ပြောင်းလဲနိုင်စေရန် **Responsive Handling** ကို စနစ်တကျ ပြုလုပ်ရန် လိုအပ်သည်။
+> **Performance Rule**:  
+> High-End စမတ်ဖုန်းများတွင် `DPR = 3` (၉ ဆပိုမို ရေးဆွဲရခြင်း) ရှိသော်လည်း လူ့မျက်စိသည် DPR 2 နှင့် မကွာခြားသဖြင့် GPU မပင်ပန်းစေရန် **အမြင့်ဆုံး `2` အထိသာ ကန့်သတ်ခြင်း (`Math.min(devicePixelRatio, 2)`)** သည် စံသတ်မှတ်ချက် ဖြစ်သည်။
 
 ---
 
-# ၂။ CSS ဖြင့် Full Viewport အပြည့် နေရာချထားခြင်း
+## 🔑 အဆင့် (၃) ဆင့်ဖြင့် Responsive ပြုလုပ်ခြင်း
 
-Browser ၏ မူလ Margin, Padding များနှင့် Scrollbar များကို ဖယ်ရှားရန် အောက်ပါ CSS ကို ရေးသားရသည်:
+### ၁။ CSS Reset (Scrollbar နှင့် Margin ဖျောက်ခြင်း)
 
 ```css
 * {
@@ -52,88 +47,45 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    outline: none; /* Focus ဖြစ်ချိန် အပြာရောင်ဘောင် မပေါ်စေရန် */
-}
-```
-
-```javascript
-// JavaScript ထဲတွင် Window အကျယ်/အမြင့်ကို ရယူခြင်း
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
+    outline: none;
 }
 ```
 
 ---
 
-# ၃။ Window Resize Event ကို ကိုင်တွယ်ဖြေရှင်းခြင်း
-
-User သည် Browser Window အရွယ်အစားကို ဆွဲချဲ့/ဆွဲချုံ့လိုက်သည့်အခါ Three.js သည် အလိုအလျောက် မသိရှိပါ။ ထို့ကြောင့် `resize` event ကို နားထောင်၍ အဆင့် (၃) ဆင့် ပြုလုပ်ပေးရသည်:
+### ၂။ Window Resize Event ကို နားထောင်၍ ပြန်လည်ချိန်ညှိခြင်း
 
 ```javascript
 window.addEventListener('resize', () => {
-    // အဆင့် ၁။ Sizes တန်ဖိုးများကို Update လုပ်ခြင်း
+    // ၁။ Sizes တန်ဖိုးများကို Update လုပ်ခြင်း
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
 
-    // အဆင့် ၂။ Camera Aspect Ratio အသစ်ကို တွက်ချက်၍ Projection Matrix ကို Update လုပ်ခြင်း
+    // ၂။ Camera Aspect Ratio ကို Update လုပ်ပြီး Projection Matrix ကို ပြန်တွက်ခြင်း
     camera.aspect = sizes.width / sizes.height
     camera.updateProjectionMatrix() // 🚨 မဖြစ်မနေ ခေါ်ပေးရမည်
 
-    // အဆင့် ၃။ Renderer ၏ အရွယ်အစားနှင့် Pixel Ratio ကို ပြန်ချိန်ခြင်း
+    // ၃။ Renderer Size နှင့် Pixel Ratio ကို ပြန်ချိန်ခြင်း
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 ```
 
-> ⚠️ **အရေးကြီးသော သတိပြုရန်**: `camera.aspect` ကို ပြောင်းပြီးပါက `camera.updateProjectionMatrix()` ကို မခေါ်ပါက ကင်မရာ၏ မြင်ကွင်းသည် ပြားကပ် သို့မဟုတ် ရှည်မျောသွားမည် ဖြစ်သည်။
-
 ---
 
-# ၄။ Device Pixel Ratio (DPR) နှင့် Performance
-
-### (က) Pixel Ratio ဆိုတာ ဘာလဲ?
-* `window.devicePixelRatio` သည် Screen ပေါ်ရှိ **CSS Pixel ၁ ခုအတွက် အသုံးပြုသော Physical Pixels အရေအတွက်** ဖြစ်သည်။
-* ရိုးရိုး Screen များတွင် `DPR = 1` ဖြစ်ပြီး၊ Apple Retina Displays, 4K Monitors နှင့် ခေတ်မီ စမတ်ဖုန်းများတွင် `DPR = 2` (သို့မဟုတ်) `DPR = 3` ဖြစ်သည်။
-
-```
-DPR 1 (Standard Display)    :  [ ■ ] (1 physical pixel)
-DPR 2 (Retina Display)      :  [ ■■ / ■■ ] (4 physical pixels - ပိုမိုကြည်လင်)
-DPR 3 (Ultra High-End Phone):  [ 3x3 = 9 physical pixels - GPU ဝန်အရမ်းများ)
-```
-
----
-
-### (ခ) `Math.min(window.devicePixelRatio, 2)` ဘာကြောင့် သုံးရသလဲ?
-
-* အကယ်၍ `DPR = 3` ဖြစ်ပါက GPU သည် Pixel ပေါင်း **၉ ဆ** ပိုမို ရေးဆွဲရသဖြင့် Battery အကုန်မြန်ပြီး Frame Rate ကျဆင်းသွားနိုင်သည်။
-* လူ့မျက်စိသည် `DPR = 2` နှင့် `DPR = 3` ကြား ကြည်လင်ပြတ်သားမှု ကွာခြားချက်ကို မခွဲခြားနိုင်ပေ။
-* ထို့ကြောင့် အကောင်းဆုံး Performance နှင့် Visual Quality ကို ရရှိရန် **အမြင့်ဆုံး `2` အထိသာ ကန့်သတ်ခြင်း (Capping)** သည် အကောင်းဆုံး အလေ့အထ ဖြစ်သည်:
-
-```javascript
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-```
-
----
-
-# ၅။ Fullscreen API ဖြင့် မျက်နှာပြင်အပြည့် ဖွင့်ခြင်း
-
-User က Screen ပေါ်တွင် Double Click နှိပ်လိုက်ပါက Fullscreen Mode သို့ ဝင်/ထွက်နိုင်ရန် ရေးသားနည်း:
+### ၃။ Fullscreen API ဖြင့် မျက်နှာပြင်အပြည့် ဖွင့်ခြင်း (Double Click)
 
 ```javascript
 window.addEventListener('dblclick', () => {
-    // Safari နှင့် အခြား Browser များ အားလုံးတွင် အလုပ်လုပ်စေရန် Prefix များ ထည့်သွင်းခြင်း
     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
 
     if (!fullscreenElement) {
-        // Fullscreen ဝင်ရောက်ခြင်း
         if (canvas.requestFullscreen) {
             canvas.requestFullscreen()
         } else if (canvas.webkitRequestFullscreen) {
             canvas.webkitRequestFullscreen() // Safari အတွက်
         }
     } else {
-        // Fullscreen မှ ထွက်ခြင်း
         if (document.exitFullscreen) {
             document.exitFullscreen()
         } else if (document.webkitExitFullscreen) {
@@ -145,49 +97,30 @@ window.addEventListener('dblclick', () => {
 
 ---
 
-# ၆။ အမြန်မှတ်စု (Lesson 07 Memo & Code Boilerplate)
+## 📋 အမြန်မှတ်စု (Lesson 07 Memo)
 
 ```javascript
-// ==========================================
 // RESPONSIVE & FULLSCREEN BOILERPLATE
-// ==========================================
 import * as THREE from 'three'
 
-const canvas = document.querySelector('canvas.webgl')
-const scene = new THREE.Scene()
-
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
-
+const sizes = { width: window.innerWidth, height: window.innerHeight }
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 3
 scene.add(camera)
 
-const renderer = new THREE.WebGLRenderer({ canvas: canvas })
+const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas.webgl') })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // RESIZE HANDLER
 window.addEventListener('resize', () => {
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+  sizes.width = window.innerWidth
+  sizes.height = window.innerHeight
 
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+  camera.aspect = sizes.width / sizes.height
+  camera.updateProjectionMatrix()
 
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-// FULLSCREEN HANDLER
-window.addEventListener('dblclick', () => {
-    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
-    if (!fullscreenElement) {
-        (canvas.requestFullscreen || canvas.webkitRequestFullscreen).call(canvas)
-    } else {
-        (document.exitFullscreen || document.webkitExitFullscreen).call(document)
-    }
+  renderer.setSize(sizes.width, sizes.height)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 ```
