@@ -29,6 +29,17 @@ export const CHAPTERS = [
 export const LESSONS = [
     // Chapter 1: Basics
     {
+        id: "01-introduction",
+        number: "01",
+        chapter: "basics",
+        title: "Introduction (မိတ်ဆက်နှင့် လမ်းပြမြေပုံ)",
+        subtitle: "WebGL vs Three.js, CPU vs GPU, Creative Web Development နယ်ပယ်များနှင့် Course Roadmap",
+        status: "ready",
+        guideFile: "lessons/01-introduction/guide.md",
+        demoType: "introduction",
+        tags: ["WebGL", "Three.js", "GPU", "Roadmap", "Introduction"]
+    },
+    {
         id: "03-basic-scene",
         number: "03",
         chapter: "basics",
