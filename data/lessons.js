@@ -54,12 +54,12 @@ export const LESSONS = [
         id: "03-basic-scene",
         number: "03",
         chapter: "basics",
-        title: "Basic Scene (အခြေခံ Scene တည်ဆောက်ခြင်း)",
-        subtitle: "Scene, Mesh, Geometry, Material, Camera နှင့် Renderer ၏ အခြေခံ Core ၄ ခု",
+        title: "First Three.js Project (ပထမဆုံး ပရောဂျက်နှင့် Basic Scene)",
+        subtitle: "Vite Setup, Scene, Mesh (Geometry + Material), Camera နှင့် Renderer ပင်မ မဏ္ဍိုင် ၄ ခု",
         status: "ready",
         guideFile: "lessons/03-basic-scene/guide.md",
         demoType: "basic-scene",
-        tags: ["Scene", "PerspectiveCamera", "WebGLRenderer", "Mesh"]
+        tags: ["Vite", "Scene", "PerspectiveCamera", "WebGLRenderer", "Mesh"]
     },
     {
         id: "04-transform-objects",
