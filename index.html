@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Journey - Burmese Learning Hub & Interactive Lab</title>
+    <title>Three.js Journey - Burmese Learning Hub & Interactive Studio</title>
     <meta name="description" content="Three.js Journey Complete Course Study Guide, Interactive 3D Labs & Memos in Burmese">
 
-    <!-- Libraries: Marked.js for Markdown & Highlight.js for Syntax Highlighting -->
+    <!-- Marked.js for Markdown & Highlight.js for Syntax Highlighting -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -29,8 +29,6 @@
             --accent-gradient: linear-gradient(135deg, #705df2 0%, #a855f7 100%);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --tag-ready: #10b981;
-            --tag-upcoming: #64748b;
         }
 
         body {
@@ -315,16 +313,18 @@
             flex: 1;
             position: relative;
             height: 100%;
+            overflow: hidden;
+            background: #090a0f;
         }
 
         canvas.lab-webgl {
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
             display: block;
         }
 
         #lab-sidebar {
-            width: 400px;
+            width: 390px;
             background: var(--bg-panel);
             border-left: 1px solid var(--border-color);
             padding: 18px;
@@ -333,6 +333,14 @@
             flex-direction: column;
             gap: 14px;
             z-index: 10;
+        }
+
+        #lab-sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        #lab-sidebar::-webkit-scrollbar-thumb {
+            background: #282b3a;
+            border-radius: 4px;
         }
 
         .lab-card {
@@ -353,6 +361,10 @@
 
         .lab-control-group {
             margin-bottom: 12px;
+        }
+
+        .lab-control-group:last-child {
+            margin-bottom: 0;
         }
 
         .lab-control-group label {
@@ -439,6 +451,7 @@
             display: flex;
             flex-direction: column;
             gap: 3px;
+            z-index: 10;
         }
 
         #lab-stats span {
@@ -462,7 +475,7 @@
             }
             .search-input { width: 140px; }
             .search-input:focus { width: 160px; }
-            #lab-sidebar { width: 300px; }
+            #lab-sidebar { width: 100%; position: absolute; bottom: 0; height: 280px; }
             .guide-paper { padding: 25px 20px; }
         }
     </style>
@@ -525,64 +538,21 @@
             <section id="view-lab">
                 <div id="lab-canvas-container">
                     <div id="lab-stats">
-                        <div>Lesson: <span id="stat-lesson-num">07</span></div>
-                        <div>Camera: <span id="stat-cam-type">PerspectiveCamera</span></div>
-                        <div>Position: <span id="stat-cam-pos">x: 0, y: 1.5, z: 4</span></div>
+                        <div>Active Lesson: <span id="stat-lesson-title">Lesson 07: Cameras</span></div>
+                        <div>Camera Type: <span id="stat-cam-type">PerspectiveCamera</span></div>
+                        <div>Camera Pos: <span id="stat-cam-pos">x: 0, y: 1.5, z: 4</span></div>
                     </div>
                     <canvas class="lab-webgl"></canvas>
                 </div>
 
                 <aside id="lab-sidebar">
-                    <div class="lab-card">
-                        <h2 id="lab-title">🎥 Interactive Camera Controls</h2>
-                        <div class="btn-group">
-                            <button id="btn-cam-persp" class="btn-lab active">Perspective</button>
-                            <button id="btn-cam-ortho" class="btn-lab">Orthographic</button>
-                        </div>
-                        <div id="lab-cam-desc" class="lab-info-box" style="margin-top:10px;">
-                            <strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။
-                        </div>
-                    </div>
-
-                    <div id="lab-persp-params" class="lab-card">
-                        <h2>⚙️ Perspective Parameters</h2>
-                        <div class="lab-control-group">
-                            <label>FOV: <span id="val-fov" class="val">75°</span></label>
-                            <input type="range" id="param-fov" min="15" max="120" value="75">
-                        </div>
-                        <div class="lab-control-group">
-                            <label>Near: <span id="val-near" class="val">0.1</span></label>
-                            <input type="range" id="param-near" min="0.05" max="3" step="0.05" value="0.1">
-                        </div>
-                        <div class="lab-control-group">
-                            <label>Far: <span id="val-far" class="val">100</span></label>
-                            <input type="range" id="param-far" min="2" max="100" step="1" value="100">
-                        </div>
+                    <!-- Dynamic Controls based on active lesson -->
+                    <div id="lab-dynamic-panel">
+                        <!-- Rendered by JavaScript -->
                     </div>
 
                     <div class="lab-card">
-                        <h2>🕹️ Control Mode</h2>
-                        <div class="btn-group" style="margin-bottom:10px;">
-                            <button id="btn-mode-orbit" class="btn-lab active">OrbitControls</button>
-                            <button id="btn-mode-custom" class="btn-lab">Trig Orbit</button>
-                            <button id="btn-mode-lerp" class="btn-lab">Smooth Lerp</button>
-                        </div>
-                        <div class="lab-control-group">
-                            <label>
-                                <span>Enable Damping (အရှိန်ဖြင့် ရပ်ခြင်း)</span>
-                                <input type="checkbox" id="chk-damping" checked>
-                            </label>
-                        </div>
-                        <div class="lab-control-group">
-                            <label>
-                                <span>Auto-Rotate (အလိုအလျောက် လှည့်ခြင်း)</span>
-                                <input type="checkbox" id="chk-autorotate">
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="lab-card">
-                        <h2>💻 Live Code</h2>
+                        <h2>💻 Live Code Snippet</h2>
                         <div id="lab-live-code" class="lab-code-box">// Three.js Live Code</div>
                     </div>
                 </aside>
@@ -608,7 +578,7 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
         // State
-        let currentLessonId = "01-introduction"
+        let currentLessonId = "07-cameras"
         let currentView = "guide" // "guide" | "lab"
 
         // DOM Elements
@@ -621,8 +591,448 @@
         const searchInput = document.getElementById('search-input')
         const sidebar = document.getElementById('lesson-sidebar')
         const btnToggleSidebar = document.getElementById('btn-toggle-sidebar')
+        const labDynamicPanel = document.getElementById('lab-dynamic-panel')
+        const labLiveCode = document.getElementById('lab-live-code')
+        const statLessonTitle = document.getElementById('stat-lesson-title')
+        const statCamType = document.getElementById('stat-cam-type')
+        const statCamPos = document.getElementById('stat-cam-pos')
 
-        // Render Lesson Drawer Menu
+        // ==========================================
+        // 3D Scene Initialization
+        // ==========================================
+        const labContainer = document.getElementById('lab-canvas-container')
+        const labCanvas = document.querySelector('canvas.lab-webgl')
+        const labScene = new THREE.Scene()
+        labScene.background = new THREE.Color('#0c0d12')
+
+        // Helpers
+        const gridHelper = new THREE.GridHelper(14, 28, 0x705df2, 0x232635)
+        gridHelper.position.y = -0.5
+        labScene.add(gridHelper)
+
+        const axesHelper = new THREE.AxesHelper(2)
+        labScene.add(axesHelper)
+
+        // Center Object (Normal Box)
+        const centerCube = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshNormalMaterial()
+        )
+        labScene.add(centerCube)
+
+        // Surrounding Reference Objects
+        const createReferenceMesh = (geom, color, x, y, z) => {
+            const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color }))
+            mesh.position.set(x, y, z)
+            labScene.add(mesh)
+            return mesh
+        }
+
+        const surroundingMeshes = [
+            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xff5252, -2.5, 0, -2.5),
+            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x448aff, 2.5, 0, -2.5),
+            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x69f0ae, -2.5, 0, 2.5),
+            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xffd740, 2.5, 0, 2.5),
+            createReferenceMesh(new THREE.SphereGeometry(0.4, 16, 16), 0xe040fb, 0, 2.2, 0),
+            createReferenceMesh(new THREE.SphereGeometry(0.4, 16, 16), 0x00e5ff, 0, 0, -5)
+        ]
+
+        // Cameras Setup
+        let labAspect = 1.333
+        const perspCam = new THREE.PerspectiveCamera(75, labAspect, 0.1, 100)
+        perspCam.position.set(0, 1.5, 4)
+        labScene.add(perspCam)
+
+        const frustumSize = 4.5
+        const orthoCam = new THREE.OrthographicCamera(
+            -frustumSize * labAspect / 2,
+             frustumSize * labAspect / 2,
+             frustumSize / 2,
+            -frustumSize / 2,
+             0.1,
+             100
+        )
+        orthoCam.position.set(0, 1.5, 4)
+        labScene.add(orthoCam)
+
+        let activeCam = perspCam
+
+        // OrbitControls Setup
+        const labControls = new OrbitControls(perspCam, labCanvas)
+        labControls.enableDamping = true
+        labControls.dampingFactor = 0.05
+        labControls.target.set(0, 0, 0)
+
+        // WebGLRenderer Setup
+        const labRenderer = new THREE.WebGLRenderer({ canvas: labCanvas, antialias: true })
+        labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+        // Resize Logic
+        const triggerLabResize = () => {
+            const width = labContainer.clientWidth || window.innerWidth - 390 - 320
+            const height = labContainer.clientHeight || window.innerHeight - 58
+            if (width <= 0 || height <= 0) return
+
+            labAspect = width / height
+
+            perspCam.aspect = labAspect
+            perspCam.updateProjectionMatrix()
+
+            orthoCam.left = -frustumSize * labAspect / 2
+            orthoCam.right = frustumSize * labAspect / 2
+            orthoCam.top = frustumSize / 2
+            orthoCam.bottom = -frustumSize / 2
+            orthoCam.updateProjectionMatrix()
+
+            labRenderer.setSize(width, height)
+        }
+
+        window.addEventListener('resize', triggerLabResize)
+
+        // Mouse Position for Custom Control
+        let labControlMode = 'orbit' // 'orbit' | 'custom' | 'lerp'
+        const cursor = { x: 0, y: 0 }
+        const targetPos = new THREE.Vector3()
+
+        window.addEventListener('mousemove', (e) => {
+            const rect = labCanvas.getBoundingClientRect()
+            if (
+                e.clientX >= rect.left && e.clientX <= rect.right &&
+                e.clientY >= rect.top && e.clientY <= rect.bottom
+            ) {
+                cursor.x = (e.clientX - rect.left) / rect.width - 0.5
+                cursor.y = -((e.clientY - rect.top) / rect.height - 0.5)
+            }
+        })
+
+        // ==========================================
+        // Dynamic Lab Controls by Lesson
+        // ==========================================
+        const setupLabControls = (lessonId) => {
+            statLessonTitle.innerText = `${lessonId.toUpperCase()}`
+
+            if (lessonId === '07-cameras') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🎥 ကင်မရာ အမျိုးအစား (Camera Type)</h2>
+                        <div class="btn-group">
+                            <button id="btn-cam-persp" class="btn-lab ${activeCam === perspCam ? 'active' : ''}">Perspective</button>
+                            <button id="btn-cam-ortho" class="btn-lab ${activeCam === orthoCam ? 'active' : ''}">Orthographic</button>
+                        </div>
+                        <div id="lab-cam-desc" class="lab-info-box" style="margin-top:10px;">
+                            <strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော သဘာဝကျသည့် ကင်မရာ။
+                        </div>
+                    </div>
+
+                    <div id="lab-persp-params" class="lab-card" style="opacity: ${activeCam === perspCam ? '1' : '0.45'}; pointer-events: ${activeCam === perspCam ? 'auto' : 'none'};">
+                        <h2>⚙️ Perspective Parameters</h2>
+                        <div class="lab-control-group">
+                            <label>FOV (Field of View): <span id="val-fov" class="val">${perspCam.fov}°</span></label>
+                            <input type="range" id="param-fov" min="15" max="120" value="${perspCam.fov}">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Near Clipping Plane: <span id="val-near" class="val">${perspCam.near}</span></label>
+                            <input type="range" id="param-near" min="0.05" max="3" step="0.05" value="${perspCam.near}">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Far Clipping Plane: <span id="val-far" class="val">${perspCam.far}</span></label>
+                            <input type="range" id="param-far" min="2" max="100" step="1" value="${perspCam.far}">
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <h2>🕹️ Camera Control Modes</h2>
+                        <div class="btn-group" style="margin-bottom:10px;">
+                            <button id="btn-mode-orbit" class="btn-lab ${labControlMode === 'orbit' ? 'active' : ''}">OrbitControls</button>
+                            <button id="btn-mode-custom" class="btn-lab ${labControlMode === 'custom' ? 'active' : ''}">Trig (sin/cos)</button>
+                            <button id="btn-mode-lerp" class="btn-lab ${labControlMode === 'lerp' ? 'active' : ''}">Smooth Lerp</button>
+                        </div>
+                        <div class="lab-control-group">
+                            <label>
+                                <span>Enable Damping (အရှိန်ဖြင့် ရပ်ခြင်း)</span>
+                                <input type="checkbox" id="chk-damping" ${labControls.enableDamping ? 'checked' : ''}>
+                            </label>
+                        </div>
+                        <div class="lab-control-group">
+                            <label>
+                                <span>Auto-Rotate (အလိုအလျောက် လှည့်ခြင်း)</span>
+                                <input type="checkbox" id="chk-autorotate" ${labControls.autoRotate ? 'checked' : ''}>
+                            </label>
+                        </div>
+                    </div>
+                `
+
+                // Bind Camera Events
+                const btnPersp = document.getElementById('btn-cam-persp')
+                const btnOrtho = document.getElementById('btn-cam-ortho')
+                const camDesc = document.getElementById('lab-cam-desc')
+                const perspParams = document.getElementById('lab-persp-params')
+                const paramFov = document.getElementById('param-fov')
+                const valFov = document.getElementById('val-fov')
+                const paramNear = document.getElementById('param-near')
+                const valNear = document.getElementById('val-near')
+                const paramFar = document.getElementById('param-far')
+                const valFar = document.getElementById('val-far')
+                const btnModeOrbit = document.getElementById('btn-mode-orbit')
+                const btnModeCustom = document.getElementById('btn-mode-custom')
+                const btnModeLerp = document.getElementById('btn-mode-lerp')
+                const chkDamping = document.getElementById('chk-damping')
+                const chkAutorotate = document.getElementById('chk-autorotate')
+
+                btnPersp.addEventListener('click', () => {
+                    btnPersp.classList.add('active')
+                    btnOrtho.classList.remove('active')
+                    activeCam = perspCam
+                    labControls.object = perspCam
+                    perspParams.style.opacity = '1'
+                    perspParams.style.pointerEvents = 'auto'
+                    camDesc.innerHTML = '<strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော သဘာဝကျသည့် ကင်မရာ။'
+                    statCamType.innerText = 'PerspectiveCamera'
+                    updateLiveCodeText()
+                })
+
+                btnOrtho.addEventListener('click', () => {
+                    btnOrtho.classList.add('active')
+                    btnPersp.classList.remove('active')
+                    activeCam = orthoCam
+                    labControls.object = orthoCam
+                    perspParams.style.opacity = '0.45'
+                    perspParams.style.pointerEvents = 'none'
+                    camDesc.innerHTML = '<strong>OrthographicCamera:</strong> အကွာအဝေးကြောင့် ပုံမသေးသွားဘဲ မျဉ်းပြိုင် (Parallel Projection) အတိုင်း ပြပေးသည့် ကင်မရာ (2D/Isometric Game များအတွက်)။'
+                    statCamType.innerText = 'OrthographicCamera'
+                    updateLiveCodeText()
+                })
+
+                paramFov.addEventListener('input', (e) => {
+                    const v = Number(e.target.value)
+                    valFov.innerText = v + '°'
+                    perspCam.fov = v
+                    perspCam.updateProjectionMatrix()
+                    updateLiveCodeText()
+                })
+
+                paramNear.addEventListener('input', (e) => {
+                    const v = Number(e.target.value)
+                    valNear.innerText = v
+                    perspCam.near = v
+                    orthoCam.near = v
+                    perspCam.updateProjectionMatrix()
+                    orthoCam.updateProjectionMatrix()
+                    updateLiveCodeText()
+                })
+
+                paramFar.addEventListener('input', (e) => {
+                    const v = Number(e.target.value)
+                    valFar.innerText = v
+                    perspCam.far = v
+                    orthoCam.far = v
+                    perspCam.updateProjectionMatrix()
+                    orthoCam.updateProjectionMatrix()
+                    updateLiveCodeText()
+                })
+
+                btnModeOrbit.addEventListener('click', () => {
+                    btnModeOrbit.classList.add('active')
+                    btnModeCustom.classList.remove('active')
+                    btnModeLerp.classList.remove('active')
+                    labControlMode = 'orbit'
+                    labControls.enabled = true
+                    updateLiveCodeText()
+                })
+
+                btnModeCustom.addEventListener('click', () => {
+                    btnModeCustom.classList.add('active')
+                    btnModeOrbit.classList.remove('active')
+                    btnModeLerp.classList.remove('active')
+                    labControlMode = 'custom'
+                    labControls.enabled = false
+                    updateLiveCodeText()
+                })
+
+                btnModeLerp.addEventListener('click', () => {
+                    btnModeLerp.classList.add('active')
+                    btnModeOrbit.classList.remove('active')
+                    btnModeCustom.classList.remove('active')
+                    labControlMode = 'lerp'
+                    labControls.enabled = false
+                    updateLiveCodeText()
+                })
+
+                chkDamping.addEventListener('change', (e) => {
+                    labControls.enableDamping = e.target.checked
+                    updateLiveCodeText()
+                })
+
+                chkAutorotate.addEventListener('change', (e) => {
+                    labControls.autoRotate = e.target.checked
+                    labControls.autoRotateSpeed = 2.0
+                })
+
+            } else if (lessonId === '04-transform-objects') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>📍 Position (Vector3)</h2>
+                        <div class="lab-control-group">
+                            <label>Position X: <span id="val-pos-x" class="val">${centerCube.position.x.toFixed(1)}</span></label>
+                            <input type="range" id="param-pos-x" min="-3" max="3" step="0.1" value="${centerCube.position.x}">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Position Y: <span id="val-pos-y" class="val">${centerCube.position.y.toFixed(1)}</span></label>
+                            <input type="range" id="param-pos-y" min="-2" max="2" step="0.1" value="${centerCube.position.y}">
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <h2>🔄 Rotation (Euler Angles)</h2>
+                        <div class="lab-control-group">
+                            <label>Rotation Y: <span id="val-rot-y" class="val">${centerCube.rotation.y.toFixed(2)} rad</span></label>
+                            <input type="range" id="param-rot-y" min="0" max="6.28" step="0.1" value="${centerCube.rotation.y}">
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <h2>🔍 Scale (Vector3)</h2>
+                        <div class="lab-control-group">
+                            <label>Uniform Scale: <span id="val-scale" class="val">${centerCube.scale.x.toFixed(1)}x</span></label>
+                            <input type="range" id="param-scale" min="0.2" max="2.5" step="0.1" value="${centerCube.scale.x}">
+                        </div>
+                    </div>
+                `
+
+                document.getElementById('param-pos-x').addEventListener('input', (e) => {
+                    centerCube.position.x = Number(e.target.value)
+                    document.getElementById('val-pos-x').innerText = centerCube.position.x.toFixed(1)
+                    updateLiveCodeText()
+                })
+                document.getElementById('param-pos-y').addEventListener('input', (e) => {
+                    centerCube.position.y = Number(e.target.value)
+                    document.getElementById('val-pos-y').innerText = centerCube.position.y.toFixed(1)
+                    updateLiveCodeText()
+                })
+                document.getElementById('param-rot-y').addEventListener('input', (e) => {
+                    centerCube.rotation.y = Number(e.target.value)
+                    document.getElementById('val-rot-y').innerText = centerCube.rotation.y.toFixed(2) + ' rad'
+                    updateLiveCodeText()
+                })
+                document.getElementById('param-scale').addEventListener('input', (e) => {
+                    const s = Number(e.target.value)
+                    centerCube.scale.set(s, s, s)
+                    document.getElementById('val-scale').innerText = s.toFixed(1) + 'x'
+                    updateLiveCodeText()
+                })
+
+            } else {
+                // Default Controls for other lessons
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🎮 3D Playground</h2>
+                        <div class="lab-info-box">
+                            Mouse ဖြင့် ဖိဆွဲပြီး 3D Scene ကို ၃၆၀ ဒီဂရီ လှည့်ပတ်ကြည့်ရှုနိုင်ပါသည်။
+                        </div>
+                        <div class="lab-control-group" style="margin-top:10px;">
+                            <label>
+                                <span>Auto Rotate Scene</span>
+                                <input type="checkbox" id="chk-default-rotate">
+                            </label>
+                        </div>
+                    </div>
+                `
+                document.getElementById('chk-default-rotate')?.addEventListener('change', (e) => {
+                    labControls.autoRotate = e.target.checked
+                })
+            }
+
+            updateLiveCodeText()
+        }
+
+        const updateLiveCodeText = () => {
+            if (currentLessonId === '07-cameras') {
+                if (activeCam === perspCam) {
+                    labLiveCode.innerText = `// PerspectiveCamera Setup
+const camera = new THREE.PerspectiveCamera(
+  ${perspCam.fov}, // FOV
+  sizes.width / sizes.height, // Aspect
+  ${perspCam.near}, // Near
+  ${perspCam.far} // Far
+)
+camera.position.set(${activeCam.position.x.toFixed(1)}, ${activeCam.position.y.toFixed(1)}, ${activeCam.position.z.toFixed(1)})
+
+// Controls Setup
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = ${labControls.enableDamping}`
+                } else {
+                    labLiveCode.innerText = `// OrthographicCamera Setup
+const aspect = sizes.width / sizes.height
+const camera = new THREE.OrthographicCamera(
+  -${(frustumSize * labAspect / 2).toFixed(1)}, // Left (-size * aspect)
+   ${(frustumSize * labAspect / 2).toFixed(1)}, // Right (size * aspect)
+   ${(frustumSize / 2).toFixed(1)},  // Top
+  -${(frustumSize / 2).toFixed(1)},  // Bottom
+   ${orthoCam.near}, // Near
+   ${orthoCam.far}  // Far
+)`
+                }
+            } else if (currentLessonId === '04-transform-objects') {
+                labLiveCode.innerText = `mesh.position.set(${centerCube.position.x.toFixed(1)}, ${centerCube.position.y.toFixed(1)}, ${centerCube.position.z.toFixed(1)})
+mesh.rotation.y = ${centerCube.rotation.y.toFixed(2)}
+mesh.scale.set(${centerCube.scale.x.toFixed(1)}, ${centerCube.scale.y.toFixed(1)}, ${centerCube.scale.z.toFixed(1)})`
+            } else {
+                labLiveCode.innerText = `// Basic Scene
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+camera.position.z = 3
+scene.add(camera)`
+            }
+        }
+
+        // ==========================================
+        // Lesson Selection & Markdown Loading
+        // ==========================================
+        const selectLesson = async (lessonId) => {
+            currentLessonId = lessonId
+            window.location.hash = lessonId
+
+            // Update active sidebar item
+            document.querySelectorAll('.lesson-item').forEach(el => {
+                el.classList.toggle('active', el.dataset.id === lessonId)
+            })
+
+            const lesson = LESSONS.find(l => l.id === lessonId)
+            if (!lesson) return
+
+            // Setup Lab for this lesson
+            setupLabControls(lessonId)
+
+            // Load Guide Markdown
+            guideContent.innerHTML = '<div style="text-align:center; padding: 40px; color:#94a3b8;">Loading guide...</div>'
+
+            if (lesson.guideFile) {
+                try {
+                    const res = await fetch(`./${lesson.guideFile}`)
+                    if (res.ok) {
+                        const md = await res.text()
+                        guideContent.innerHTML = marked.parse(md)
+                        hljs.highlightAll()
+                    } else {
+                        guideContent.innerHTML = `<div style="padding:20px;"><h2>${lesson.title}</h2><p style="color:#94a3b8;">ဤသင်ခန်းစာအတွက် Guide ကို မကြာမီ ပြုစုတင်ပြပေးပါမည်။</p></div>`
+                    }
+                } catch (e) {
+                    guideContent.innerHTML = `<div style="padding:20px;"><h2>${lesson.title}</h2><p style="color:#ef4444;">Markdown ဖိုင်ကို ဆွဲယူ၍ မရပါ (Fetch Error)။</p></div>`
+                }
+            } else {
+                guideContent.innerHTML = `
+                    <div style="padding:20px;">
+                        <h2>${lesson.title}</h2>
+                        <p style="color:#ffb74d;">✨ မကြာမီ ပြုစုတင်ပြပေးပါမည် (Upcoming Lesson)</p>
+                        <p>${lesson.subtitle}</p>
+                    </div>
+                `
+            }
+
+            viewGuide.scrollTop = 0
+        }
+
+        // Render Sidebar
         const renderSidebar = (filterText = "") => {
             lessonsContainer.innerHTML = ""
 
@@ -672,54 +1082,7 @@
             })
         }
 
-        // Switch Lesson Function
-        const selectLesson = async (lessonId) => {
-            currentLessonId = lessonId
-            window.location.hash = lessonId
-
-            // Update active styling
-            document.querySelectorAll('.lesson-item').forEach(el => {
-                el.classList.toggle('active', el.dataset.id === lessonId)
-            })
-
-            const lesson = LESSONS.find(l => l.id === lessonId)
-            if (!lesson) return
-
-            document.getElementById('stat-lesson-num').innerText = lesson.number
-
-            // Load Guide Markdown
-            guideContent.innerHTML = '<div style="text-align:center; padding: 40px; color:#94a3b8;">Loading guide...</div>'
-
-            if (lesson.guideFile) {
-                try {
-                    const res = await fetch(`./${lesson.guideFile}`)
-                    if (res.ok) {
-                        const md = await res.text()
-                        guideContent.innerHTML = marked.parse(md)
-                        hljs.highlightAll()
-                    } else {
-                        guideContent.innerHTML = `<div style="padding:20px;"><h2>${lesson.title}</h2><p style="color:#94a3b8;">ဤသင်ခန်းစာအတွက် Guide ကို ပြင်ဆင်နေဆဲ ဖြစ်ပါသည်။</p></div>`
-                    }
-                } catch (e) {
-                    guideContent.innerHTML = `<div style="padding:20px;"><h2>${lesson.title}</h2><p style="color:#ef4444;">Markdown ဖိုင်ကို ဆွဲယူ၍ မရပါ (Fetch Error)။</p></div>`
-                }
-            } else {
-                guideContent.innerHTML = `
-                    <div style="padding:20px;">
-                        <h2>${lesson.title}</h2>
-                        <p style="color:#ffb74d;">✨ မကြာမီ ပြုစုတင်ပြပေးပါမည် (Upcoming Lesson)</p>
-                        <p>${lesson.subtitle}</p>
-                        <hr style="margin: 20px 0; border:0; border-top:1px solid var(--border-color);">
-                        <p>Topic Tags: ${lesson.tags.map(t => `<code style="margin-right:6px;">${t}</code>`).join('')}</p>
-                    </div>
-                `
-            }
-
-            // Scroll Guide to top
-            viewGuide.scrollTop = 0
-        }
-
-        // View Tabs Toggle
+        // View Tabs Switching
         tabBtnGuide.addEventListener('click', () => {
             tabBtnGuide.classList.add('active')
             tabBtnLab.classList.remove('active')
@@ -734,248 +1097,38 @@
             viewGuide.style.display = 'none'
             viewLab.style.display = 'flex'
             currentView = "lab"
-            onLabResize()
+
+            // Force resize after display flex
+            requestAnimationFrame(() => {
+                triggerLabResize()
+            })
         })
 
-        // Mobile Sidebar Toggle
         btnToggleSidebar.addEventListener('click', () => {
             sidebar.classList.toggle('open')
         })
 
-        // Search Input Filter
         searchInput.addEventListener('input', (e) => {
             renderSidebar(e.target.value)
         })
 
         // ==========================================
-        // 3D Interactive Lab Setup (Three.js)
-        // ==========================================
-        const labContainer = document.getElementById('lab-canvas-container')
-        const labCanvas = document.querySelector('canvas.lab-webgl')
-        const labScene = new THREE.Scene()
-        labScene.background = new THREE.Color('#0c0d12')
-
-        // Helpers
-        const gridHelper = new THREE.GridHelper(12, 24, 0x705df2, 0x232635)
-        gridHelper.position.y = -0.5
-        labScene.add(gridHelper)
-
-        const axesHelper = new THREE.AxesHelper(1.5)
-        labScene.add(axesHelper)
-
-        // Center Object & Multi-objects
-        const centerCube = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshNormalMaterial()
-        )
-        labScene.add(centerCube)
-
-        const createHelperMesh = (geom, color, x, y, z) => {
-            const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color }))
-            mesh.position.set(x, y, z)
-            labScene.add(mesh)
-            return mesh
-        }
-
-        createHelperMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xff5252, -2.5, 0, -2.5)
-        createHelperMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x448aff, 2.5, 0, -2.5)
-        createHelperMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x69f0ae, -2.5, 0, 2.5)
-        createHelperMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xffd740, 2.5, 0, 2.5)
-        createHelperMesh(new THREE.SphereGeometry(0.35, 16, 16), 0xe040fb, 0, 2, 0)
-        createHelperMesh(new THREE.SphereGeometry(0.35, 16, 16), 0x00e5ff, 0, 0, -5)
-
-        // Cameras
-        let labAspect = (labContainer.clientWidth || 800) / (labContainer.clientHeight || 600)
-        const perspCam = new THREE.PerspectiveCamera(75, labAspect, 0.1, 100)
-        perspCam.position.set(0, 1.5, 4)
-        labScene.add(perspCam)
-
-        const frustumSize = 4
-        const orthoCam = new THREE.OrthographicCamera(
-            -frustumSize * labAspect / 2,
-             frustumSize * labAspect / 2,
-             frustumSize / 2,
-            -frustumSize / 2,
-             0.1,
-             100
-        )
-        orthoCam.position.set(0, 1.5, 4)
-        labScene.add(orthoCam)
-
-        let activeCam = perspCam
-
-        // Controls
-        const labControls = new OrbitControls(perspCam, labCanvas)
-        labControls.enableDamping = true
-        labControls.dampingFactor = 0.05
-        labControls.target.set(0, 0, 0)
-
-        // Renderer
-        const labRenderer = new THREE.WebGLRenderer({ canvas: labCanvas, antialias: true })
-        labRenderer.setSize(labContainer.clientWidth || 800, labContainer.clientHeight || 600)
-        labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-        // Lab Event Listeners & State
-        let labControlMode = 'orbit'
-        const cursor = { x: 0, y: 0 }
-        const targetPos = new THREE.Vector3()
-
-        window.addEventListener('mousemove', (e) => {
-            const rect = labCanvas.getBoundingClientRect()
-            if (
-                e.clientX >= rect.left && e.clientX <= rect.right &&
-                e.clientY >= rect.top && e.clientY <= rect.bottom
-            ) {
-                cursor.x = (e.clientX - rect.left) / rect.width - 0.5
-                cursor.y = -((e.clientY - rect.top) / rect.height - 0.5)
-            }
-        })
-
-        const onLabResize = () => {
-            if (!labContainer) return
-            const w = labContainer.clientWidth
-            const h = labContainer.clientHeight
-            if (w === 0 || h === 0) return
-
-            labAspect = w / h
-            perspCam.aspect = labAspect
-            perspCam.updateProjectionMatrix()
-
-            orthoCam.left = -frustumSize * labAspect / 2
-            orthoCam.right = frustumSize * labAspect / 2
-            orthoCam.top = frustumSize / 2
-            orthoCam.bottom = -frustumSize / 2
-            orthoCam.updateProjectionMatrix()
-
-            labRenderer.setSize(w, h)
-            labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-        }
-
-        window.addEventListener('resize', onLabResize)
-
-        // Lab UI Bindings
-        const btnPersp = document.getElementById('btn-cam-persp')
-        const btnOrtho = document.getElementById('btn-cam-ortho')
-        const camDesc = document.getElementById('lab-cam-desc')
-        const paramFov = document.getElementById('param-fov')
-        const valFov = document.getElementById('val-fov')
-        const paramNear = document.getElementById('param-near')
-        const valNear = document.getElementById('val-near')
-        const paramFar = document.getElementById('param-far')
-        const valFar = document.getElementById('val-far')
-        const btnModeOrbit = document.getElementById('btn-mode-orbit')
-        const btnModeCustom = document.getElementById('btn-mode-custom')
-        const btnModeLerp = document.getElementById('btn-mode-lerp')
-        const chkDamping = document.getElementById('chk-damping')
-        const chkAutorotate = document.getElementById('chk-autorotate')
-        const labLiveCode = document.getElementById('lab-live-code')
-        const statCamType = document.getElementById('stat-cam-type')
-        const statCamPos = document.getElementById('stat-cam-pos')
-
-        const updateLabCode = () => {
-            if (activeCam === perspCam) {
-                labLiveCode.innerText = `const camera = new THREE.PerspectiveCamera(${perspCam.fov}, sizes.width / sizes.height, ${perspCam.near}, ${perspCam.far})
-camera.position.set(${activeCam.position.x.toFixed(1)}, ${activeCam.position.y.toFixed(1)}, ${activeCam.position.z.toFixed(1)})`
-            } else {
-                labLiveCode.innerText = `const camera = new THREE.OrthographicCamera(-${(frustumSize * labAspect / 2).toFixed(1)}, ${(frustumSize * labAspect / 2).toFixed(1)}, ${(frustumSize / 2).toFixed(1)}, -${(frustumSize / 2).toFixed(1)}, ${orthoCam.near}, ${orthoCam.far})`
-            }
-        }
-
-        btnPersp.addEventListener('click', () => {
-            btnPersp.classList.add('active')
-            btnOrtho.classList.remove('active')
-            activeCam = perspCam
-            labControls.object = perspCam
-            document.getElementById('lab-persp-params').style.opacity = '1'
-            document.getElementById('lab-persp-params').style.pointerEvents = 'auto'
-            camDesc.innerHTML = '<strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။'
-            statCamType.innerText = 'PerspectiveCamera'
-            updateLabCode()
-        })
-
-        btnOrtho.addEventListener('click', () => {
-            btnOrtho.classList.add('active')
-            btnPersp.classList.remove('active')
-            activeCam = orthoCam
-            labControls.object = orthoCam
-            document.getElementById('lab-persp-params').style.opacity = '0.45'
-            document.getElementById('lab-persp-params').style.pointerEvents = 'none'
-            camDesc.innerHTML = '<strong>OrthographicCamera:</strong> အကွာအဝေးကြောင့် ပုံမသေးသွားဘဲ မျဉ်းပြိုင် (Parallel Projection) အတိုင်း ပြပေးသည့် ကင်မရာ။'
-            statCamType.innerText = 'OrthographicCamera'
-            updateLabCode()
-        })
-
-        paramFov.addEventListener('input', (e) => {
-            const v = Number(e.target.value)
-            valFov.innerText = v + '°'
-            perspCam.fov = v
-            perspCam.updateProjectionMatrix()
-            updateLabCode()
-        })
-
-        paramNear.addEventListener('input', (e) => {
-            const v = Number(e.target.value)
-            valNear.innerText = v
-            perspCam.near = v
-            orthoCam.near = v
-            perspCam.updateProjectionMatrix()
-            orthoCam.updateProjectionMatrix()
-            updateLabCode()
-        })
-
-        paramFar.addEventListener('input', (e) => {
-            const v = Number(e.target.value)
-            valFar.innerText = v
-            perspCam.far = v
-            orthoCam.far = v
-            perspCam.updateProjectionMatrix()
-            orthoCam.updateProjectionMatrix()
-            updateLabCode()
-        })
-
-        btnModeOrbit.addEventListener('click', () => {
-            btnModeOrbit.classList.add('active')
-            btnModeCustom.classList.remove('active')
-            btnModeLerp.classList.remove('active')
-            labControlMode = 'orbit'
-            labControls.enabled = true
-        })
-
-        btnModeCustom.addEventListener('click', () => {
-            btnModeCustom.classList.add('active')
-            btnModeOrbit.classList.remove('active')
-            btnModeLerp.classList.remove('active')
-            labControlMode = 'custom'
-            labControls.enabled = false
-        })
-
-        btnModeLerp.addEventListener('click', () => {
-            btnModeLerp.classList.add('active')
-            btnModeOrbit.classList.remove('active')
-            btnModeCustom.classList.remove('active')
-            labControlMode = 'lerp'
-            labControls.enabled = false
-        })
-
-        chkDamping.addEventListener('change', (e) => {
-            labControls.enableDamping = e.target.checked
-        })
-
-        chkAutorotate.addEventListener('change', (e) => {
-            labControls.autoRotate = e.target.checked
-            labControls.autoRotateSpeed = 2.0
-        })
-
         // Animation Loop
+        // ==========================================
         const clock = new THREE.Clock()
+
         const tick = () => {
             const elapsedTime = clock.getElapsedTime()
-            centerCube.rotation.y = elapsedTime * 0.4
-            centerCube.rotation.x = elapsedTime * 0.2
+
+            // Gentle center object rotation
+            if (currentLessonId !== '04-transform-objects') {
+                centerCube.rotation.y = elapsedTime * 0.4
+                centerCube.rotation.x = elapsedTime * 0.2
+            }
 
             if (currentView === "lab") {
                 if (labControlMode === 'orbit') {
-                    if (labControls.enableDamping || labControls.autoRotate) {
+                    if (labControls.enabled) {
                         labControls.update()
                     }
                 } else if (labControlMode === 'custom') {
@@ -1000,14 +1153,17 @@ camera.position.set(${activeCam.position.x.toFixed(1)}, ${activeCam.position.y.t
             window.requestAnimationFrame(tick)
         }
 
-        // Init
+        // Initialize from URL Hash or default to Lesson 07 Cameras
         const initHash = window.location.hash.replace('#', '')
         if (initHash && LESSONS.some(l => l.id === initHash)) {
             currentLessonId = initHash
+        } else {
+            currentLessonId = "07-cameras"
         }
 
         renderSidebar()
         selectLesson(currentLessonId)
+        triggerLabResize()
         tick()
     </script>
 </body>
