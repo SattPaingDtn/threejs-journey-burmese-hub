@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Journey - Lesson 07: Cameras (မြန်မာဘာသာ)</title>
+    <meta name="description" content="Three.js Journey Lesson 07: Cameras Master Study Guide, Interactive Lab & Memo in Burmese">
+    
+    <!-- Marked.js for Markdown rendering & Highlight.js for Code Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0f1015;
+            --bg-card: #171821;
+            --bg-sidebar: #13141c;
+            --border-color: #262938;
+            --accent: #705df2;
+            --accent-hover: #8b7cf8;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Top Navigation Bar */
+        header.navbar {
+            height: 56px;
+            background: #111218;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .brand-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #1e202b;
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-tab {
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .nav-tab:hover {
+            color: #fff;
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(112, 93, 242, 0.4);
+        }
+
+        .external-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .link-btn {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #181924;
+            transition: all 0.2s;
+        }
+
+        .link-btn:hover {
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* Main Content View Areas */
+        main#main-view {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* 3D Studio View */
+        #studio-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.2s;
+        }
+
+        #canvas-container {
+            flex: 1;
+            position: relative;
+            height: 100%;
+        }
+
+        canvas.webgl {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #sidebar {
+            width: 420px;
+            background: var(--bg-sidebar);
+            border-left: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        #sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        #sidebar::-webkit-scrollbar-thumb {
+            background: #2f3242;
+            border-radius: 4px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card h2 {
+            font-size: 0.9rem;
+            color: #ffb74d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .control-group {
+            margin-bottom: 12px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #d1d5db;
+            margin-bottom: 4px;
+        }
+
+        .control-group label span.val {
+            color: #64d2ff;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        button.btn-ctrl {
+            flex: 1;
+            padding: 8px 10px;
+            background: #222430;
+            color: #cbd5e1;
+            border: 1px solid #333748;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            transition: all 0.2s;
+        }
+
+        button.btn-ctrl:hover {
+            background: #2d3040;
+        }
+
+        button.btn-ctrl.active {
+            background: var(--accent);
+            border-color: var(--accent-hover);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .info-box {
+            font-size: 0.76rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+            background: #101117;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .code-box {
+            background: #0b0c10;
+            border: 1px solid #20222e;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.72rem;
+            color: #4ade80;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        #stats-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(17, 18, 24, 0.88);
+            backdrop-filter: blur(10px);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 0.76rem;
+            font-family: monospace;
+            color: #94a3b8;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        #stats-overlay span {
+            color: #38ef7d;
+            font-weight: bold;
+        }
+
+        /* Markdown Guide View */
+        #guide-view {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--bg-dark);
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .guide-container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 35px 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            line-height: 1.7;
+        }
+
+        /* Markdown Typography */
+        .guide-container h1 { font-size: 1.8rem; color: #a79afc; margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+        .guide-container h2 { font-size: 1.35rem; color: #ffb74d; margin-top: 28px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        .guide-container h3 { font-size: 1.1rem; color: #64d2ff; margin-top: 20px; margin-bottom: 8px; }
+        .guide-container h4 { font-size: 0.95rem; color: #f472b6; margin-top: 14px; margin-bottom: 6px; }
+        .guide-container p { margin-bottom: 12px; color: #cbd5e1; font-size: 0.92rem; }
+        .guide-container ul, .guide-container ol { margin-left: 24px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; }
+        .guide-container li { margin-bottom: 6px; }
+        .guide-container blockquote { border-left: 4px solid var(--accent); background: #111218; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; color: #94a3b8; font-size: 0.88rem; }
+        .guide-container table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 0.85rem; }
+        .guide-container th, .guide-container td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; }
+        .guide-container th { background: #1f222e; color: #ffb74d; }
+        .guide-container tr:nth-child(even) { background: #13141c; }
+        .guide-container pre { background: #0b0c10 !important; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; overflow-x: auto; margin-bottom: 16px; font-size: 0.82rem; }
+        .guide-container code:not(pre code) { background: #262938; color: #ff94c2; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+        .guide-container a { color: #8b7cf8; text-decoration: none; }
+        .guide-container a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="brand">
+            <span>📸 Three.js Journey</span>
+            <span class="brand-badge">Lesson 07: Cameras</span>
+        </div>
+
+        <div class="nav-tabs">
+            <div id="tab-studio" class="nav-tab active">
+                <span>🎮 Interactive 3D Studio</span>
+            </div>
+            <div id="tab-guide" class="nav-tab">
+                <span>📚 Burmese Study Guide & Memo</span>
+            </div>
+        </div>
+
+        <div class="external-links">
+            <a class="link-btn" href="https://threejs-journey.com/lessons/cameras" target="_blank" rel="noopener">
+                <span>Three.js Journey</span> ↗
+            </a>
+            <a class="link-btn" href="https://threejs.org/docs/#api/en/cameras/PerspectiveCamera" target="_blank" rel="noopener">
+                <span>Docs</span> ↗
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Views -->
+    <main id="main-view">
+
+        <!-- VIEW 1: 3D Interactive Studio -->
+        <div id="studio-view">
+            <div id="canvas-container">
+                <div id="stats-overlay">
+                    <div>Camera: <span id="stat-cam">PerspectiveCamera</span></div>
+                    <div>Position: <span id="stat-pos">x: 0, y: 1.5, z: 4</span></div>
+                    <div>Active Mode: <span id="stat-mode">OrbitControls (Damping: ON)</span></div>
+                </div>
+                <canvas class="webgl"></canvas>
+            </div>
+
+            <aside id="sidebar">
+                <!-- Camera Switcher -->
+                <div class="card">
+                    <h2>🎥 ကင်မရာ အမျိုးအစား (Camera Type)</h2>
+                    <div class="btn-group">
+                        <button id="btn-perspective" class="btn-ctrl active">Perspective</button>
+                        <button id="btn-orthographic" class="btn-ctrl">Orthographic</button>
+                    </div>
+                    <div id="cam-desc" class="info-box" style="margin-top: 10px;">
+                        <strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးမားပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။
+                    </div>
+                </div>
+
+                <!-- Perspective Parameters -->
+                <div id="perspective-controls" class="card">
+                    <h2>⚙️ Perspective Parameters</h2>
+                    <div class="control-group">
+                        <label>Field of View (FOV): <span id="val-fov" class="val">75°</span></label>
+                        <input type="range" id="param-fov" min="15" max="120" value="75">
+                    </div>
+                    <div class="control-group">
+                        <label>Near Plane: <span id="val-near" class="val">0.1</span></label>
+                        <input type="range" id="param-near" min="0.05" max="3" step="0.05" value="0.1">
+                    </div>
+                    <div class="control-group">
+                        <label>Far Plane: <span id="val-far" class="val">100</span></label>
+                        <input type="range" id="param-far" min="2" max="100" step="1" value="100">
+                    </div>
+                </div>
+
+                <!-- Control Modes -->
+                <div class="card">
+                    <h2>🕹️ Control Mode နှင့် Motion Math</h2>
+                    <div class="btn-group" style="margin-bottom: 10px;">
+                        <button id="btn-mode-orbit" class="btn-ctrl active">OrbitControls</button>
+                        <button id="btn-mode-custom" class="btn-ctrl">Trig (sin/cos)</button>
+                        <button id="btn-mode-lerp" class="btn-ctrl">Smooth Lerp</button>
+                    </div>
+
+                    <div id="orbit-settings">
+                        <div class="control-group">
+                            <label>
+                                <span>Enable Damping (အရှိန်ဖြင့် ရပ်တန့်ခြင်း)</span>
+                                <input type="checkbox" id="chk-damping" checked>
+                            </label>
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>Auto-Rotation (အလိုအလျောက် လှည့်ခြင်း)</span>
+                                <input type="checkbox" id="chk-autorotate">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="mode-desc" class="info-box">
+                        <strong>OrbitControls:</strong> Target ဗဟိုပြု လှည့်ပတ်ခြင်း (Orbit, Pan, Zoom)။ Damping သုံးပါက <code>tick()</code> ထဲတွင် <code>controls.update()</code> ခေါ်ပေးရမည်။
+                    </div>
+                </div>
+
+                <!-- Live Generated Code Box -->
+                <div class="card">
+                    <h2>💻 Live Generated Code</h2>
+                    <div id="live-code" class="code-box">// Perspective Camera
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+camera.position.set(0, 1.5, 4)
+scene.add(camera)</div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- VIEW 2: Markdown Guide & Memo -->
+        <div id="guide-view">
+            <div class="guide-container" id="guide-content">
+                <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                    စာရွက်စာတမ်းများကို ရေးဆွဲနေပါသည်...
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Three.js Module Import -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three'
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
+        // Tab Switching
+        const tabStudio = document.getElementById('tab-studio')
+        const tabGuide = document.getElementById('tab-guide')
+        const studioView = document.getElementById('studio-view')
+        const guideView = document.getElementById('guide-view')
+        const guideContent = document.getElementById('guide-content')
+        let guideLoaded = false
+
+        tabStudio.addEventListener('click', () => {
+            tabStudio.classList.add('active')
+            tabGuide.classList.remove('active')
+            studioView.style.display = 'flex'
+            guideView.style.display = 'none'
+        })
+
+        tabGuide.addEventListener('click', async () => {
+            tabGuide.classList.add('active')
+            tabStudio.classList.remove('active')
+            studioView.style.display = 'none'
+            guideView.style.display = 'block'
+
+            if (!guideLoaded) {
+                try {
+                    const res = await fetch('./07-cameras-burmese-guide.md')
+                    if (res.ok) {
+                        const mdText = await res.text()
+                        guideContent.innerHTML = marked.parse(mdText)
+                        hljs.highlightAll()
+                        guideLoaded = true
+                    }
+                } catch (e) {
+                    guideContent.innerHTML = '<p style="color:#ef4444;">Markdown ဖိုင်ကို ဖတ်၍မရပါ သို့မဟုတ် Local fetch ကန့်သတ်ချက် ရှိနေပါသည်။</p>'
+                }
+            }
+        })
+
+        // 3D Canvas & Scene
+        const container = document.getElementById('canvas-container')
+        const canvas = document.querySelector('canvas.webgl')
+        const scene = new THREE.Scene()
+        scene.background = new THREE.Color('#0f1015')
+
+        // Helpers
+        const gridHelper = new THREE.GridHelper(12, 24, 0x705df2, 0x262938)
+        gridHelper.position.y = -0.5
+        scene.add(gridHelper)
+
+        const axesHelper = new THREE.AxesHelper(1.5)
+        scene.add(axesHelper)
+
+        // Meshes
+        const centerCube = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshNormalMaterial()
+        )
+        scene.add(centerCube)
+
+        const createMesh = (geom, color, x, y, z) => {
+            const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color }))
+            mesh.position.set(x, y, z)
+            scene.add(mesh)
+            return mesh
+        }
+
+        const boxGeom = new THREE.BoxGeometry(0.6, 0.6, 0.6)
+        const sphereGeom = new THREE.SphereGeometry(0.35, 16, 16)
+        const torusGeom = new THREE.TorusGeometry(0.3, 0.1, 12, 24)
+
+        createMesh(boxGeom, 0xff5252, -2.5, 0, -2.5)
+        createMesh(boxGeom, 0x448aff, 2.5, 0, -2.5)
+        createMesh(boxGeom, 0x69f0ae, -2.5, 0, 2.5)
+        createMesh(boxGeom, 0xffd740, 2.5, 0, 2.5)
+        createMesh(sphereGeom, 0xe040fb, 0, 2, 0)
+        createMesh(sphereGeom, 0x00e5ff, 0, 0, -5)
+        createMesh(torusGeom, 0xffab40, 0, 0, 3)
+
+        // Sizes & Aspect
+        const sizes = {
+            width: container.clientWidth || window.innerWidth - 420,
+            height: container.clientHeight || window.innerHeight - 56
+        }
+        let aspectRatio = sizes.width / sizes.height
+
+        // Cameras
+        const perspectiveCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100)
+        perspectiveCamera.position.set(0, 1.5, 4)
+        scene.add(perspectiveCamera)
+
+        const frustumSize = 4
+        const orthographicCamera = new THREE.OrthographicCamera(
+            -frustumSize * aspectRatio / 2,
+             frustumSize * aspectRatio / 2,
+             frustumSize / 2,
+            -frustumSize / 2,
+             0.1,
+             100
+        )
+        orthographicCamera.position.set(0, 1.5, 4)
+        scene.add(orthographicCamera)
+
+        let activeCamera = perspectiveCamera
+
+        // OrbitControls
+        const controls = new OrbitControls(perspectiveCamera, canvas)
+        controls.enableDamping = true
+        controls.dampingFactor = 0.05
+        controls.target.set(0, 0, 0)
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+        renderer.setSize(sizes.width, sizes.height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+        // State & Cursor
+        let controlMode = 'orbit'
+        const cursor = { x: 0, y: 0 }
+        const targetPos = new THREE.Vector3()
+
+        window.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect()
+            if (
+                event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom
+            ) {
+                cursor.x = (event.clientX - rect.left) / sizes.width - 0.5
+                cursor.y = -((event.clientY - rect.top) / sizes.height - 0.5)
+            }
+        })
+
+        // Resize
+        window.addEventListener('resize', () => {
+            sizes.width = container.clientWidth
+            sizes.height = container.clientHeight
+            aspectRatio = sizes.width / sizes.height
+
+            perspectiveCamera.aspect = aspectRatio
+            perspectiveCamera.updateProjectionMatrix()
+
+            orthographicCamera.left = -frustumSize * aspectRatio / 2
+            orthographicCamera.right = frustumSize * aspectRatio / 2
+            orthographicCamera.top = frustumSize / 2
+            orthographicCamera.bottom = -frustumSize / 2
+            orthographicCamera.updateProjectionMatrix()
+
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        })
+
+        // UI Binding
+        const btnPerspective = document.getElementById('btn-perspective')
+        const btnOrthographic = document.getElementById('btn-orthographic')
+        const camDesc = document.getElementById('cam-desc')
+        const perspectiveControls = document.getElementById('perspective-controls')
+        const paramFov = document.getElementById('param-fov')
+        const valFov = document.getElementById('val-fov')
+        const paramNear = document.getElementById('param-near')
+        const valNear = document.getElementById('val-near')
+        const paramFar = document.getElementById('param-far')
+        const valFar = document.getElementById('val-far')
+        const btnModeOrbit = document.getElementById('btn-mode-orbit')
+        const btnModeCustom = document.getElementById('btn-mode-custom')
+        const btnModeLerp = document.getElementById('btn-mode-lerp')
+        const chkDamping = document.getElementById('chk-damping')
+        const chkAutorotate = document.getElementById('chk-autorotate')
+        const modeDesc = document.getElementById('mode-desc')
+        const liveCode = document.getElementById('live-code')
+        const statCam = document.getElementById('stat-cam')
+        const statPos = document.getElementById('stat-pos')
+        const statMode = document.getElementById('stat-mode')
+
+        const updateLiveCode = () => {
+            if (activeCamera === perspectiveCamera) {
+                liveCode.innerText = `// Perspective Camera
+const camera = new THREE.PerspectiveCamera(
+  ${perspectiveCamera.fov}, // FOV (degrees)
+  sizes.width / sizes.height, // Aspect
+  ${perspectiveCamera.near}, // Near
+  ${perspectiveCamera.far} // Far
+)
+camera.position.set(${activeCamera.position.x.toFixed(1)}, ${activeCamera.position.y.toFixed(1)}, ${activeCamera.position.z.toFixed(1)})`
+            } else {
+                liveCode.innerText = `// Orthographic Camera
+const aspect = sizes.width / sizes.height
+const camera = new THREE.OrthographicCamera(
+  -${(frustumSize * aspectRatio / 2).toFixed(1)}, // Left
+   ${(frustumSize * aspectRatio / 2).toFixed(1)}, // Right
+   ${(frustumSize / 2).toFixed(1)},  // Top
+  -${(frustumSize / 2).toFixed(1)},  // Bottom
+   ${orthographicCamera.near}, // Near
+   ${orthographicCamera.far}  // Far
+)`
+            }
+        }
+
+        btnPerspective.addEventListener('click', () => {
+            btnPerspective.classList.add('active')
+            btnOrthographic.classList.remove('active')
+            activeCamera = perspectiveCamera
+            controls.object = perspectiveCamera
+            perspectiveControls.style.opacity = '1'
+            perspectiveControls.style.pointerEvents = 'auto'
+            camDesc.innerHTML = '<strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးမားပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။'
+            statCam.innerText = 'PerspectiveCamera'
+            updateLiveCode()
+        })
+
+        btnOrthographic.addEventListener('click', () => {
+            btnOrthographic.classList.add('active')
+            btnPerspective.classList.remove('active')
+            activeCamera = orthographicCamera
+            controls.object = orthographicCamera
+            perspectiveControls.style.opacity = '0.45'
+            perspectiveControls.style.pointerEvents = 'none'
+            camDesc.innerHTML = '<strong>OrthographicCamera:</strong> အကွာအဝေးကြောင့် ပုံမသေးသွားဘဲ မျဉ်းပြိုင် (Parallel Projection) အတိုင်း ပြပေးသည့် ကင်မရာ။'
+            statCam.innerText = 'OrthographicCamera'
+            updateLiveCode()
+        })
+
+        paramFov.addEventListener('input', (e) => {
+            const val = Number(e.target.value)
+            valFov.innerText = val + '°'
+            perspectiveCamera.fov = val
+            perspectiveCamera.updateProjectionMatrix()
+            updateLiveCode()
+        })
+
+        paramNear.addEventListener('input', (e) => {
+            const val = Number(e.target.value)
+            valNear.innerText = val
+            perspectiveCamera.near = val
+            orthographicCamera.near = val
+            perspectiveCamera.updateProjectionMatrix()
+            orthographicCamera.updateProjectionMatrix()
+            updateLiveCode()
+        })
+
+        paramFar.addEventListener('input', (e) => {
+            const val = Number(e.target.value)
+            valFar.innerText = val
+            perspectiveCamera.far = val
+            orthographicCamera.far = val
+            perspectiveCamera.updateProjectionMatrix()
+            orthographicCamera.updateProjectionMatrix()
+            updateLiveCode()
+        })
+
+        btnModeOrbit.addEventListener('click', () => {
+            btnModeOrbit.classList.add('active')
+            btnModeCustom.classList.remove('active')
+            btnModeLerp.classList.remove('active')
+            controlMode = 'orbit'
+            controls.enabled = true
+            modeDesc.innerHTML = '<strong>OrbitControls:</strong> Target ဗဟိုပြု လှည့်ပတ်ခြင်း (Orbit, Pan, Zoom)။ Damping ဖွင့်ထားပါက <code>tick()</code> ထဲတွင် <code>controls.update()</code> မဖြစ်မနေ ခေါ်ရပါမည်။'
+            statMode.innerText = `OrbitControls (Damping: ${controls.enableDamping ? 'ON' : 'OFF'})`
+        })
+
+        btnModeCustom.addEventListener('click', () => {
+            btnModeCustom.classList.add('active')
+            btnModeOrbit.classList.remove('active')
+            btnModeLerp.classList.remove('active')
+            controlMode = 'custom'
+            controls.enabled = false
+            modeDesc.innerHTML = '<strong>Trigonometric Orbit:</strong> <code>Math.sin()</code> နှင့် <code>Math.cos()</code> သုံး၍ Mouse ရွေ့ရာသို့ 360° တိုက်ရိုက် စက်ဝိုင်းပတ် လှည့်ပတ်ခြင်း။'
+            statMode.innerText = 'Custom Trig (sin/cos direct)'
+        })
+
+        btnModeLerp.addEventListener('click', () => {
+            btnModeLerp.classList.add('active')
+            btnModeOrbit.classList.remove('active')
+            btnModeCustom.classList.remove('active')
+            controlMode = 'lerp'
+            controls.enabled = false
+            modeDesc.innerHTML = '<strong>Smooth Lerp Motion:</strong> <code>camera.position.lerp(target, 0.05)</code> သုံး၍ Mouse နောက်သို့ ချောမွေ့စွာ အရှိန်ဖြင့် ပြေးလိုက်လာစေခြင်း။'
+            statMode.innerText = 'Custom Smooth Lerp (Factor: 0.05)'
+        })
+
+        chkDamping.addEventListener('change', (e) => {
+            controls.enableDamping = e.target.checked
+            statMode.innerText = `OrbitControls (Damping: ${controls.enableDamping ? 'ON' : 'OFF'})`
+        })
+
+        chkAutorotate.addEventListener('change', (e) => {
+            controls.autoRotate = e.target.checked
+            controls.autoRotateSpeed = 2.0
+        })
+
+        // Animation Loop
+        const clock = new THREE.Clock()
+        const tick = () => {
+            const elapsedTime = clock.getElapsedTime()
+            centerCube.rotation.y = elapsedTime * 0.4
+            centerCube.rotation.x = elapsedTime * 0.2
+
+            if (controlMode === 'orbit') {
+                if (controls.enableDamping || controls.autoRotate) {
+                    controls.update()
+                }
+            } else if (controlMode === 'custom') {
+                const angle = cursor.x * Math.PI * 2
+                activeCamera.position.x = Math.sin(angle) * 4.5
+                activeCamera.position.z = Math.cos(angle) * 4.5
+                activeCamera.position.y = cursor.y * 4
+                activeCamera.lookAt(centerCube.position)
+            } else if (controlMode === 'lerp') {
+                const angle = cursor.x * Math.PI * 2
+                targetPos.x = Math.sin(angle) * 4.5
+                targetPos.z = Math.cos(angle) * 4.5
+                targetPos.y = cursor.y * 4
+                activeCamera.position.lerp(targetPos, 0.05)
+                activeCamera.lookAt(centerCube.position)
+            }
+
+            statPos.innerText = `x: ${activeCamera.position.x.toFixed(1)}, y: ${activeCamera.position.y.toFixed(1)}, z: ${activeCamera.position.z.toFixed(1)}`
+            renderer.render(scene, activeCamera)
+            window.requestAnimationFrame(tick)
+        }
+        tick()
+    </script>
+</body>
+</html>
