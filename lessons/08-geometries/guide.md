@@ -1,6 +1,6 @@
-# 🔷 Three.js Journey - Lesson 09: Geometries (ဂျီဩမေတြီများနှင့် BufferGeometry)
+# 🔷 Three.js Journey - Lesson 08: Geometries (ဂျီဩမေတြီများနှင့် BufferGeometry)
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 09: Geometries](https://threejs-journey.com/lessons/geometries)  
+> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 08: Geometries](https://threejs-journey.com/lessons/geometries)  
 > **Course Instructor**: Bruno Simon  
 > **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity
 

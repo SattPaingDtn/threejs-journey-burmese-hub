@@ -1,6 +1,6 @@
-# ✨ Three.js Journey - Lesson 11: Materials (ရုပ်ထွက် ပစ္စည်းအမျိုးအစားများ)
+# ✨ Three.js Journey - Lesson 10: Materials (ရုပ်ထွက် ပစ္စည်းအမျိုးအစားများ)
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 11: Materials](https://threejs-journey.com/lessons/materials)  
+> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 10: Materials](https://threejs-journey.com/lessons/materials)  
 > **Course Instructor**: Bruno Simon  
 > **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity
 

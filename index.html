@@ -903,8 +903,8 @@
                 orbitingBox.name = "animOrbit"
                 lessonMeshGroup.add(orbitingBox)
 
-            } else if (lessonId === '07-cameras') {
-                // Lesson 07: Cameras studio with surrounding depth cubes
+            } else if (lessonId === '06-cameras') {
+                // Lesson 06: Cameras studio with surrounding depth cubes
                 const centerCube = new THREE.Mesh(
                     new THREE.BoxGeometry(1, 1, 1),
                     new THREE.MeshNormalMaterial()
@@ -923,6 +923,13 @@
                 createHelper(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xffd740, 2.5, 0, 2.5)
                 createHelper(new THREE.SphereGeometry(0.4, 16, 16), 0xe040fb, 0, 2.2, 0)
                 createHelper(new THREE.SphereGeometry(0.4, 16, 16), 0x00e5ff, 0, 0, -5)
+
+            } else if (lessonId === '07-fullscreen-and-resizing') {
+                // Lesson 07: Fullscreen and Resizing (Colorful animated TorusKnot)
+                const geom = new THREE.TorusKnotGeometry(0.8, 0.28, 100, 16)
+                const mat = new THREE.MeshNormalMaterial()
+                const mesh = new THREE.Mesh(geom, mat)
+                lessonMeshGroup.add(mesh)
 
             } else {
                 // Fallback default
@@ -1170,7 +1177,7 @@ tick()`
                     }
                 })
 
-            } else if (lessonId === '07-cameras') {
+            } else if (lessonId === '06-cameras') {
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
                         <h2>🎥 ကင်မရာ အမျိုးအစား (Camera Type)</h2>
@@ -1327,6 +1334,58 @@ controls.enableDamping = true`
                 chkAutorotate.addEventListener('change', (e) => {
                     labControls.autoRotate = e.target.checked
                     labControls.autoRotateSpeed = 2.0
+                })
+
+            } else if (lessonId === '07-fullscreen-and-resizing') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🖥️ Fullscreen & DPR Studio</h2>
+                        <div class="lab-control-group">
+                            <label>Pixel Ratio (DPR): <span id="val-dpr" class="val">2.0</span></label>
+                            <input type="range" id="param-dpr" min="0.5" max="3" step="0.5" value="2">
+                        </div>
+                        <button id="btn-toggle-fullscreen" class="btn-action-trigger" style="margin-top:10px;">⛶ Toggle Fullscreen (ဖန်သားပြင်အပြည့်)</button>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">📱 Retina & Mobile Screen Sharpness</div>
+                        <div class="showcase-desc">High-DPI Retina ဖန်သားပြင်များတွင် ဝါးမသွားဘဲ ကြည်လင်တောက်ပစွာ ပေါ်စေရန် <strong>Math.min(window.devicePixelRatio, 2)</strong> ဖြင့် ထိန်းချုပ်သည်။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// Resize & Pixel Ratio Handling
+window.addEventListener('resize', () => {
+  sizes.width = window.innerWidth
+  sizes.height = window.innerHeight
+
+  camera.aspect = sizes.width / sizes.height
+  camera.updateProjectionMatrix()
+
+  renderer.setSize(sizes.width, sizes.height)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+// Fullscreen API (Double Click)
+window.addEventListener('dblclick', () => {
+  if (!document.fullscreenElement) {
+    canvas.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+})`
+
+                document.getElementById('param-dpr').addEventListener('input', (e) => {
+                    const dpr = Number(e.target.value)
+                    labRenderer.setPixelRatio(dpr)
+                    document.getElementById('val-dpr').innerText = dpr.toFixed(1)
+                })
+
+                document.getElementById('btn-toggle-fullscreen').addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        labCanvas.requestFullscreen?.() || labContainer.requestFullscreen?.()
+                    } else {
+                        document.exitFullscreen?.()
+                    }
                 })
 
             } else {

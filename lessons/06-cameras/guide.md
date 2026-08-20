@@ -1,6 +1,6 @@
-# 📸 Three.js Journey - Lesson 07: Cameras (Master Deep-Dive Study Guide & Memo)
+# 📸 Three.js Journey - Lesson 06: Cameras (Master Deep-Dive Study Guide & Memo)
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 07: Cameras](https://threejs-journey.com/lessons/cameras)  
+> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 06: Cameras](https://threejs-journey.com/lessons/cameras)  
 > **Course Instructor**: Bruno Simon  
 > **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity  
 > **ရည်ရွယ်ချက်**: Three.js ရှိ Camera System အားလုံး၊ အတွင်းပိုင်း 3D Graphics Pipeline၊ Projection Matrix သင်္ချာသဘောတရားများ၊ ကင်မရာ (၆) မျိုး၏ အသေးစိတ် အလုပ်လုပ်ပုံ၊ Custom Controller တည်ဆောက်ပုံနှင့် OrbitControls ၏ Advanced Configuration များကို အခြေခံမှ Master အဆင့်အထိ နားလည်သဘောပေါက်စေရန် ပြုစုထားသော Deep-Dive လမ်းညွှန်စာအုပ် ဖြစ်ပါသည်။

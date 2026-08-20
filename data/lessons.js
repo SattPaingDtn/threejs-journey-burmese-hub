@@ -21,8 +21,13 @@ export const CHAPTERS = [
     },
     {
         id: "extra",
-        title: "Chapter 5: Extra & React Three Fiber",
-        description: "Post-Processing, Performance Optimization, React Three Fiber (R3F) နှင့် WebXR"
+        title: "Chapter 5: Extra & Performance",
+        description: "Post-Processing, Performance Optimization, Mixing HTML & WebGL"
+    },
+    {
+        id: "r3f",
+        title: "Chapter 6: React Three Fiber (R3F)",
+        description: "React Three Fiber, Drei, Physics in R3F, 3D Text နှင့် Complex Portfolios"
     }
 ];
 
@@ -84,76 +89,76 @@ export const LESSONS = [
         tags: ["requestAnimationFrame", "THREE.Clock", "GSAP", "Delta Time"]
     },
     {
-        id: "07-cameras",
-        number: "07",
+        id: "06-cameras",
+        number: "06",
         chapter: "basics",
         title: "Cameras (ကင်မရာစနစ် အပြည့်အစုံ)",
         subtitle: "Perspective vs Orthographic, Clipping, Z-Fighting, Custom Mouse Controls နှင့် OrbitControls",
         status: "ready",
-        guideFile: "lessons/07-cameras/guide.md",
+        guideFile: "lessons/06-cameras/guide.md",
         demoType: "cameras",
         tags: ["PerspectiveCamera", "OrthographicCamera", "OrbitControls", "Z-Fighting", "Frustum"]
     },
     {
-        id: "08-fullscreen-and-resizing",
-        number: "08",
+        id: "07-fullscreen-and-resizing",
+        number: "07",
         chapter: "basics",
         title: "Fullscreen and Resizing (ဖန်သားပြင် အပြည့်နှင့် Resize)",
         subtitle: "Responsive Viewport, Window Resize, Pixel Ratio (DPR) Handling နှင့် Fullscreen API",
         status: "ready",
-        guideFile: "lessons/08-fullscreen-and-resizing/guide.md",
+        guideFile: "lessons/07-fullscreen-and-resizing/guide.md",
         demoType: "fullscreen-resize",
-        tags: ["Resize Event", "PixelRatio", "Fullscreen API"]
+        tags: ["Resize Event", "PixelRatio", "Fullscreen API", "DPR"]
     },
     {
-        id: "09-geometries",
-        number: "09",
+        id: "08-geometries",
+        number: "08",
         chapter: "basics",
         title: "Geometries (ဂျီဩမေတြီများနှင့် BufferGeometry)",
         subtitle: "Built-in Geometries, BufferGeometry, Float32Array, Vertices, Normals နှင့် UV Coordinates",
         status: "ready",
-        guideFile: "lessons/09-geometries/guide.md",
+        guideFile: "lessons/08-geometries/guide.md",
         demoType: "geometries",
         tags: ["BufferGeometry", "BufferAttribute", "Float32Array", "Wireframe"]
     },
     {
-        id: "10-textures",
-        number: "10",
+        id: "09-textures",
+        number: "09",
         chapter: "basics",
         title: "Textures (မျက်နှာပြင် Texture များ)",
         subtitle: "TextureLoader, LoadingManager, UV Mapping, Mipmapping, Min/Mag Filter နှင့် Optimization",
         status: "ready",
-        guideFile: "lessons/10-textures/guide.md",
+        guideFile: "lessons/09-textures/guide.md",
         demoType: "textures",
         tags: ["TextureLoader", "LoadingManager", "UVs", "Mipmaps", "NearestFilter"]
     },
     {
-        id: "11-materials",
-        number: "11",
+        id: "10-materials",
+        number: "10",
         chapter: "basics",
         title: "Materials (ရုပ်ထွက် ပစ္စည်းအမျိုးအစားများ)",
         subtitle: "MeshBasic, MeshNormal, MeshMatcap, MeshLambert, MeshPhong, MeshStandard, MeshPhysical, Environment Maps",
         status: "ready",
-        guideFile: "lessons/11-materials/guide.md",
+        guideFile: "lessons/10-materials/guide.md",
         demoType: "materials",
         tags: ["MeshStandardMaterial", "PBR", "Roughness", "Metalness", "EnvMap"]
     },
     {
-        id: "12-3d-text",
-        number: "12",
+        id: "11-3d-text",
+        number: "11",
         chapter: "basics",
         title: "3D Text (3D စာသား ဖန်တီးခြင်း)",
         subtitle: "Typeface Fonts, FontLoader, TextGeometry, Bounding Box ဖြင့် Center ချခြင်းနှင့် Matcap",
         status: "ready",
-        guideFile: "lessons/12-3d-text/guide.md",
+        guideFile: "lessons/11-3d-text/guide.md",
         demoType: "3d-text",
         tags: ["FontLoader", "TextGeometry", "computeBoundingBox", "Center"]
     },
 
     // Chapter 2: Classic Techniques
     {
-        id: "13-lights",
-        number: "13",
+        id: "12-lights",
+        number: "12",
         chapter: "classic",
         title: "Lights (အလင်းရောင်စနစ်)",
         subtitle: "AmbientLight, DirectionalLight, HemisphereLight, PointLight, RectAreaLight, SpotLight နှင့် Helpers",
@@ -161,8 +166,8 @@ export const LESSONS = [
         tags: ["AmbientLight", "DirectionalLight", "PointLight", "SpotLight"]
     },
     {
-        id: "14-shadows",
-        number: "14",
+        id: "13-shadows",
+        number: "13",
         chapter: "classic",
         title: "Shadows (အရိပ်စနစ်)",
         subtitle: "Shadow Maps (PCF, PCFSoft), castShadow, receiveShadow, Shadow Map Optimization",
@@ -170,8 +175,8 @@ export const LESSONS = [
         tags: ["castShadow", "receiveShadow", "ShadowMap", "PCFSoftShadowMap"]
     },
     {
-        id: "15-haunted-house",
-        number: "15",
+        id: "14-haunted-house",
+        number: "14",
         chapter: "classic",
         title: "Haunted House (သရဲခြောက်သောအိမ် ပရောဂျက်)",
         subtitle: "အဆောက်အအုံ၊ မြက်ခင်း၊ ဂူသင်္ချိုင်း၊ မီးရောင်များနှင့် အခိုးအငွေ့ Ghost လှုပ်ရှားမှုများ",
@@ -179,8 +184,8 @@ export const LESSONS = [
         tags: ["Project", "House", "Graves", "Fog", "PointLight Animation"]
     },
     {
-        id: "16-particles",
-        number: "16",
+        id: "15-particles",
+        number: "15",
         chapter: "classic",
         title: "Particles (အမှုန်အမွှားစနစ်)",
         subtitle: "Points, PointsMaterial, BufferGeometry သုံး၍ နှင်း၊ မိုး၊ ဖုန်မှုန့် အမှုန်များ ဖန်တီးခြင်း",
@@ -188,8 +193,8 @@ export const LESSONS = [
         tags: ["Points", "PointsMaterial", "AlphaMap", "DepthWrite"]
     },
     {
-        id: "17-galaxy-generator",
-        number: "17",
+        id: "16-galaxy-generator",
+        number: "16",
         chapter: "classic",
         title: "Galaxy Generator (ဂလက်ဆီ ဖန်တီးခြင်း)",
         subtitle: "Spiral Galaxies, Particle Branching, Spin, Randomness, Core/Outside Colors နှင့် GUI Tweaks",
@@ -197,8 +202,8 @@ export const LESSONS = [
         tags: ["Galaxy", "Trigonometry", "Color Vertex", "lil-gui"]
     },
     {
-        id: "18-scroll-based-animation",
-        number: "18",
+        id: "17-scroll-based-animation",
+        number: "17",
         chapter: "classic",
         title: "Scroll-based Animation (Scroll အလိုက် ကာတွန်းလှုပ်ရှားမှု)",
         subtitle: "HTML/CSS နှင့် WebGL ပေါင်းစပ်ခြင်း၊ Scroll Position အလိုက် ကင်မရာနှင့် 3D Object များ လှည့်ခြင်း",
@@ -208,8 +213,8 @@ export const LESSONS = [
 
     // Chapter 3: Advanced Techniques
     {
-        id: "19-physics",
-        number: "19",
+        id: "18-physics",
+        number: "18",
         chapter: "advanced",
         title: "Physics (ရူပဗေဒစနစ် - Cannon-es)",
         subtitle: "Physics World vs Visual World, Rigid Bodies, Colliders, Forces/Impulses, Collision Events",
@@ -217,8 +222,8 @@ export const LESSONS = [
         tags: ["Cannon-es", "RigidBody", "Collisions", "Broadphase"]
     },
     {
-        id: "20-imported-models",
-        number: "20",
+        id: "19-imported-models",
+        number: "19",
         chapter: "advanced",
         title: "Imported Models (3D Model များ တင်သွင်းခြင်း)",
         subtitle: "GLTF, GLB, GLTFLoader, DRACOLoader Compression, AnimationMixer ဖြင့် Animation ဖွင့်ခြင်း",
@@ -226,13 +231,31 @@ export const LESSONS = [
         tags: ["GLTFLoader", "DRACOLoader", "AnimationMixer", "Duck/Fox"]
     },
     {
-        id: "21-raycaster",
-        number: "21",
+        id: "20-raycaster-and-mouse-events",
+        number: "20",
         chapter: "advanced",
         title: "Raycaster and Mouse Events (3D Click/Hover စနစ်)",
         subtitle: "Raycasting, Cursor Coordinate Casting, intersectObjects, Hover/Click Events",
         status: "upcoming",
         tags: ["Raycaster", "intersectObjects", "Mouse Hover", "Click"]
+    },
+    {
+        id: "21-custom-models-with-blender",
+        number: "21",
+        chapter: "advanced",
+        title: "Custom Models with Blender (Blender ဖြင့် 3D Model ပြုလုပ်ခြင်း)",
+        subtitle: "Blender Basics, Modeling, UV Unwrapping, Baking Textures, GLTF Export",
+        status: "upcoming",
+        tags: ["Blender", "Baking", "UV Unwrapping", "GLTF Export"]
+    },
+    {
+        id: "22-environment-and-staging",
+        number: "22",
+        chapter: "advanced",
+        title: "Environment and Staging (ပတ်ဝန်းကျင်နှင့် အလင်းအမှောင် ဖန်တီးခြင်း)",
+        subtitle: "HDRI Environment Maps, Ground Projected EnvMap, Background Blur, Lighting Setup",
+        status: "upcoming",
+        tags: ["HDRI", "RGBELoader", "GroundProjectedEnvMap", "BackgroundBlur"]
     },
     {
         id: "23-realistic-render",
@@ -242,6 +265,15 @@ export const LESSONS = [
         subtitle: "Tone Mapping (ACESFilmic), Color Space (sRGB), Output Encoding, Environment Map Lighting",
         status: "upcoming",
         tags: ["ACESFilmicToneMapping", "sRGBEncoding", "Shadows", "EnvMap Intensity"]
+    },
+    {
+        id: "24-code-structuring",
+        number: "24",
+        chapter: "advanced",
+        title: "Code Structuring for Bigger Projects (ကြီးမားသော ပရောဂျက်များအတွက် Code ဖွဲ့စည်းပုံ)",
+        subtitle: "OOP Classes, EventEmitter, Resources Loader, Time, Sizes, Experience Class Pattern",
+        status: "upcoming",
+        tags: ["Architecture", "OOP", "EventEmitter", "Singleton"]
     },
 
     // Chapter 4: Shaders
@@ -253,6 +285,15 @@ export const LESSONS = [
         subtitle: "ShaderMaterial, RawShaderMaterial, Vertex Shader, Fragment Shader, Attributes, Uniforms, Varyings",
         status: "upcoming",
         tags: ["GLSL", "Vertex Shader", "Fragment Shader", "Uniforms", "Varyings"]
+    },
+    {
+        id: "26-shader-patterns",
+        number: "26",
+        chapter: "shaders",
+        title: "Shader Patterns (Shader ပုံစံ ၅၀ ကျော် ရေးဆွဲနည်း)",
+        subtitle: "Step, Smoothstep, Modulo, Distance, Length, Noise, UV Math Patterns",
+        status: "upcoming",
+        tags: ["Patterns", "Math", "Step", "Smoothstep", "Noise"]
     },
     {
         id: "27-raging-sea",

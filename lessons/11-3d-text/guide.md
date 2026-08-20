@@ -1,6 +1,6 @@
-# 🔤 Three.js Journey - Lesson 12: 3D Text (3D စာသား ဖန်တီးခြင်း)
+# 🔤 Three.js Journey - Lesson 11: 3D Text (3D စာသား ဖန်တီးခြင်း)
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 12: 3D Text](https://threejs-journey.com/lessons/3d-text)  
+> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 11: 3D Text](https://threejs-journey.com/lessons/3d-text)  
 > **Course Instructor**: Bruno Simon  
 > **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity
 

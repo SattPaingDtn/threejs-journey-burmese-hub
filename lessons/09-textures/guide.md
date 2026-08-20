@@ -1,6 +1,6 @@
-# 🎨 Three.js Journey - Lesson 10: Textures (မျက်နှာပြင် Texture များ)
+# 🎨 Three.js Journey - Lesson 09: Textures (မျက်နှာပြင် Texture များ)
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 10: Textures](https://threejs-journey.com/lessons/textures)  
+> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 09: Textures](https://threejs-journey.com/lessons/textures)  
 > **Course Instructor**: Bruno Simon  
 > **ဘာသာပြန်နှင့် ပြုစုသူ**: Antigravity
 
