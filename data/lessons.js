@@ -40,6 +40,17 @@ export const LESSONS = [
         tags: ["WebGL", "Three.js", "GPU", "Roadmap", "Introduction"]
     },
     {
+        id: "02-webgl-and-threejs",
+        number: "02",
+        chapter: "basics",
+        title: "What is WebGL and why use Three.js? (WebGL နှင့် Three.js)",
+        subtitle: "Triangles, GPU Parallelism, Shaders (Vertex & Fragment), Babylon.js/Pixi.js နှင့် WebGPU",
+        status: "ready",
+        guideFile: "lessons/02-webgl-and-threejs/guide.md",
+        demoType: "webgl-threejs",
+        tags: ["WebGL", "Three.js", "Triangles", "Shaders", "GLSL", "WebGPU"]
+    },
+    {
         id: "03-basic-scene",
         number: "03",
         chapter: "basics",
