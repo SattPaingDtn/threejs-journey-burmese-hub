@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three.js Journey - Burmese Learning Hub & Interactive Studio</title>
-    <meta name="description" content="Three.js Journey Complete Course Study Guide, Interactive 3D Labs & Memos in Burmese">
+    <meta name="description" content="Three.js Journey Complete Course Study Guide, Interactive 3D Labs, Live Code & Real-World Showcases in Burmese">
 
     <!-- Marked.js for Markdown & Highlight.js for Syntax Highlighting -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -20,15 +20,17 @@
         }
 
         :root {
-            --bg-dark: #0c0d12;
-            --bg-panel: #13141c;
-            --bg-card: #181a24;
-            --border-color: #232635;
+            --bg-dark: #090a0f;
+            --bg-panel: #11131a;
+            --bg-card: #171923;
+            --border-color: #222634;
             --accent: #705df2;
             --accent-light: #8e7ff7;
             --accent-gradient: linear-gradient(135deg, #705df2 0%, #a855f7 100%);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --teal: #14b8a6;
+            --orange: #f97316;
         }
 
         body {
@@ -41,7 +43,7 @@
             flex-direction: column;
         }
 
-        /* Top Header */
+        /* Top Navigation Bar */
         header.top-bar {
             height: 58px;
             background: var(--bg-panel);
@@ -51,6 +53,7 @@
             justify-content: space-between;
             padding: 0 18px;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .brand-group {
@@ -61,7 +64,7 @@
 
         .btn-menu-toggle {
             display: none;
-            background: #202330;
+            background: #1f2230;
             border: 1px solid var(--border-color);
             color: #fff;
             padding: 6px 10px;
@@ -92,7 +95,7 @@
 
         .view-switcher {
             display: flex;
-            background: #1c1e2a;
+            background: #1b1d28;
             padding: 3px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -134,20 +137,20 @@
         }
 
         .search-input {
-            background: #1a1c26;
+            background: #181a24;
             border: 1px solid var(--border-color);
             color: #fff;
             font-size: 0.8rem;
             padding: 6px 12px 6px 30px;
             border-radius: 6px;
             outline: none;
-            width: 190px;
+            width: 180px;
             transition: width 0.2s;
         }
 
         .search-input:focus {
             border-color: var(--accent);
-            width: 240px;
+            width: 230px;
         }
 
         .search-icon {
@@ -168,7 +171,7 @@
 
         /* Left Sidebar (Lesson Directory) */
         aside.lesson-sidebar {
-            width: 320px;
+            width: 310px;
             background: var(--bg-panel);
             border-right: 1px solid var(--border-color);
             display: flex;
@@ -193,12 +196,12 @@
 
         .chapter-title {
             padding: 12px 16px 8px 16px;
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #ffb74d;
             font-weight: 700;
-            background: #101118;
+            background: #0e0f15;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -215,11 +218,11 @@
         }
 
         .lesson-item:hover {
-            background: #181a24;
+            background: #171922;
         }
 
         .lesson-item.active {
-            background: #1f212e;
+            background: #1e202c;
             border-left-color: var(--accent);
         }
 
@@ -230,7 +233,7 @@
         }
 
         .lesson-number-title {
-            font-size: 0.84rem;
+            font-size: 0.83rem;
             font-weight: 600;
             color: #f1f5f9;
         }
@@ -245,11 +248,11 @@
             border-radius: 4px;
             font-weight: 600;
         }
-        .badge-ready { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-ready { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
         .badge-upcoming { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
 
         .lesson-item-sub {
-            font-size: 0.74rem;
+            font-size: 0.73rem;
             color: var(--text-muted);
             line-height: 1.35;
         }
@@ -314,7 +317,7 @@
             position: relative;
             height: 100%;
             overflow: hidden;
-            background: #090a0f;
+            background: #08090e;
         }
 
         canvas.lab-webgl {
@@ -324,7 +327,7 @@
         }
 
         #lab-sidebar {
-            width: 390px;
+            width: 410px;
             background: var(--bg-panel);
             border-left: 1px solid var(--border-color);
             padding: 18px;
@@ -333,6 +336,7 @@
             flex-direction: column;
             gap: 14px;
             z-index: 10;
+            flex-shrink: 0;
         }
 
         #lab-sidebar::-webkit-scrollbar {
@@ -351,7 +355,7 @@
         }
 
         .lab-card h2 {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: #ffb74d;
             margin-bottom: 10px;
             display: flex;
@@ -395,16 +399,16 @@
         button.btn-lab {
             flex: 1;
             padding: 8px 10px;
-            background: #222430;
+            background: #20222e;
             color: #cbd5e1;
-            border: 1px solid #333748;
+            border: 1px solid #313546;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.78rem;
             transition: all 0.2s;
         }
 
-        button.btn-lab:hover { background: #2d3040; }
+        button.btn-lab:hover { background: #2d3040; color: #fff; }
         button.btn-lab.active {
             background: var(--accent);
             border-color: var(--accent-light);
@@ -412,8 +416,23 @@
             font-weight: 600;
         }
 
+        .btn-action-trigger {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+            margin-top: 4px;
+        }
+        .btn-action-trigger:hover { opacity: 0.9; }
+
         .lab-info-box {
-            font-size: 0.76rem;
+            font-size: 0.77rem;
             line-height: 1.5;
             color: #cbd5e1;
             background: #0f1015;
@@ -422,9 +441,49 @@
             border-left: 3px solid var(--accent);
         }
 
+        .showcase-item {
+            background: #11131b;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+        .showcase-item:last-child { margin-bottom: 0; }
+        .showcase-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #38bdf8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .showcase-desc {
+            font-size: 0.74rem;
+            color: #94a3b8;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .code-container-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .btn-copy-code {
+            background: #252838;
+            border: 1px solid var(--border-color);
+            color: #cbd5e1;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-copy-code:hover { background: var(--accent); color: white; }
+
         .lab-code-box {
-            background: #08090d;
-            border: 1px solid #1e212d;
+            background: #07080b;
+            border: 1px solid #1c1f2b;
             border-radius: 6px;
             padding: 10px;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -432,14 +491,14 @@
             color: #4ade80;
             overflow-x: auto;
             white-space: pre-wrap;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         #lab-stats {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(15, 16, 22, 0.88);
+            background: rgba(15, 16, 22, 0.9);
             backdrop-filter: blur(8px);
             padding: 10px 14px;
             border-radius: 8px;
@@ -460,7 +519,7 @@
         }
 
         /* Mobile Responsive */
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
             .btn-menu-toggle { display: block; }
             aside.lesson-sidebar {
                 position: absolute;
@@ -475,7 +534,7 @@
             }
             .search-input { width: 140px; }
             .search-input:focus { width: 160px; }
-            #lab-sidebar { width: 100%; position: absolute; bottom: 0; height: 280px; }
+            #lab-sidebar { width: 100%; position: absolute; bottom: 0; height: 320px; }
             .guide-paper { padding: 25px 20px; }
         }
     </style>
@@ -518,7 +577,7 @@
         <!-- Lesson Sidebar / Drawer -->
         <aside class="lesson-sidebar" id="lesson-sidebar">
             <div id="lessons-list-container">
-                <!-- Dynamically Populated from data/lessons.js -->
+                <!-- Populated from data/lessons.js -->
             </div>
         </aside>
 
@@ -538,21 +597,33 @@
             <section id="view-lab">
                 <div id="lab-canvas-container">
                     <div id="lab-stats">
-                        <div>Active Lesson: <span id="stat-lesson-title">Lesson 07: Cameras</span></div>
-                        <div>Camera Type: <span id="stat-cam-type">PerspectiveCamera</span></div>
-                        <div>Camera Pos: <span id="stat-cam-pos">x: 0, y: 1.5, z: 4</span></div>
+                        <div>Lesson: <span id="stat-lesson-title">Lesson 01: Introduction</span></div>
+                        <div>FPS / Render: <span id="stat-fps">60 FPS (WebGL)</span></div>
+                        <div>Camera Position: <span id="stat-cam-pos">x: 0, y: 1.5, z: 4</span></div>
                     </div>
                     <canvas class="lab-webgl"></canvas>
                 </div>
 
                 <aside id="lab-sidebar">
-                    <!-- Dynamic Controls based on active lesson -->
+                    <!-- Dynamic Lesson Controls Panel -->
                     <div id="lab-dynamic-panel">
-                        <!-- Rendered by JavaScript -->
+                        <!-- Populated by JavaScript according to current lesson -->
                     </div>
 
+                    <!-- Real-World Showcase Section -->
+                    <div class="lab-card" id="lab-showcase-panel">
+                        <h2>🌍 Real-World Use Cases (လက်တွေ့ အသုံးချမှု)</h2>
+                        <div id="showcase-content">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Live Code Box -->
                     <div class="lab-card">
-                        <h2>💻 Live Code Snippet</h2>
+                        <div class="code-container-header">
+                            <h2 style="margin-bottom:0;">💻 Live Three.js Code</h2>
+                            <button id="btn-copy-code" class="btn-copy-code">Copy Code</button>
+                        </div>
                         <div id="lab-live-code" class="lab-code-box">// Three.js Live Code</div>
                     </div>
                 </aside>
@@ -578,7 +649,7 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
         // State
-        let currentLessonId = "07-cameras"
+        let currentLessonId = "01-introduction"
         let currentView = "guide" // "guide" | "lab"
 
         // DOM Elements
@@ -592,50 +663,39 @@
         const sidebar = document.getElementById('lesson-sidebar')
         const btnToggleSidebar = document.getElementById('btn-toggle-sidebar')
         const labDynamicPanel = document.getElementById('lab-dynamic-panel')
+        const showcaseContent = document.getElementById('showcase-content')
         const labLiveCode = document.getElementById('lab-live-code')
+        const btnCopyCode = document.getElementById('btn-copy-code')
         const statLessonTitle = document.getElementById('stat-lesson-title')
-        const statCamType = document.getElementById('stat-cam-type')
         const statCamPos = document.getElementById('stat-cam-pos')
 
         // ==========================================
-        // 3D Scene Initialization
+        // Three.js 3D Scene Initialization
         // ==========================================
         const labContainer = document.getElementById('lab-canvas-container')
         const labCanvas = document.querySelector('canvas.lab-webgl')
         const labScene = new THREE.Scene()
-        labScene.background = new THREE.Color('#0c0d12')
+        labScene.background = new THREE.Color('#090a0f')
 
-        // Helpers
-        const gridHelper = new THREE.GridHelper(14, 28, 0x705df2, 0x232635)
+        // Scene Groups
+        const gridHelper = new THREE.GridHelper(14, 28, 0x705df2, 0x222634)
         gridHelper.position.y = -0.5
         labScene.add(gridHelper)
 
         const axesHelper = new THREE.AxesHelper(2)
         labScene.add(axesHelper)
 
-        // Center Object (Normal Box)
-        const centerCube = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshNormalMaterial()
-        )
-        labScene.add(centerCube)
+        // Dynamic Lesson Mesh Container
+        const lessonMeshGroup = new THREE.Group()
+        labScene.add(lessonMeshGroup)
 
-        // Surrounding Reference Objects
-        const createReferenceMesh = (geom, color, x, y, z) => {
-            const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color }))
-            mesh.position.set(x, y, z)
-            labScene.add(mesh)
-            return mesh
-        }
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
+        labScene.add(ambientLight)
 
-        const surroundingMeshes = [
-            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xff5252, -2.5, 0, -2.5),
-            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x448aff, 2.5, 0, -2.5),
-            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x69f0ae, -2.5, 0, 2.5),
-            createReferenceMesh(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xffd740, 2.5, 0, 2.5),
-            createReferenceMesh(new THREE.SphereGeometry(0.4, 16, 16), 0xe040fb, 0, 2.2, 0),
-            createReferenceMesh(new THREE.SphereGeometry(0.4, 16, 16), 0x00e5ff, 0, 0, -5)
-        ]
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
+        directionalLight.position.set(5, 5, 5)
+        labScene.add(directionalLight)
 
         // Cameras Setup
         let labAspect = 1.333
@@ -657,19 +717,19 @@
 
         let activeCam = perspCam
 
-        // OrbitControls Setup
+        // OrbitControls
         const labControls = new OrbitControls(perspCam, labCanvas)
         labControls.enableDamping = true
         labControls.dampingFactor = 0.05
         labControls.target.set(0, 0, 0)
 
-        // WebGLRenderer Setup
+        // Renderer
         const labRenderer = new THREE.WebGLRenderer({ canvas: labCanvas, antialias: true })
         labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
         // Resize Logic
         const triggerLabResize = () => {
-            const width = labContainer.clientWidth || window.innerWidth - 390 - 320
+            const width = labContainer.clientWidth || window.innerWidth - 410 - 310
             const height = labContainer.clientHeight || window.innerHeight - 58
             if (width <= 0 || height <= 0) return
 
@@ -689,7 +749,7 @@
 
         window.addEventListener('resize', triggerLabResize)
 
-        // Mouse Position for Custom Control
+        // Mouse Controls Variables
         let labControlMode = 'orbit' // 'orbit' | 'custom' | 'lerp'
         const cursor = { x: 0, y: 0 }
         const targetPos = new THREE.Vector3()
@@ -705,13 +765,412 @@
             }
         })
 
+        // Copy Code Button
+        btnCopyCode.addEventListener('click', () => {
+            navigator.clipboard.writeText(labLiveCode.innerText)
+            btnCopyCode.innerText = 'Copied! ✓'
+            setTimeout(() => { btnCopyCode.innerText = 'Copy Code' }, 1500)
+        })
+
         // ==========================================
-        // Dynamic Lab Controls by Lesson
+        // Lesson-Specific 3D Scene & UI Builder
         // ==========================================
-        const setupLabControls = (lessonId) => {
+        let animState = {
+            type: 'spin',
+            speed: 1.0,
+            amplitude: 1.0,
+            particleCount: 2000,
+            particlesMesh: null
+        }
+
+        const build3DSceneForLesson = (lessonId) => {
+            // Clear existing lesson meshes
+            while (lessonMeshGroup.children.length > 0) {
+                const obj = lessonMeshGroup.children[0]
+                lessonMeshGroup.remove(obj)
+                if (obj.geometry) obj.geometry.dispose()
+                if (obj.material) {
+                    if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose())
+                    else obj.material.dispose()
+                }
+            }
+
+            // Reset Camera & Helpers
+            activeCam = perspCam
+            labControls.object = perspCam
+            labControls.enabled = true
+            labControls.autoRotate = false
+            labControlMode = 'orbit'
+            gridHelper.visible = true
+            axesHelper.visible = true
+
+            // Build scene based on lesson
+            if (lessonId === '01-introduction') {
+                // Lesson 01: GPU Particle Galaxy / Swarm demonstrating GPU massive parallel power
+                const count = 3000
+                const positions = new Float32Array(count * 3)
+                const colors = new Float32Array(count * 3)
+
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3
+                    const radius = Math.random() * 4 + 0.5
+                    const spinAngle = radius * 2
+                    const branchAngle = ((i % 3) * 2 * Math.PI) / 3
+
+                    positions[i3] = Math.cos(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * 0.3
+                    positions[i3 + 1] = (Math.random() - 0.5) * 0.5
+                    positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * 0.3
+
+                    // Colors
+                    colors[i3] = 0.5 + Math.random() * 0.5 // R
+                    colors[i3 + 1] = 0.3 + Math.random() * 0.5 // G
+                    colors[i3 + 2] = 1.0 // B
+                }
+
+                const particleGeometry = new THREE.BufferGeometry()
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+
+                const particleMaterial = new THREE.PointsMaterial({
+                    size: 0.04,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.9
+                })
+
+                const particles = new THREE.Points(particleGeometry, particleMaterial)
+                lessonMeshGroup.add(particles)
+                animState.particlesMesh = particles
+
+                // Also center cube
+                const cube = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.8, 0.8, 0.8),
+                    new THREE.MeshNormalMaterial()
+                )
+                lessonMeshGroup.add(cube)
+
+            } else if (lessonId === '02-webgl-and-threejs') {
+                // Lesson 02: Triangles & Shaders demonstration
+                const geom = new THREE.TorusKnotGeometry(0.9, 0.3, 64, 16)
+                const mat = new THREE.MeshNormalMaterial({ wireframe: false })
+                const torusKnot = new THREE.Mesh(geom, mat)
+                lessonMeshGroup.add(torusKnot)
+
+            } else if (lessonId === '03-basic-scene') {
+                // Lesson 03: Basic Red Cube with Core 4 elements
+                const geom = new THREE.BoxGeometry(1.2, 1.2, 1.2)
+                const mat = new THREE.MeshBasicMaterial({ color: 0xff4444 })
+                const cube = new THREE.Mesh(geom, mat)
+                lessonMeshGroup.add(cube)
+
+            } else if (lessonId === '04-transform-objects') {
+                // Lesson 04: Transform Object (Cube with child group)
+                const cube = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.3 })
+                )
+                cube.name = "transformCube"
+                lessonMeshGroup.add(cube)
+
+                // Add 2 child objects in group
+                const child1 = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.3, 16, 16),
+                    new THREE.MeshBasicMaterial({ color: 0xff5252 })
+                )
+                child1.position.set(1.5, 0, 0)
+                lessonMeshGroup.add(child1)
+
+                const child2 = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                    new THREE.MeshBasicMaterial({ color: 0x69f0ae })
+                )
+                child2.position.set(-1.5, 0, 0)
+                lessonMeshGroup.add(child2)
+
+            } else if (lessonId === '05-animations') {
+                // Lesson 05: Floating Sphere & Orbiting Box
+                const sphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.7, 32, 32),
+                    new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.2, metalness: 0.5 })
+                )
+                sphere.name = "animMain"
+                lessonMeshGroup.add(sphere)
+
+                const orbitingBox = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.4, 0.4, 0.4),
+                    new THREE.MeshBasicMaterial({ color: 0xfacc15 })
+                )
+                orbitingBox.name = "animOrbit"
+                lessonMeshGroup.add(orbitingBox)
+
+            } else if (lessonId === '07-cameras') {
+                // Lesson 07: Cameras studio with surrounding depth cubes
+                const centerCube = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshNormalMaterial()
+                )
+                lessonMeshGroup.add(centerCube)
+
+                const createHelper = (geom, color, x, y, z) => {
+                    const m = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color }))
+                    m.position.set(x, y, z)
+                    lessonMeshGroup.add(m)
+                }
+
+                createHelper(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xff5252, -2.5, 0, -2.5)
+                createHelper(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x448aff, 2.5, 0, -2.5)
+                createHelper(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0x69f0ae, -2.5, 0, 2.5)
+                createHelper(new THREE.BoxGeometry(0.6, 0.6, 0.6), 0xffd740, 2.5, 0, 2.5)
+                createHelper(new THREE.SphereGeometry(0.4, 16, 16), 0xe040fb, 0, 2.2, 0)
+                createHelper(new THREE.SphereGeometry(0.4, 16, 16), 0x00e5ff, 0, 0, -5)
+
+            } else {
+                // Fallback default
+                const mesh = new THREE.Mesh(
+                    new THREE.TorusGeometry(0.8, 0.3, 16, 32),
+                    new THREE.MeshNormalMaterial()
+                )
+                lessonMeshGroup.add(mesh)
+            }
+        }
+
+        // ==========================================
+        // Render Lesson-Specific Sidebar Controls & Real-World Showcase
+        // ==========================================
+        const updateLabSidebarForLesson = (lessonId) => {
             statLessonTitle.innerText = `${lessonId.toUpperCase()}`
 
-            if (lessonId === '07-cameras') {
+            if (lessonId === '01-introduction') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🚀 GPU Parallel Power Lab</h2>
+                        <div class="lab-info-box">
+                            GPU သည် တြိဂံနှင့် Particle ထောင်သောင်းချီကို <strong>60 FPS ချောမွေ့စွာ</strong> တစ်ပြိုင်နက်တည်း (Parallel) တွက်ချက်ရေးဆွဲပြသနိုင်စွမ်းရှိသည်။
+                        </div>
+                        <div class="lab-control-group" style="margin-top:12px;">
+                            <label>Galaxy Particle Spin Speed: <span id="val-intro-speed" class="val">1.0x</span></label>
+                            <input type="range" id="param-intro-speed" min="0.1" max="3" step="0.1" value="1">
+                        </div>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🚗 Bruno Simon Portfolio <a href="https://bruno-simon.com" target="_blank" style="color:#a855f7; text-decoration:none;">View ↗</a></div>
+                        <div class="showcase-desc">Three.js + Physics သုံး၍ 3D ကားလေးကို မောင်းနှင်ကာ စူးစမ်းနိုင်သော ကမ္ဘာကျော် Portfolio။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">📱 Apple 3D Product Viewers</div>
+                        <div class="showcase-desc">iPhone, AirPods နှင့် Mac များကို ၃၆၀ ဒီဂရီ အလင်းအမှောင် ရောင်ပြန်ဟပ်မှုများဖြင့် ပြသသော စနစ်။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// 3,000 GPU Particles Simulation
+const geometry = new THREE.BufferGeometry()
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+const material = new THREE.PointsMaterial({ size: 0.04, vertexColors: true })
+const particles = new THREE.Points(geometry, material)
+scene.add(particles)`
+
+                document.getElementById('param-intro-speed').addEventListener('input', (e) => {
+                    animState.speed = Number(e.target.value)
+                    document.getElementById('val-intro-speed').innerText = animState.speed.toFixed(1) + 'x'
+                })
+
+            } else if (lessonId === '02-webgl-and-threejs') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🔺 Triangles & Mesh Inspector</h2>
+                        <div class="lab-control-group">
+                            <label>
+                                <span>Wireframe (တြိဂံများ မြင်ရစေရန်)</span>
+                                <input type="checkbox" id="chk-wireframe">
+                            </label>
+                        </div>
+                        <div class="lab-info-box" style="margin-top:8px;">
+                            3D Model အားလုံးကို ထောင်ပေါင်းများစွာသော <strong>Triangles (တြိဂံများ)</strong> ဖြင့် တည်ဆောက်ထားသည်။
+                        </div>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🏆 Awwwards 3D Sites</div>
+                        <div class="showcase-desc">Web Designer များ၏ Interactive 3D WebGL Storytelling စာမျက်နှာများ။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// TorusKnot Mesh (1,024 Triangles)
+const geometry = new THREE.TorusKnotGeometry(0.9, 0.3, 64, 16)
+const material = new THREE.MeshNormalMaterial({ wireframe: false })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)`
+
+                document.getElementById('chk-wireframe').addEventListener('change', (e) => {
+                    if (lessonMeshGroup.children[0]) {
+                        lessonMeshGroup.children[0].material.wireframe = e.target.checked
+                    }
+                })
+
+            } else if (lessonId === '03-basic-scene') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>📦 The Core 4 Elements Studio</h2>
+                        <div class="lab-control-group">
+                            <label>Cube Color Picker</label>
+                            <div class="btn-group">
+                                <button class="btn-lab active" id="btn-col-red">Red</button>
+                                <button class="btn-lab" id="btn-col-blue">Blue</button>
+                                <button class="btn-lab" id="btn-col-green">Green</button>
+                            </div>
+                        </div>
+                        <div class="lab-control-group" style="margin-top:10px;">
+                            <label>Camera Z Distance: <span id="val-cam-z" class="val">3.0</span></label>
+                            <input type="range" id="param-cam-z" min="1.5" max="7" step="0.1" value="3">
+                        </div>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🛍️ E-Commerce Product Box</div>
+                        <div class="showcase-desc">Nike, Ikea စသော ကုန်ပစ္စည်း 3D စတင်မိတ်ဆက် Box ပြသမှုများ။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// Core 4 Elements
+const scene = new THREE.Scene()
+const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xff0000 }))
+scene.add(mesh)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+camera.position.z = 3
+scene.add(camera)
+const renderer = new THREE.WebGLRenderer({ canvas })
+renderer.render(scene, camera)`
+
+                document.getElementById('btn-col-red').addEventListener('click', () => {
+                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0xff4444)
+                })
+                document.getElementById('btn-col-blue').addEventListener('click', () => {
+                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0x38bdf8)
+                })
+                document.getElementById('btn-col-green').addEventListener('click', () => {
+                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0x4ade80)
+                })
+                document.getElementById('param-cam-z').addEventListener('input', (e) => {
+                    const z = Number(e.target.value)
+                    perspCam.position.z = z
+                    document.getElementById('val-cam-z').innerText = z.toFixed(1)
+                })
+
+            } else if (lessonId === '04-transform-objects') {
+                const targetMesh = lessonMeshGroup.children[0]
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>📍 Position (Vector3)</h2>
+                        <div class="lab-control-group">
+                            <label>Position X: <span id="val-pos-x" class="val">0.0</span></label>
+                            <input type="range" id="param-pos-x" min="-3" max="3" step="0.1" value="0">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Position Y: <span id="val-pos-y" class="val">0.0</span></label>
+                            <input type="range" id="param-pos-y" min="-2" max="2" step="0.1" value="0">
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <h2>🔄 Rotation (Euler Angles)</h2>
+                        <div class="lab-control-group">
+                            <label>Rotation Y (Radians): <span id="val-rot-y" class="val">0.0 rad</span></label>
+                            <input type="range" id="param-rot-y" min="0" max="6.28" step="0.1" value="0">
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <h2>🔍 Scale (Vector3)</h2>
+                        <div class="lab-control-group">
+                            <label>Scale: <span id="val-scale" class="val">1.0x</span></label>
+                            <input type="range" id="param-scale" min="0.3" max="2.5" step="0.1" value="1">
+                        </div>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🚗 3D Car Disassembly & Hierarchy</div>
+                        <div class="showcase-desc">ကားဘီးများ၊ တံခါးများ၊ စက်အစိတ်အပိုင်းများကို Group ဖြင့် ဖွဲ့စည်း၍ နေရာရွှေ့ပြောင်းခြင်း။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// Transform Objects
+mesh.position.set(0.7, -0.6, 1)
+mesh.rotation.reorder('YXZ')
+mesh.rotation.y = Math.PI * 0.5
+mesh.scale.set(1.5, 1.5, 1.5)`
+
+                document.getElementById('param-pos-x').addEventListener('input', (e) => {
+                    const x = Number(e.target.value)
+                    if (targetMesh) targetMesh.position.x = x
+                    document.getElementById('val-pos-x').innerText = x.toFixed(1)
+                })
+                document.getElementById('param-pos-y').addEventListener('input', (e) => {
+                    const y = Number(e.target.value)
+                    if (targetMesh) targetMesh.position.y = y
+                    document.getElementById('val-pos-y').innerText = y.toFixed(1)
+                })
+                document.getElementById('param-rot-y').addEventListener('input', (e) => {
+                    const r = Number(e.target.value)
+                    if (targetMesh) targetMesh.rotation.y = r
+                    document.getElementById('val-rot-y').innerText = r.toFixed(2) + ' rad'
+                })
+                document.getElementById('param-scale').addEventListener('input', (e) => {
+                    const s = Number(e.target.value)
+                    if (targetMesh) targetMesh.scale.set(s, s, s)
+                    document.getElementById('val-scale').innerText = s.toFixed(1) + 'x'
+                })
+
+            } else if (lessonId === '05-animations') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🏃 Animation Mode (Math & Clock)</h2>
+                        <div class="btn-group" style="margin-bottom:10px;">
+                            <button id="btn-anim-spin" class="btn-lab active">Spin</button>
+                            <button id="btn-anim-wave" class="btn-lab">Wave (sin)</button>
+                            <button id="btn-anim-orbit" class="btn-lab">Orbit (sin/cos)</button>
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Animation Speed: <span id="val-anim-speed" class="val">1.0x</span></label>
+                            <input type="range" id="param-anim-speed" min="0.2" max="3" step="0.1" value="1">
+                        </div>
+                        <button id="btn-gsap-jump" class="btn-action-trigger">⚡ Trigger GSAP Jump Animation</button>
+                    </div>
+                `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">✨ Interactive Web Storytelling</div>
+                        <div class="showcase-desc">User Scroll အလိုက် 3D ကုန်ပစ္စည်းများ ပျံဝဲကာ ချောမွေ့စွာ လှည့်ပတ်ပြသသော Animation စနစ်များ။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// Clock & Trigonometric Animation
+const clock = new THREE.Clock()
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime()
+  mesh.position.y = Math.sin(elapsedTime * 2) * 0.5
+  mesh.rotation.y = elapsedTime * Math.PI
+  renderer.render(scene, camera)
+  window.requestAnimationFrame(tick)
+}
+tick()`
+
+                document.getElementById('btn-anim-spin').addEventListener('click', () => { animState.type = 'spin' })
+                document.getElementById('btn-anim-wave').addEventListener('click', () => { animState.type = 'wave' })
+                document.getElementById('btn-anim-orbit').addEventListener('click', () => { animState.type = 'orbit' })
+                document.getElementById('param-anim-speed').addEventListener('input', (e) => {
+                    animState.speed = Number(e.target.value)
+                    document.getElementById('val-anim-speed').innerText = animState.speed.toFixed(1) + 'x'
+                })
+                document.getElementById('btn-gsap-jump').addEventListener('click', () => {
+                    const m = lessonMeshGroup.getObjectByName("animMain")
+                    if (m) {
+                        m.position.y = 2
+                        setTimeout(() => { m.position.y = 0 }, 600)
+                    }
+                })
+
+            } else if (lessonId === '07-cameras') {
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
                         <h2>🎥 ကင်မရာ အမျိုးအစား (Camera Type)</h2>
@@ -720,7 +1179,7 @@
                             <button id="btn-cam-ortho" class="btn-lab ${activeCam === orthoCam ? 'active' : ''}">Orthographic</button>
                         </div>
                         <div id="lab-cam-desc" class="lab-info-box" style="margin-top:10px;">
-                            <strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော သဘာဝကျသည့် ကင်မရာ။
+                            <strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။
                         </div>
                     </div>
 
@@ -731,17 +1190,17 @@
                             <input type="range" id="param-fov" min="15" max="120" value="${perspCam.fov}">
                         </div>
                         <div class="lab-control-group">
-                            <label>Near Clipping Plane: <span id="val-near" class="val">${perspCam.near}</span></label>
+                            <label>Near Plane: <span id="val-near" class="val">${perspCam.near}</span></label>
                             <input type="range" id="param-near" min="0.05" max="3" step="0.05" value="${perspCam.near}">
                         </div>
                         <div class="lab-control-group">
-                            <label>Far Clipping Plane: <span id="val-far" class="val">${perspCam.far}</span></label>
+                            <label>Far Plane: <span id="val-far" class="val">${perspCam.far}</span></label>
                             <input type="range" id="param-far" min="2" max="100" step="1" value="${perspCam.far}">
                         </div>
                     </div>
 
                     <div class="lab-card">
-                        <h2>🕹️ Camera Control Modes</h2>
+                        <h2>🕹️ Camera Control Mode</h2>
                         <div class="btn-group" style="margin-bottom:10px;">
                             <button id="btn-mode-orbit" class="btn-lab ${labControlMode === 'orbit' ? 'active' : ''}">OrbitControls</button>
                             <button id="btn-mode-custom" class="btn-lab ${labControlMode === 'custom' ? 'active' : ''}">Trig (sin/cos)</button>
@@ -761,6 +1220,19 @@
                         </div>
                     </div>
                 `
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🏰 RTS Games vs FPS Games</div>
+                        <div class="showcase-desc">Age of Empires, SimCity တို့တွင် <strong>OrthographicCamera</strong> ကို သုံးပြီး First-person shooter ဂိမ်းများတွင် <strong>PerspectiveCamera</strong> ကို သုံးသည်။</div>
+                    </div>
+                `
+                labLiveCode.innerText = `// Perspective Camera Setup
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+camera.position.set(0, 1.5, 4)
+
+// OrbitControls with Damping
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true`
 
                 // Bind Camera Events
                 const btnPersp = document.getElementById('btn-cam-persp')
@@ -786,9 +1258,7 @@
                     labControls.object = perspCam
                     perspParams.style.opacity = '1'
                     perspParams.style.pointerEvents = 'auto'
-                    camDesc.innerHTML = '<strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော သဘာဝကျသည့် ကင်မရာ။'
-                    statCamType.innerText = 'PerspectiveCamera'
-                    updateLiveCodeText()
+                    camDesc.innerHTML = '<strong>PerspectiveCamera:</strong> လူ့မျက်လုံးလို အနီးရှိအရာများ ကြီးပြီး အဝေးရှိအရာများ သေးငယ်သွားသော Frustum Projection ဖြစ်သည်။'
                 })
 
                 btnOrtho.addEventListener('click', () => {
@@ -799,8 +1269,6 @@
                     perspParams.style.opacity = '0.45'
                     perspParams.style.pointerEvents = 'none'
                     camDesc.innerHTML = '<strong>OrthographicCamera:</strong> အကွာအဝေးကြောင့် ပုံမသေးသွားဘဲ မျဉ်းပြိုင် (Parallel Projection) အတိုင်း ပြပေးသည့် ကင်မရာ (2D/Isometric Game များအတွက်)။'
-                    statCamType.innerText = 'OrthographicCamera'
-                    updateLiveCodeText()
                 })
 
                 paramFov.addEventListener('input', (e) => {
@@ -808,7 +1276,6 @@
                     valFov.innerText = v + '°'
                     perspCam.fov = v
                     perspCam.updateProjectionMatrix()
-                    updateLiveCodeText()
                 })
 
                 paramNear.addEventListener('input', (e) => {
@@ -818,7 +1285,6 @@
                     orthoCam.near = v
                     perspCam.updateProjectionMatrix()
                     orthoCam.updateProjectionMatrix()
-                    updateLiveCodeText()
                 })
 
                 paramFar.addEventListener('input', (e) => {
@@ -828,7 +1294,6 @@
                     orthoCam.far = v
                     perspCam.updateProjectionMatrix()
                     orthoCam.updateProjectionMatrix()
-                    updateLiveCodeText()
                 })
 
                 btnModeOrbit.addEventListener('click', () => {
@@ -837,7 +1302,6 @@
                     btnModeLerp.classList.remove('active')
                     labControlMode = 'orbit'
                     labControls.enabled = true
-                    updateLiveCodeText()
                 })
 
                 btnModeCustom.addEventListener('click', () => {
@@ -846,7 +1310,6 @@
                     btnModeLerp.classList.remove('active')
                     labControlMode = 'custom'
                     labControls.enabled = false
-                    updateLiveCodeText()
                 })
 
                 btnModeLerp.addEventListener('click', () => {
@@ -855,12 +1318,10 @@
                     btnModeCustom.classList.remove('active')
                     labControlMode = 'lerp'
                     labControls.enabled = false
-                    updateLiveCodeText()
                 })
 
                 chkDamping.addEventListener('change', (e) => {
                     labControls.enableDamping = e.target.checked
-                    updateLiveCodeText()
                 })
 
                 chkAutorotate.addEventListener('change', (e) => {
@@ -868,125 +1329,27 @@
                     labControls.autoRotateSpeed = 2.0
                 })
 
-            } else if (lessonId === '04-transform-objects') {
-                labDynamicPanel.innerHTML = `
-                    <div class="lab-card">
-                        <h2>📍 Position (Vector3)</h2>
-                        <div class="lab-control-group">
-                            <label>Position X: <span id="val-pos-x" class="val">${centerCube.position.x.toFixed(1)}</span></label>
-                            <input type="range" id="param-pos-x" min="-3" max="3" step="0.1" value="${centerCube.position.x}">
-                        </div>
-                        <div class="lab-control-group">
-                            <label>Position Y: <span id="val-pos-y" class="val">${centerCube.position.y.toFixed(1)}</span></label>
-                            <input type="range" id="param-pos-y" min="-2" max="2" step="0.1" value="${centerCube.position.y}">
-                        </div>
-                    </div>
-
-                    <div class="lab-card">
-                        <h2>🔄 Rotation (Euler Angles)</h2>
-                        <div class="lab-control-group">
-                            <label>Rotation Y: <span id="val-rot-y" class="val">${centerCube.rotation.y.toFixed(2)} rad</span></label>
-                            <input type="range" id="param-rot-y" min="0" max="6.28" step="0.1" value="${centerCube.rotation.y}">
-                        </div>
-                    </div>
-
-                    <div class="lab-card">
-                        <h2>🔍 Scale (Vector3)</h2>
-                        <div class="lab-control-group">
-                            <label>Uniform Scale: <span id="val-scale" class="val">${centerCube.scale.x.toFixed(1)}x</span></label>
-                            <input type="range" id="param-scale" min="0.2" max="2.5" step="0.1" value="${centerCube.scale.x}">
-                        </div>
-                    </div>
-                `
-
-                document.getElementById('param-pos-x').addEventListener('input', (e) => {
-                    centerCube.position.x = Number(e.target.value)
-                    document.getElementById('val-pos-x').innerText = centerCube.position.x.toFixed(1)
-                    updateLiveCodeText()
-                })
-                document.getElementById('param-pos-y').addEventListener('input', (e) => {
-                    centerCube.position.y = Number(e.target.value)
-                    document.getElementById('val-pos-y').innerText = centerCube.position.y.toFixed(1)
-                    updateLiveCodeText()
-                })
-                document.getElementById('param-rot-y').addEventListener('input', (e) => {
-                    centerCube.rotation.y = Number(e.target.value)
-                    document.getElementById('val-rot-y').innerText = centerCube.rotation.y.toFixed(2) + ' rad'
-                    updateLiveCodeText()
-                })
-                document.getElementById('param-scale').addEventListener('input', (e) => {
-                    const s = Number(e.target.value)
-                    centerCube.scale.set(s, s, s)
-                    document.getElementById('val-scale').innerText = s.toFixed(1) + 'x'
-                    updateLiveCodeText()
-                })
-
             } else {
                 // Default Controls for other lessons
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
-                        <h2>🎮 3D Playground</h2>
+                        <h2>🎮 3D Playground Studio</h2>
                         <div class="lab-info-box">
                             Mouse ဖြင့် ဖိဆွဲပြီး 3D Scene ကို ၃၆၀ ဒီဂရီ လှည့်ပတ်ကြည့်ရှုနိုင်ပါသည်။
                         </div>
-                        <div class="lab-control-group" style="margin-top:10px;">
-                            <label>
-                                <span>Auto Rotate Scene</span>
-                                <input type="checkbox" id="chk-default-rotate">
-                            </label>
-                        </div>
                     </div>
                 `
-                document.getElementById('chk-default-rotate')?.addEventListener('change', (e) => {
-                    labControls.autoRotate = e.target.checked
-                })
-            }
-
-            updateLiveCodeText()
-        }
-
-        const updateLiveCodeText = () => {
-            if (currentLessonId === '07-cameras') {
-                if (activeCam === perspCam) {
-                    labLiveCode.innerText = `// PerspectiveCamera Setup
-const camera = new THREE.PerspectiveCamera(
-  ${perspCam.fov}, // FOV
-  sizes.width / sizes.height, // Aspect
-  ${perspCam.near}, // Near
-  ${perspCam.far} // Far
-)
-camera.position.set(${activeCam.position.x.toFixed(1)}, ${activeCam.position.y.toFixed(1)}, ${activeCam.position.z.toFixed(1)})
-
-// Controls Setup
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = ${labControls.enableDamping}`
-                } else {
-                    labLiveCode.innerText = `// OrthographicCamera Setup
-const aspect = sizes.width / sizes.height
-const camera = new THREE.OrthographicCamera(
-  -${(frustumSize * labAspect / 2).toFixed(1)}, // Left (-size * aspect)
-   ${(frustumSize * labAspect / 2).toFixed(1)}, // Right (size * aspect)
-   ${(frustumSize / 2).toFixed(1)},  // Top
-  -${(frustumSize / 2).toFixed(1)},  // Bottom
-   ${orthoCam.near}, // Near
-   ${orthoCam.far}  // Far
-)`
-                }
-            } else if (currentLessonId === '04-transform-objects') {
-                labLiveCode.innerText = `mesh.position.set(${centerCube.position.x.toFixed(1)}, ${centerCube.position.y.toFixed(1)}, ${centerCube.position.z.toFixed(1)})
-mesh.rotation.y = ${centerCube.rotation.y.toFixed(2)}
-mesh.scale.set(${centerCube.scale.x.toFixed(1)}, ${centerCube.scale.y.toFixed(1)}, ${centerCube.scale.z.toFixed(1)})`
-            } else {
-                labLiveCode.innerText = `// Basic Scene
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
-scene.add(camera)`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🌐 Web 3D Experience</div>
+                        <div class="showcase-desc">Creative WebGL interactive portfolio & visual art.</div>
+                    </div>
+                `
             }
         }
 
         // ==========================================
-        // Lesson Selection & Markdown Loading
+        // Select Lesson Handler
         // ==========================================
         const selectLesson = async (lessonId) => {
             currentLessonId = lessonId
@@ -1000,8 +1363,9 @@ scene.add(camera)`
             const lesson = LESSONS.find(l => l.id === lessonId)
             if (!lesson) return
 
-            // Setup Lab for this lesson
-            setupLabControls(lessonId)
+            // Rebuild 3D Scene & Sidebar Controls for this specific lesson
+            build3DSceneForLesson(lessonId)
+            updateLabSidebarForLesson(lessonId)
 
             // Load Guide Markdown
             guideContent.innerHTML = '<div style="text-align:center; padding: 40px; color:#94a3b8;">Loading guide...</div>'
@@ -1032,7 +1396,7 @@ scene.add(camera)`
             viewGuide.scrollTop = 0
         }
 
-        // Render Sidebar
+        // Render Sidebar Menu
         const renderSidebar = (filterText = "") => {
             lessonsContainer.innerHTML = ""
 
@@ -1070,7 +1434,7 @@ scene.add(camera)`
 
                     item.addEventListener('click', () => {
                         selectLesson(lesson.id)
-                        if (window.innerWidth <= 900) {
+                        if (window.innerWidth <= 960) {
                             sidebar.classList.remove('open')
                         }
                     })
@@ -1098,7 +1462,6 @@ scene.add(camera)`
             viewLab.style.display = 'flex'
             currentView = "lab"
 
-            // Force resize after display flex
             requestAnimationFrame(() => {
                 triggerLabResize()
             })
@@ -1113,19 +1476,42 @@ scene.add(camera)`
         })
 
         // ==========================================
-        // Animation Loop
+        // Continuous Animation Loop
         // ==========================================
         const clock = new THREE.Clock()
 
         const tick = () => {
             const elapsedTime = clock.getElapsedTime()
 
-            // Gentle center object rotation
-            if (currentLessonId !== '04-transform-objects') {
-                centerCube.rotation.y = elapsedTime * 0.4
-                centerCube.rotation.x = elapsedTime * 0.2
+            // Lesson 01: Rotate Particle Galaxy
+            if (currentLessonId === '01-introduction' && animState.particlesMesh) {
+                animState.particlesMesh.rotation.y = elapsedTime * 0.2 * animState.speed
             }
 
+            // Lesson 05: Animate Objects
+            if (currentLessonId === '05-animations') {
+                const mainObj = lessonMeshGroup.getObjectByName("animMain")
+                const orbitObj = lessonMeshGroup.getObjectByName("animOrbit")
+
+                if (mainObj) {
+                    if (animState.type === 'spin') {
+                        mainObj.rotation.y = elapsedTime * Math.PI * animState.speed
+                    } else if (animState.type === 'wave') {
+                        mainObj.position.y = Math.sin(elapsedTime * 3 * animState.speed) * 0.7
+                    } else if (animState.type === 'orbit') {
+                        mainObj.position.x = Math.cos(elapsedTime * 2 * animState.speed) * 1.5
+                        mainObj.position.z = Math.sin(elapsedTime * 2 * animState.speed) * 1.5
+                    }
+                }
+
+                if (orbitObj) {
+                    orbitObj.position.x = Math.cos(elapsedTime * 3 * animState.speed) * 2
+                    orbitObj.position.z = Math.sin(elapsedTime * 3 * animState.speed) * 2
+                    orbitObj.position.y = Math.sin(elapsedTime * 5 * animState.speed) * 0.5
+                }
+            }
+
+            // Active Lab Controls Loop
             if (currentView === "lab") {
                 if (labControlMode === 'orbit') {
                     if (labControls.enabled) {
@@ -1136,14 +1522,14 @@ scene.add(camera)`
                     activeCam.position.x = Math.sin(angle) * 4.5
                     activeCam.position.z = Math.cos(angle) * 4.5
                     activeCam.position.y = cursor.y * 4
-                    activeCam.lookAt(centerCube.position)
+                    activeCam.lookAt(0, 0, 0)
                 } else if (labControlMode === 'lerp') {
                     const angle = cursor.x * Math.PI * 2
                     targetPos.x = Math.sin(angle) * 4.5
                     targetPos.z = Math.cos(angle) * 4.5
                     targetPos.y = cursor.y * 4
                     activeCam.position.lerp(targetPos, 0.05)
-                    activeCam.lookAt(centerCube.position)
+                    activeCam.lookAt(0, 0, 0)
                 }
 
                 statCamPos.innerText = `x: ${activeCam.position.x.toFixed(1)}, y: ${activeCam.position.y.toFixed(1)}, z: ${activeCam.position.z.toFixed(1)}`
@@ -1153,12 +1539,12 @@ scene.add(camera)`
             window.requestAnimationFrame(tick)
         }
 
-        // Initialize from URL Hash or default to Lesson 07 Cameras
+        // Initialize from URL Hash or default to 01-introduction
         const initHash = window.location.hash.replace('#', '')
         if (initHash && LESSONS.some(l => l.id === initHash)) {
             currentLessonId = initHash
         } else {
-            currentLessonId = "07-cameras"
+            currentLessonId = "01-introduction"
         }
 
         renderSidebar()
