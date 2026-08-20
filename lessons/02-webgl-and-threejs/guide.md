@@ -1,93 +1,147 @@
 # ⚡ Three.js Journey - Lesson 02: What is WebGL and why use Three.js?
 
-> **မူရင်းသင်ခန်းစာ**: [Three.js Journey - Lesson 02: What is WebGL and why use Three.js](https://threejs-journey.com/lessons/what-is-webgl-and-why-use-three-js)  
-> **Course Instructor**: Bruno Simon  
-> **ဘာသာပြန်နှင့် စနစ်တကျ ပြုစုသူ**: Antigravity  
-> **အဆင့်**: အခြေခံ (Beginner Friendly)
+---
+
+## 📑 မာတိကာ (Table of Contents)
+
+1. [WebGL ဆိုတာ အမှန်တကယ် ဘာလဲ? (What is WebGL?)](#၁-webgl-ဆိုတာ-အမှန်တကယ်-ဘာလဲ)
+2. [3D Graphics ၏ အခြေခံ အုတ်မြစ်: တြိဂံများ (Triangles & Vertices)](#၂-3d-graphics-၏-အခြေခံ-အုတ်မြစ်-တြိဂံများ)
+3. [Shaders နှင့် Matrices မိတ်ဆက်](#၃-shaders-နှင့်-matrices-မိတ်ဆက်)
+   - Vertex Shader (အမှတ်များ နေရာချထားခြင်း)
+   - Fragment / Pixel Shader (အရောင် ဆေးခြယ်ခြင်း)
+   - Transformation Matrices (Model, View, Projection)
+4. [Native WebGL ဘာကြောင့် ရေးသားရ ခက်ခဲသလဲ?](#၄-native-webgl-ဘာကြောင့်-ရေးသားရ-ခက်ခဲသလဲ)
+5. [Three.js ပေါ်ပေါက်လာပုံနှင့် အဓိက အားသာချက်များ](#၅-threejs-ပေါ်ပေါက်လာပုံနှင့်-အဓိက-အားသာချက်များ)
+6. [အခြား WebGL Library များနှင့် အသေးစိတ် နှိုင်းယှဉ်ချက်](#၆-အခြား-webgl-library-များနှင့်-နှိုင်းယှဉ်ချက်)
+   - Three.js vs Babylon.js vs Pixi.js vs PlayCanvas vs A-Frame
+7. [Web 3D ၏ အနာဂတ်: WebGPU အကြောင်း သိကောင်းစရာ](#၇-web-3d-၏-အနာဂတ်-webgpu-အကြောင်း)
+8. [အနှစ်ချုပ် မှတ်စုတို (Lesson 02 Memo)](#၈-အနှစ်ချုပ်-မှတ်စုတို)
 
 ---
 
-## 🎯 ဤသင်ခန်းစာ၏ အဓိက ရည်ရွယ်ချက်
-3D ရုပ်ပုံများကို ကွန်ပျူတာက တြိဂံ (Triangles) များဖြင့် မည်သို့ တည်ဆောက်ပုံ၊ Shaders (Vertex & Fragment) ၏ အခန်းကဏ္ဍ၊ Native WebGL အစား Three.js ကို အဘယ်ကြောင့် ရွေးချယ် အသုံးပြုရသည်ကို ရှင်းလင်းစွာ သဘောပေါက်စေရန် ဖြစ်ပါသည်။
+# ၁။ WebGL ဆိုတာ အမှန်တကယ် ဘာလဲ?
+
+**WebGL (Web Graphics Library)** သည် Browser ၏ `<canvas>` tag ပေါ်တွင် Hardware Acceleration (GPU စွမ်းအား) ဖြင့် 2D နှင့် 3D Graphics များကို အလွန်လျင်မြန်သော နှုန်းဖြင့် ရေးဆွဲပေးသည့် **JavaScript API** တစ်ခု ဖြစ်သည်။
+
+၎င်းသည် **OpenGL ES 2.0** (မိုဘိုင်းဖုန်းများနှင့် Embedded System များတွင် သုံးသော စံနှုန်း) ကို အခြေခံထားပြီး W3C နှင့် Khronos Group တို့မှ ပူးပေါင်း ထိန်းသိမ်းထားသည်။
 
 ---
 
-## 💡 Mental Model: 3D Graphics တည်ဆောက်ပုံ
+# ၂။ 3D Graphics ၏ အခြေခံ အုတ်မြစ်: တြိဂံများ
 
-3D လောကတွင် မည်သည့် အရာဝတ္ထုမဆို (စက်လုံး၊ ကား၊ လူ၊ အဆောက်အအုံ) အားလုံးကို **တြိဂံ (Triangles)** များဖြင့်သာ ဆက်စပ် တည်ဆောက်ထားသည်:
+3D Computer Graphics တွင် ပိုမိုလှပပြီး ချောမွေ့သော မည်သည့် 3D Model ကိုမဆို (စက်လုံး၊ ကား၊ လူရုပ်၊ တိုက်တာအဆောက်အအုံ) အားလုံးကို **တြိဂံ (Triangles)** ပေါင်း သောင်းနှင့်ချီ ဆက်စပ်၍ တည်ဆောက်ထားခြင်း ဖြစ်သည်။
 
 ```
-        Vertex 1 (ထိပ်မှတ်)
-            /\
-           /  \
-          /    \   <── မျက်နှာပြင် (Triangle Face)
-         /______\
-Vertex 2         Vertex 3
+                 Vertex 1 (X, Y, Z)
+                     /\
+                    /  \
+                   /    \   <── မျက်နှာပြင် (Triangle Face)
+                  /______\
+     Vertex 2 (X, Y, Z)   Vertex 3 (X, Y, Z)
 ```
 
-1. **ထိပ်မှတ်များ (Vertices)**: 3D Space ထဲရှိ အမှတ် $X, Y, Z$ Coordinate များ။
-2. **တြိဂံမျက်နှာပြင် (Face)**: အမှတ် ၃ ခုကို ဆက်စပ်လိုက်သည့်အခါ မျက်နှာပြင်တစ်ခု ဖြစ်ပေါ်လာသည်။
-3. **အရောင်ဆေးခြယ်ခြင်း (Pixel Coloring)**: ထိုမျက်နှာပြင်အတွင်းရှိ Pixel များကို အလင်း/အရိပ် တွက်ချက်၍ ဆေးခြယ်သည်။
+### အဓိက အစိတ်အပိုင်း (၃) ခု:
+1. **ထိပ်မှတ် (Vertex / အများကိန်း Vertices)**: 3D Space ထဲရှိ တည်နေရာ အမှတ်အသား ($X, Y, Z$) ဖြစ်သည်။ ထို့အပြင် Vertex တိုင်းတွင် Normal (မျက်နှာမူရာ ဦးတည်ချက်) နှင့် UV Coordinate (Texture ပုံ ကပ်ရန် အမှတ်) များ ပါဝင်သည်။
+2. **မျက်နှာပြင် (Face)**: Vertex ၃ ခုကို ဆက်စပ်လိုက်သည့်အခါ တြိဂံမျက်နှာပြင်တစ်ခု ဖြစ်ပေါ်လာသည်။
+3. **Pixel ဆေးခြယ်ခြင်း (Rasterization)**: ထိုတြိဂံမျက်နှာပြင်သည် Screen ပေါ် မည်သည့် Pixel နေရာများတွင် ကျရောက်နေသည်ကို တွက်ချက်ကာ အလင်းရောင်နှင့် အရိပ်များ ပေါင်းစပ်၍ ဆေးခြယ်ပေးခြင်း ဖြစ်သည်။
 
 ---
 
-## 🔑 အဓိက သဘောတရားများ
+# ၃။ Shaders နှင့် Matrices မိတ်ဆက်
 
-### ၁။ Shaders ဆိုတာ ဘာလဲ? (GPU သို့ ညွှန်ကြားချက်များ)
-GPU ပေါ်တွင် တိုက်ရိုက် Run သော ပရိုဂရမ်ငယ်များကို **Shaders** ဟု ခေါ်ပြီး အမျိုးအစား (၂) မျိုး ရှိသည်:
+GPU သည် CPU ကဲ့သို့ JavaScript ကုဒ်ကို တိုက်ရိုက် နားမလည်ပါ။ GPU ကို မည်သို့ အလုပ်လုပ်ရမည်ဟု ညွှန်ကြားရန် **GLSL (OpenGL Shading Language)** ဟူသော C-like Language ဖြင့် ရေးသားထားသည့် ပရိုဂရမ်များကို **Shaders** ဟု ခေါ်သည်:
 
-* 📍 **Vertex Shader**: 3D အမှတ် (Vertices) များကို Screen ပေါ် မည်သည့်နေရာတွင် ချရမည်ကို တွက်ချက်သည်။
-* 🎨 **Fragment (Pixel) Shader**: တြိဂံအတွင်းရှိ Pixel တစ်ခုချင်းစီကို မည်သည့်အရောင် (RGB) ခြယ်ရမည်ကို တွက်ချက်သည်။
+```
+[ 3D Vertices Data ] ──► [ Vertex Shader ] ──► [ Rasterizer ] ──► [ Fragment Shader ] ──► [ Screen Pixels ]
+```
 
 ---
 
-### ၂။ Native WebGL နှင့် Three.js နှိုင်းယှဉ်ချက်
+### (က) Vertex Shader (အမှတ်များ နေရာချထားခြင်း)
+* 3D Space ထဲရှိ Vertex တစ်ခုချင်းစီ၏ $X, Y, Z$ တည်နေရာကို Screen ဖန်သားပြင် (2D Screen) ပေါ်ရှိ မည်သည့်နေရာတွင် ပေါ်ရမည်ဟု တွက်ချက် နေရာချပေးသည်။
+* ကင်မရာ၏ အကွာအဝေး၊ ထောင့်ဒီဂရီနှင့် လှည့်ပတ်မှုများကို ဤအဆင့်တွင် တွက်ချက်သည်။
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 Three.js (High-Level API)                   │
-│   Scene, Camera, Mesh, Geometry, Material, Light, Controls  │
-├─────────────────────────────────────────────────────────────┤
-│                 WebGL (Low-Level Driver API)                │
-│             Shaders, Buffers, Draw Calls, GLSL              │
-├─────────────────────────────────────────────────────────────┤
-│                    GPU (Hardware Graphics)                  │
-└─────────────────────────────────────────────────────────────┘
-```
+### (ခ) Fragment / Pixel Shader (အရောင် ဆေးခြယ်ခြင်း)
+* Vertex များ နေရာကျပြီးနောက် တြိဂံအတွင်းရှိ Pixel တစ်ခုချင်းစီအတွက် မည်သည့်အရောင် ($R, G, B, A$) ဖြစ်ရမည်ကို ဆုံးဖြတ်သည်။
+* မီးရောင် (Light) ထိုးကျမှု၊ အရိပ်ကျရောက်မှု၊ ရောင်ပြန်ဟပ်မှုနှင့် Texture ဓာတ်ပုံများကို ဤအဆင့်တွင် ပေါင်းစပ် တွက်ချက်သည်။
 
-* **Native WebGL ၏ အခက်အခဲ**: ရိုးရိုး တြိဂံပြားလေးတစ်ခု ဆွဲရန်အတွက်ပင် ကုဒ်စာကြောင်းရေ **၁၀၀ ကျော်** ရေးသားရသည်။
-* **Three.js ၏ အားသာချက်**: ရှုပ်ထွေးသော သင်္ချာနှင့် GPU Pipeline များကို ကွယ်ဝှက်ပေးကာ စာကြောင်းအနည်းငယ်ဖြင့် လှပသော 3D Scene များကို ဖန်တီးစေနိုင်သည်။
+### (ဂ) Transformation Matrices (Model, View, Projection)
+3D အမှတ်များကို Screen ပေါ်သို့ ပြောင်းလဲရန် Matrix သင်္ချာ ၃ ခုကို အသုံးပြုသည်:
+* **Model Matrix**: Object ၏ ကိုယ်ပိုင် Position, Rotation, Scale ကို တွက်ချက်သည်။
+* **View Matrix**: Camera ၏ တည်နေရာနှင့် မျက်နှာမူရာကို တွက်ချက်သည်။
+* **Projection Matrix**: Perspective (အနီးကြီး အဝေးသေး) သို့မဟုတ် Orthographic အဖြစ် ပြောင်းလဲပေးသည်။
+
+---
+
+# ၄။ Native WebGL ဘာကြောင့် ရေးသားရ ခက်ခဲသလဲ?
+
+Native WebGL ဖြင့် ရိုးရိုး ၂ ဖက်မြင် တြိဂံပြားလေးတစ်ခု ရေးဆွဲရန်အတွက်ပင် အောက်ပါ အဆင့်များကို ကိုယ်တိုင် ကုဒ်ရေးသားရသည်:
+
+1. HTML Canvas မှ `gl = canvas.getContext('webgl')` ဆွဲယူခြင်း
+2. Vertex Data များကို `Float32Array` အဖြစ် သတ်မှတ်ပြီး GPU Memory Buffer တည်ဆောက်ခြင်း (`gl.createBuffer`, `gl.bindBuffer`, `gl.bufferData`)
+3. Vertex Shader နှင့် Fragment Shader GLSL ကုဒ်များကို Text String အဖြစ် ရေးသားခြင်း
+4. Shader များကို Compile လုပ်ခြင်း (`gl.compileShader`) နှင့် Error စစ်ဆေးခြင်း
+5. Shader Program တည်ဆောက်၍ GPU သို့ Attach လုပ်ကာ Link ချိတ်ဆက်ခြင်း (`gl.linkProgram`)
+6. Attribute Pointer များကို Binding ပြုလုပ်ခြင်း (`gl.vertexAttribPointer`)
+7. Viewport သတ်မှတ်ပြီး Draw Call ခေါ်ယူခြင်း (`gl.drawArrays(gl.TRIANGLES, 0, 3)`)
+
+ဤသို့ဖြင့် တြိဂံပြားတစ်ခုအတွက်ပင် ကုဒ်စာကြောင်းရေ **၁၀၀ ကျော်** ဖြစ်သွားသည်။ အကယ်၍ 3D Model, Shadows, Lights, Textures များနှင့် Controls များ ထည့်သွင်းလိုပါက ကုဒ်ထောင်သောင်းချီ ရှုပ်ထွေးသွားမည် ဖြစ်သည်။
+
+---
+
+# ၅။ Three.js ပေါ်ပေါက်လာပုံနှင့် အဓိက အားသာချက်များ
+
+**Three.js** သည် အထက်ပါ ရှုပ်ထွေးလှသော WebGL ၏ အောက်ခြေစနစ်များကို စနစ်တကျ ကွယ်ဝှက် (Abstract) ပေးထားသော **Open-Source JavaScript 3D Library (MIT License)** ဖြစ်သည်။
 
 ```javascript
-// Three.js ဖြင့် ရေးသားရပုံ ရိုးရှင်းမှု:
+// Native WebGL တွင် စာကြောင်း ၁၀၀ ကျော် ရေးရမည့်အစား Three.js တွင်:
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 ```
 
+### Three.js ၏ ထူးခြားသော အားသာချက်များ:
+* 💡 **အလွန်လွယ်ကူရှင်းလင်းခြင်း**: Scene, Camera, Mesh, Geometry, Material, Light ဟူသော သဘောတရားများဖြင့် အလိုလို နားလည်လွယ်သည်။
+* 🌍 **အကြီးမားဆုံး Community**: Stack Overflow, GitHub နှင့် Discord တွင် ကူညီမည့် Developer ထောင်ပေါင်းများစွာ ရှိသည်။
+* 🧩 **ကြွယ်ဝသော Loaders & Extensions**: GLTF, OBJ, FBX Model Loaders များနှင့် OrbitControls များ ပါဝင်သည်။
+* 🔄 **ပုံမှန် Update ပြုလုပ်ခြင်း**: ၂၀၁၀ တွင် **Mr.doob** စတင်ခဲ့ပြီး ယနေ့တိုင် လစဉ် Update အသစ်များ ထွက်ရှိနေသည်။
+
 ---
 
-### ၃။ အခြား WebGL Libraries များနှင့် နှိုင်းယှဉ်ချက်
+# ၆။ အခြား WebGL Library များနှင့် အသေးစိတ် နှိုင်းယှဉ်ချက်
 
-| Library | အဓိက အားသာချက် | သင့်တော်သော နေရာ |
+| Library / Engine | အဓိက သွင်ပြင်လက္ခဏာ | အကောင်းဆုံး အသုံးချမှု |
 | :--- | :--- | :--- |
-| **`Three.js`** ⭐ | လေ့လာရ အလွယ်ကူဆုံး၊ Community အကြီးဆုံး | Creative 3D Websites, Product Configurators, Portfolios |
-| **`Babylon.js`** | Microsoft ကျောထောက်နောက်ခံပြုထားပြီး Physics, Audio, GUI ဂိမ်းစနစ်များ ပါဝင် | Web 3D Games, Enterprise Simulators |
-| **`Pixi.js`** | **2D Graphics သီးသန့်** အလွန်မြန်ဆန်သော WebGL Engine | 2D Games, Canvas Rich Animations |
-| **`PlayCanvas`** | Cloud Editor ပါဝင်သော Web Game Engine | Collaborative 3D Games |
+| **`Three.js`** ⭐ | လေ့လာရ အလွယ်ကူဆုံး၊ အပေါ့ပါးဆုံး၊ အသုံးအများဆုံး စံသတ်မှတ်ချက် | Creative 3D Websites, Portfolios, Product Configurators |
+| **`Babylon.js`** | Microsoft မှ ထောက်ပံ့ထားပြီး Physics, Audio, GUI, Collision စသော Game Engine စနစ်များ ပြည့်စုံ | Web 3D Games, Simulators, Enterprise Tools |
+| **`PlayCanvas`** | Cloud-based Visual Editor ပါဝင်သော Web-first Game Engine | Collaborative 3D Web Games |
+| **`Pixi.js`** | **2D WebGL သီးသန့်** အလွန်လျင်မြန်သော Engine | 2D Games, Rich Web UI, Canvas Animations |
+| **`A-Frame`** | HTML Custom Tags ဖြင့် ရေးသားနိုင်သော WebXR/VR Framework | Quick VR/AR Prototypes, WebXR Experiences |
 
 ---
 
-## 📋 အမြန်မှတ်စု (Lesson 02 Memo)
+# ၇။ Web 3D ၏ အနာဂတ်: WebGPU အကြောင်း
+
+* **WebGPU ဆိုတာ ဘာလဲ?**:  
+  WebGL ၏ ဆက်ခံသူအဖြစ် W3C မှ စံသတ်မှတ်ထားသော မျိုးဆက်သစ် Modern Graphics API ဖြစ်သည်။ Apple ၏ Metal, Microsoft ၏ DirectX 12, Linux/Android ၏ Vulkan ကဲ့သို့သော ခေတ်မီ Low-level Graphics Architecture များနှင့် တိုက်ရိုက် ကိုက်ညီသည်။
+* **Compute Shaders**:  
+  Graphics သာမက AI, Machine Learning နှင့် Physics တွက်ချက်မှုများကို GPU ပေါ်တွင် တိုက်ရိုက် မောင်းနှင်နိုင်သည်။
+* **Three.js ၏ ပံ့ပိုးမှု**:  
+  Three.js တွင် `WebGPURenderer` နှင့် TSL (Three.js Shading Language) Node Material စနစ်ကို အဆင်သင့် ပံ့ပိုးပေးနေပြီ ဖြစ်သဖြင့် Three.js ကို လေ့လာခြင်းဖြင့် အနာဂတ် WebGPU သို့ အလွယ်တကူ ကူးပြောင်းနိုင်မည် ဖြစ်သည်။
+
+---
+
+# ၈။ အနှစ်ချုပ် မှတ်စုတို (Lesson 02 Memo)
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        LESSON 02 CHEAT SHEET                           │
+│                        LESSON 02 SUMMARY MEMO                          │
 ├────────────────────────────────────────────────────────────────────────┤
-│ 1. Triangles : 3D Object အားလုံးကို တြိဂံများ ဆက်စပ်၍ တည်ဆောက်ထားသည်     │
-│ 2. Vertex    : 3D အာကာသထဲရှိ ထောင့်စွန်း အမှတ် (X, Y, Z)               │
-│ 3. Shaders   : Vertex Shader (အမှတ်နေရာချ) + Fragment Shader (အရောင်ခြယ်)│
-│ 4. Three.js  : WebGL ကို အလွယ်တကူ ရေးသားနိုင်အောင် ကူညီပေးသည့် စံ Library│
+│ • WebGL      : Browser တွင် GPU စွမ်းအားဖြင့် တြိဂံများကို ရေးဆွဲပေးသော API │
+│ • Triangles  : 3D Objects အားလုံးကို တြိဂံမျက်နှာပြင်များဖြင့် တည်ဆောက်သည်│
+│ • Shaders    : Vertex Shader (အမှတ်နေရာချ) + Fragment Shader (အရောင်ခြယ်)│
+│ • Three.js   : WebGL ၏ အခက်အခဲများကို လွယ်ကူစေသော စံ 3D JavaScript Library│
+│ • WebGPU     : WebGL ထက် ပိုမိုစွမ်းအားမြင့်သော မျိုးဆက်သစ် စံနှုန်းသစ် ဖြစ်သည်│
 └────────────────────────────────────────────────────────────────────────┘
 ```
