@@ -7,10 +7,10 @@
 ## 🚀 အဓိက ပါဝင်သော အင်္ဂါရပ်များ (Key Features)
 
 * 📚 **Multi-Lesson Support**: Three.js Journey ၏ Chapter အားလုံး (Basics, Classic Techniques, Advanced Techniques, Shaders, R3F) ကို စနစ်တကျ ခွဲခြားစီစဉ်ထားခြင်း။
-* 🔍 **Instant Search & Drawer Navigation**: မည်သည့် သင်ခန်းစာ သို့မဟုတ် Topic Keyword ကိုမဆို ရှာဖွေနိုင်ပြီး Bookmarkable Hash URL (ဥပမာ - `/#07-cameras`, `/#03-basic-scene`) ဖြင့် တိုက်ရိုက် သွားရောက်နိုင်ခြင်း။
+* 🔍 **Instant Search & Drawer Navigation**: မည်သည့် သင်ခန်းစာ သို့မဟုတ် Topic Keyword ကိုမဆို ရှာဖွေနိုင်ပြီး Bookmarkable Hash URL (ဥပမာ - `/#06-cameras`, `/#13-go-live`) ဖြင့် တိုက်ရိုက် သွားရောက်နိုင်ခြင်း။
 * 📖 **Deep-Dive Burmese Guides**: သင်္ချာသဘောတရားများ (Matrix Transformations, Trigonometry, Non-linear Depth Buffer, PBR Material Math) ကို ရှင်းလင်းထားသော လမ်းညွှန်များ။
 * 🎮 **Interactive 3D Lab**: Three.js Canvas တွင် ကင်မရာ၊ မီးရောင်၊ Geometries၊ Controls (OrbitControls vs Custom Mouse vs Smooth Lerp) များကို အချိန်နှင့်တပြေးညီ စမ်းသပ်နိုင်ခြင်း။
-* ⚡ **Production Ready for Vercel & GitHub**: Zero Build Tool (Vanilla JS + ES Modules) ဖြင့် Vercel ပေါ်တွင် စက္ကန့်ပိုင်းအတွင်း Deploy ပြုလုပ်နိုင်ခြင်း။
+* ⚡ **Production Ready for Vercel & GitHub**: Vanilla JavaScript + Vite ဖြင့် local development နှင့် optimized production build ပြုလုပ်နိုင်ခြင်း။
 
 ---
 
@@ -25,21 +25,36 @@ My3Djourneylesson/
 ├── README.md                  # Project Documentation
 ├── data/
 │   └── lessons.js             # Chapters and Lessons Registry & Metadata
-├── lessons/                   # Individual Lesson Study Guides
+├── lessons/                   # Chapter 1 Burmese Study Guides
+│   ├── 01-introduction/guide.md
+│   ├── 02-webgl-and-threejs/guide.md
 │   ├── 03-basic-scene/guide.md
 │   ├── 04-transform-objects/guide.md
 │   ├── 05-animations/guide.md
-│   ├── 07-cameras/guide.md
-│   ├── 08-fullscreen-and-resizing/guide.md
-│   ├── 09-geometries/guide.md
+│   ├── 06-cameras/guide.md
+│   ├── 07-fullscreen-and-resizing/guide.md
+│   ├── 08-geometries/guide.md
+│   ├── 09-debug-ui/guide.md
 │   ├── 10-textures/guide.md
 │   ├── 11-materials/guide.md
-│   └── 12-3d-text/guide.md
+│   ├── 12-3d-text/guide.md
+│   └── 13-go-live/guide.md
 ```
 
 ---
 
 ## 🛠️ GitHub နှင့် Vercel တွင် အသုံးပြုပုံ (Publish & Deploy)
+
+### Local မှာ ဖွင့်ရန်
+
+Node.js 20 နှင့်အထက် ထည့်သွင်းထားပြီး project folder ထဲမှာ အောက်ပါ command များကို run ပါ။
+
+```bash
+npm install
+npm start
+```
+
+Terminal မှာ ပြသလာတဲ့ `http://127.0.0.1:5173/` သို့မဟုတ် `http://localhost:5173/` ကို browser ဖြင့် ဖွင့်ပါ။ Production build စစ်ရန် `npm run build` ကို အသုံးပြုနိုင်ပါတယ်။
 
 ### 1. GitHub သို့ Push ပြုလုပ်ရန်:
 ```bash

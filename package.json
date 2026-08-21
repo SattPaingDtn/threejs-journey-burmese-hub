@@ -1,18 +1,28 @@
 {
-  "name": "threejs-journey-lesson-07-cameras-burmese",
+  "name": "threejs-journey-burmese-hub",
   "version": "1.0.0",
-  "description": "Three.js Journey Lesson 07: Cameras Master Study Guide & Interactive Lab in Burmese",
-  "main": "index.html",
+  "description": "A Burmese study companion and interactive lab for Three.js Journey",
   "scripts": {
-    "start": "npx serve ."
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "threejs",
     "webgl",
-    "cameras",
+    "learning-hub",
     "burmese",
     "threejs-journey"
   ],
-  "author": "Antigravity & SattPaing",
-  "license": "MIT"
+  "author": "SattPaing",
+  "license": "MIT",
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "marked": "^15.0.12",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
 }

@@ -6,35 +6,37 @@
     <title>Three.js Journey - Burmese Learning Hub & Interactive Studio</title>
     <meta name="description" content="Three.js Journey Complete Course Study Guide, Interactive 3D Labs, Live Code & Real-World Showcases in Burmese">
 
-    <!-- Marked.js for Markdown & Highlight.js for Syntax Highlighting -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: Inter, "Noto Sans Myanmar", "Myanmar Text", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         :root {
-            --bg-dark: #090a0f;
-            --bg-panel: #11131a;
-            --bg-card: #171923;
-            --border-color: #222634;
-            --accent: #705df2;
-            --accent-light: #8e7ff7;
-            --accent-gradient: linear-gradient(135deg, #705df2 0%, #a855f7 100%);
+            --bg-dark: #070810;
+            --bg-panel: rgba(14, 16, 27, 0.94);
+            --bg-card: #141724;
+            --bg-elevated: #1a1e2e;
+            --border-color: rgba(148, 163, 184, 0.14);
+            --accent: #7c6df2;
+            --accent-light: #a99fff;
+            --accent-gradient: linear-gradient(135deg, #7867ed 0%, #a855f7 55%, #ec4899 100%);
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #9da9bc;
             --teal: #14b8a6;
             --orange: #f97316;
+            --topbar-height: 64px;
+            --sidebar-width: 300px;
+            color-scheme: dark;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background:
+                radial-gradient(circle at 72% -10%, rgba(124, 109, 242, 0.16), transparent 38%),
+                radial-gradient(circle at 12% 110%, rgba(20, 184, 166, 0.08), transparent 30%),
+                var(--bg-dark);
             color: var(--text-main);
             height: 100vh;
             width: 100vw;
@@ -45,15 +47,16 @@
 
         /* Top Navigation Bar */
         header.top-bar {
-            height: 58px;
+            height: var(--topbar-height);
             background: var(--bg-panel);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 18px;
+            padding: 0 20px;
             z-index: 100;
             flex-shrink: 0;
+            backdrop-filter: blur(18px);
         }
 
         .brand-group {
@@ -71,6 +74,12 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
+        }
+
+        button { font: inherit; }
+        button:focus-visible, a:focus-visible, input:focus-visible {
+            outline: 2px solid var(--accent-light);
+            outline-offset: 2px;
         }
 
         .logo-text {
@@ -97,7 +106,7 @@
             display: flex;
             background: #1b1d28;
             padding: 3px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
         }
 
@@ -113,6 +122,9 @@
             align-items: center;
             gap: 6px;
             user-select: none;
+            border: 0;
+            background: transparent;
+            text-decoration: none;
         }
 
         .view-tab:hover {
@@ -171,7 +183,7 @@
 
         /* Left Sidebar (Lesson Directory) */
         aside.lesson-sidebar {
-            width: 310px;
+            width: var(--sidebar-width);
             background: var(--bg-panel);
             border-right: 1px solid var(--border-color);
             display: flex;
@@ -271,30 +283,31 @@
             width: 100%;
             height: 100%;
             overflow-y: auto;
-            background: var(--bg-dark);
-            padding: 30px 20px;
+            background: transparent;
+            padding: 32px 22px 64px;
             display: block;
         }
 
         .guide-paper {
-            max-width: 880px;
+            max-width: 920px;
             margin: 0 auto;
             background: var(--bg-card);
-            padding: 40px 45px;
-            border-radius: 12px;
+            padding: clamp(24px, 4vw, 52px);
+            border-radius: 18px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            line-height: 1.75;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.32);
+            line-height: 1.85;
         }
 
-        .guide-paper h1 { font-size: 1.8rem; color: #a79afc; margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
-        .guide-paper h2 { font-size: 1.35rem; color: #ffb74d; margin-top: 30px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        .guide-paper h1 { font-size: clamp(1.65rem, 4vw, 2.25rem); line-height: 1.35; color: #c4bdff; margin-bottom: 20px; border-bottom: 2px solid var(--accent); padding-bottom: 14px; }
+        .guide-paper h2 { font-size: 1.38rem; color: #ffc26b; margin-top: 38px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
         .guide-paper h3 { font-size: 1.1rem; color: #64d2ff; margin-top: 22px; margin-bottom: 8px; }
         .guide-paper h4 { font-size: 0.95rem; color: #f472b6; margin-top: 14px; margin-bottom: 6px; }
-        .guide-paper p { margin-bottom: 14px; color: #cbd5e1; font-size: 0.93rem; }
-        .guide-paper ul, .guide-paper ol { margin-left: 24px; margin-bottom: 16px; color: #cbd5e1; font-size: 0.91rem; }
-        .guide-paper li { margin-bottom: 6px; }
-        .guide-paper blockquote { border-left: 4px solid var(--accent); background: #111219; padding: 12px 16px; border-radius: 6px; margin-bottom: 18px; color: #94a3b8; font-size: 0.88rem; }
+        .guide-paper p { margin-bottom: 16px; color: #d1d8e5; font-size: 0.98rem; }
+        .guide-paper ul, .guide-paper ol { margin-left: 24px; margin-bottom: 18px; color: #d1d8e5; font-size: 0.96rem; }
+        .guide-paper li { margin-bottom: 8px; padding-left: 3px; }
+        .guide-paper blockquote { border-left: 4px solid var(--accent); background: linear-gradient(135deg, rgba(124,109,242,.12), rgba(168,85,247,.06)); padding: 15px 18px; border-radius: 8px; margin-bottom: 20px; color: #b8c2d3; font-size: 0.92rem; }
+        .guide-paper hr { border: 0; border-top: 1px solid var(--border-color); margin: 28px 0; }
         .guide-paper table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.86rem; }
         .guide-paper th, .guide-paper td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; }
         .guide-paper th { background: #1f222e; color: #ffb74d; }
@@ -310,6 +323,7 @@
             height: 100%;
             display: none;
             position: relative;
+            min-width: 0;
         }
 
         #lab-canvas-container {
@@ -317,7 +331,8 @@
             position: relative;
             height: 100%;
             overflow: hidden;
-            background: #08090e;
+            background: radial-gradient(circle at 50% 40%, rgba(124,109,242,.12), transparent 42%), #070810;
+            min-width: 0;
         }
 
         canvas.lab-webgl {
@@ -327,14 +342,15 @@
         }
 
         #lab-sidebar {
-            width: 410px;
+            width: min(410px, 34vw);
+            min-width: 330px;
             background: var(--bg-panel);
             border-left: 1px solid var(--border-color);
-            padding: 18px;
+            padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
             z-index: 10;
             flex-shrink: 0;
         }
@@ -349,9 +365,10 @@
 
         .lab-card {
             background: var(--bg-card);
-            border-radius: 8px;
-            padding: 14px;
+            border-radius: 12px;
+            padding: 16px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 12px 28px rgba(0,0,0,.16);
         }
 
         .lab-card h2 {
@@ -518,6 +535,23 @@
             font-weight: bold;
         }
 
+        .lab-hint {
+            position: absolute;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%);
+            background: rgba(10, 12, 20, .78);
+            border: 1px solid var(--border-color);
+            color: #cbd5e1;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: .74rem;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            z-index: 5;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 960px) {
             .btn-menu-toggle { display: block; }
@@ -534,8 +568,31 @@
             }
             .search-input { width: 140px; }
             .search-input:focus { width: 160px; }
-            #lab-sidebar { width: 100%; position: absolute; bottom: 0; height: 320px; }
+            #view-lab { flex-direction: column; overflow-y: auto; }
+            #lab-canvas-container { flex: 0 0 min(52vh, 520px); min-height: 340px; }
+            #lab-sidebar { width: 100%; min-width: 0; height: auto; overflow: visible; position: static; }
             .guide-paper { padding: 25px 20px; }
+        }
+
+        @media (max-width: 720px) {
+            header.top-bar { padding: 0 12px; gap: 10px; }
+            .logo-text > span:first-child { display: none; }
+            .view-tab { padding: 7px 10px; }
+            #tab-btn-guide span, #tab-btn-lab span { font-size: 0; }
+            #tab-btn-guide span::after { content: "📚 Guide"; font-size: .78rem; }
+            #tab-btn-lab span::after { content: "🎮 3D Lab"; font-size: .78rem; }
+            .header-actions .search-box, .header-actions > a { display: none; }
+            #view-guide { padding: 16px 10px 42px; }
+            .guide-paper { border-radius: 12px; }
+            #lab-stats { top: 10px; left: 10px; font-size: .68rem; }
+            .lab-hint { bottom: 12px; font-size: .66rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
         }
     </style>
 </head>
@@ -552,18 +609,18 @@
         </div>
 
         <div class="view-switcher">
-            <div id="tab-btn-guide" class="view-tab active">
+            <button id="tab-btn-guide" class="view-tab active" type="button" aria-pressed="true">
                 <span>📚 သင်ခန်းစာ လမ်းညွှန် & Memo</span>
-            </div>
-            <div id="tab-btn-lab" class="view-tab">
+            </button>
+            <button id="tab-btn-lab" class="view-tab" type="button" aria-pressed="false">
                 <span>🎮 Interactive 3D Lab</span>
-            </div>
+            </button>
         </div>
 
         <div class="header-actions">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="search-input" class="search-input" placeholder="Search lessons..." />
+                <input type="search" id="search-input" class="search-input" placeholder="Search lessons..." aria-label="Search lessons" />
             </div>
             <a href="https://threejs-journey.com" target="_blank" class="view-tab" style="padding:6px 10px; border:1px solid var(--border-color); text-decoration:none;">
                 <span>Official Course</span> ↗
@@ -601,7 +658,8 @@
                         <div>FPS / Render: <span id="stat-fps">60 FPS (WebGL)</span></div>
                         <div>Camera Position: <span id="stat-cam-pos">x: 0, y: 1.5, z: 4</span></div>
                     </div>
-                    <canvas class="lab-webgl"></canvas>
+                    <canvas class="lab-webgl" aria-label="Interactive Three.js lesson preview"></canvas>
+                    <div class="lab-hint">Drag to orbit · Scroll to zoom · Controls are in the right panel</div>
                 </div>
 
                 <aside id="lab-sidebar">
@@ -632,21 +690,20 @@
         </main>
     </div>
 
-    <!-- Three.js CDN Module Setup -->
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }
-    }
-    </script>
-
     <!-- Main Web App Script -->
     <script type="module">
         import { CHAPTERS, LESSONS } from './data/lessons.js'
         import * as THREE from 'three'
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+        import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+        import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+        import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+        import helvetikerRegular from 'three/examples/fonts/helvetiker_regular.typeface.json'
+        import { marked } from 'marked'
+        import hljs from 'highlight.js/lib/core'
+        import javascript from 'highlight.js/lib/languages/javascript'
+        import 'highlight.js/styles/github-dark-dimmed.css'
+
+        hljs.registerLanguage('javascript', javascript)
 
         // State
         let currentLessonId = "01-introduction"
@@ -667,6 +724,7 @@
         const labLiveCode = document.getElementById('lab-live-code')
         const btnCopyCode = document.getElementById('btn-copy-code')
         const statLessonTitle = document.getElementById('stat-lesson-title')
+        const statFps = document.getElementById('stat-fps')
         const statCamPos = document.getElementById('stat-cam-pos')
 
         // ==========================================
@@ -721,16 +779,21 @@
         const labControls = new OrbitControls(perspCam, labCanvas)
         labControls.enableDamping = true
         labControls.dampingFactor = 0.05
+        labControls.minDistance = 1.5
+        labControls.maxDistance = 12
         labControls.target.set(0, 0, 0)
 
         // Renderer
-        const labRenderer = new THREE.WebGLRenderer({ canvas: labCanvas, antialias: true })
+        const labRenderer = new THREE.WebGLRenderer({ canvas: labCanvas, antialias: true, powerPreference: 'high-performance' })
         labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        labRenderer.outputColorSpace = THREE.SRGBColorSpace
+        labRenderer.toneMapping = THREE.ACESFilmicToneMapping
+        labRenderer.toneMappingExposure = 1.1
 
         // Resize Logic
         const triggerLabResize = () => {
-            const width = labContainer.clientWidth || window.innerWidth - 410 - 310
-            const height = labContainer.clientHeight || window.innerHeight - 58
+            const width = Math.floor(labContainer.clientWidth)
+            const height = Math.floor(labContainer.clientHeight)
             if (width <= 0 || height <= 0) return
 
             labAspect = width / height
@@ -744,17 +807,19 @@
             orthoCam.bottom = -frustumSize / 2
             orthoCam.updateProjectionMatrix()
 
-            labRenderer.setSize(width, height)
+            labRenderer.setSize(width, height, false)
         }
 
         window.addEventListener('resize', triggerLabResize)
+        const labResizeObserver = new ResizeObserver(triggerLabResize)
+        labResizeObserver.observe(labContainer)
 
         // Mouse Controls Variables
         let labControlMode = 'orbit' // 'orbit' | 'custom' | 'lerp'
         const cursor = { x: 0, y: 0 }
         const targetPos = new THREE.Vector3()
 
-        window.addEventListener('mousemove', (e) => {
+        labCanvas.addEventListener('pointermove', (e) => {
             const rect = labCanvas.getBoundingClientRect()
             if (
                 e.clientX >= rect.left && e.clientX <= rect.right &&
@@ -767,9 +832,13 @@
 
         // Copy Code Button
         btnCopyCode.addEventListener('click', () => {
-            navigator.clipboard.writeText(labLiveCode.innerText)
-            btnCopyCode.innerText = 'Copied! ✓'
-            setTimeout(() => { btnCopyCode.innerText = 'Copy Code' }, 1500)
+            navigator.clipboard.writeText(labLiveCode.innerText).then(() => {
+                btnCopyCode.innerText = 'Copied! ✓'
+                setTimeout(() => { btnCopyCode.innerText = 'Copy Code' }, 1500)
+            }).catch(() => {
+                btnCopyCode.innerText = 'Copy failed'
+                setTimeout(() => { btnCopyCode.innerText = 'Copy Code' }, 1500)
+            })
         })
 
         // ==========================================
@@ -780,33 +849,70 @@
             speed: 1.0,
             amplitude: 1.0,
             particleCount: 2000,
-            particlesMesh: null
+            particlesMesh: null,
+            jumpStartedAt: null,
+            debugSpinStartedAt: null,
+            debugSpinBaseRotation: 0,
+            deployLaunchedAt: null
         }
 
         const build3DSceneForLesson = (lessonId) => {
+            animState.particlesMesh = null
+            animState.type = 'spin'
+            animState.speed = 1
+            animState.jumpStartedAt = null
+            animState.debugSpinStartedAt = null
+            animState.debugSpinBaseRotation = 0
+            animState.deployLaunchedAt = null
+
             // Clear existing lesson meshes
             while (lessonMeshGroup.children.length > 0) {
                 const obj = lessonMeshGroup.children[0]
                 lessonMeshGroup.remove(obj)
-                if (obj.geometry) obj.geometry.dispose()
-                if (obj.material) {
-                    if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose())
-                    else obj.material.dispose()
-                }
+                const disposedGeometries = new Set()
+                const disposedMaterials = new Set()
+                obj.traverse((child) => {
+                    if (child.geometry && !disposedGeometries.has(child.geometry)) {
+                        disposedGeometries.add(child.geometry)
+                        child.geometry.dispose()
+                    }
+                    if (!child.material) return
+                    const disposeMaterial = (material) => {
+                        if (disposedMaterials.has(material)) return
+                        disposedMaterials.add(material)
+                        if (material.map) material.map.dispose()
+                        material.dispose()
+                    }
+                    if (Array.isArray(child.material)) child.material.forEach(disposeMaterial)
+                    else disposeMaterial(child.material)
+                })
             }
 
             // Reset Camera & Helpers
             activeCam = perspCam
             labControls.object = perspCam
             labControls.enabled = true
+            labControls.enableDamping = true
             labControls.autoRotate = false
             labControlMode = 'orbit'
+            perspCam.fov = 75
+            perspCam.near = 0.1
+            perspCam.far = 100
+            perspCam.position.set(0, 1.5, 4)
+            perspCam.updateProjectionMatrix()
+            orthoCam.near = 0.1
+            orthoCam.far = 100
+            orthoCam.position.set(0, 1.5, 4)
+            orthoCam.updateProjectionMatrix()
+            labControls.target.set(0, 0, 0)
+            labControls.update()
+            labRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
             gridHelper.visible = true
             axesHelper.visible = true
 
             // Build scene based on lesson
             if (lessonId === '01-introduction') {
-                // Lesson 01: GPU Particle Galaxy / Swarm demonstrating GPU massive parallel power
+                // Lesson 01: a visual preview of the creative journey ahead
                 const count = 3000
                 const positions = new Float32Array(count * 3)
                 const colors = new Float32Array(count * 3)
@@ -854,38 +960,44 @@
                 const geom = new THREE.TorusKnotGeometry(0.9, 0.3, 64, 16)
                 const mat = new THREE.MeshNormalMaterial({ wireframe: false })
                 const torusKnot = new THREE.Mesh(geom, mat)
+                torusKnot.name = 'webglDemo'
                 lessonMeshGroup.add(torusKnot)
 
             } else if (lessonId === '03-basic-scene') {
                 // Lesson 03: Basic Red Cube with Core 4 elements
-                const geom = new THREE.BoxGeometry(1.2, 1.2, 1.2)
-                const mat = new THREE.MeshBasicMaterial({ color: 0xff4444 })
+                const geom = new THREE.BoxGeometry(1, 1, 1)
+                const mat = new THREE.MeshBasicMaterial({ color: 0xff0000 })
                 const cube = new THREE.Mesh(geom, mat)
+                cube.name = 'basicSceneCube'
                 lessonMeshGroup.add(cube)
+                perspCam.position.set(0, 0, 3)
+                labControls.update()
 
             } else if (lessonId === '04-transform-objects') {
-                // Lesson 04: Transform Object (Cube with child group)
-                const cube = new THREE.Mesh(
-                    new THREE.BoxGeometry(1, 1, 1),
-                    new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.3 })
-                )
-                cube.name = "transformCube"
-                lessonMeshGroup.add(cube)
+                // Lesson 04: a real parent/child scene graph
+                const transformGroup = new THREE.Group()
+                transformGroup.name = 'transformDemoGroup'
+                lessonMeshGroup.add(transformGroup)
 
-                // Add 2 child objects in group
-                const child1 = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.3, 16, 16),
-                    new THREE.MeshBasicMaterial({ color: 0xff5252 })
-                )
-                child1.position.set(1.5, 0, 0)
-                lessonMeshGroup.add(child1)
+                const cubeGeometry = new THREE.BoxGeometry(0.9, 0.9, 0.9)
+                const cubeDefinitions = [
+                    { name: 'transformLeftCube', x: -1.5, color: 0xff6b6b },
+                    { name: 'transformCube', x: 0, color: 0x38bdf8 },
+                    { name: 'transformRightCube', x: 1.5, color: 0x69f0ae }
+                ]
 
-                const child2 = new THREE.Mesh(
-                    new THREE.BoxGeometry(0.5, 0.5, 0.5),
-                    new THREE.MeshBasicMaterial({ color: 0x69f0ae })
-                )
-                child2.position.set(-1.5, 0, 0)
-                lessonMeshGroup.add(child2)
+                cubeDefinitions.forEach(({ name, x, color }) => {
+                    const cube = new THREE.Mesh(
+                        cubeGeometry,
+                        new THREE.MeshStandardMaterial({ color, roughness: 0.3, metalness: 0.08 })
+                    )
+                    cube.name = name
+                    cube.position.x = x
+                    transformGroup.add(cube)
+                })
+
+                perspCam.position.set(0, 1.6, 5)
+                labControls.update()
 
             } else if (lessonId === '05-animations') {
                 // Lesson 05: Floating Sphere & Orbiting Box
@@ -931,6 +1043,124 @@
                 const mesh = new THREE.Mesh(geom, mat)
                 lessonMeshGroup.add(mesh)
 
+            } else if (lessonId === '08-geometries') {
+                const geometries = [
+                    new THREE.BoxGeometry(1.1, 1.1, 1.1, 2, 2, 2),
+                    new THREE.SphereGeometry(0.75, 32, 20),
+                    new THREE.TorusKnotGeometry(0.58, 0.2, 96, 16)
+                ]
+                geometries.forEach((geometry, index) => {
+                    const mesh = new THREE.Mesh(
+                        geometry,
+                        new THREE.MeshStandardMaterial({
+                            color: [0x7c6df2, 0x14b8a6, 0xf97316][index],
+                            roughness: 0.32,
+                            metalness: 0.18
+                        })
+                    )
+                    mesh.position.x = (index - 1) * 2.2
+                    mesh.name = 'geometryDemo'
+                    lessonMeshGroup.add(mesh)
+                })
+
+            } else if (lessonId === '09-debug-ui') {
+                const debugCube = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.3, 1.3, 1.3, 2, 2, 2),
+                    new THREE.MeshStandardMaterial({ color: 0x7c6df2, roughness: 0.3, metalness: 0.15 })
+                )
+                debugCube.name = 'debugCube'
+                lessonMeshGroup.add(debugCube)
+
+            } else if (lessonId === '10-textures') {
+                const textureCanvas = document.createElement('canvas')
+                textureCanvas.width = textureCanvas.height = 256
+                const context = textureCanvas.getContext('2d')
+                const cells = 8
+                const cellSize = textureCanvas.width / cells
+                for (let y = 0; y < cells; y++) {
+                    for (let x = 0; x < cells; x++) {
+                        context.fillStyle = (x + y) % 2 ? '#7c6df2' : '#f8fafc'
+                        context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
+                    }
+                }
+                const checkerTexture = new THREE.CanvasTexture(textureCanvas)
+                checkerTexture.colorSpace = THREE.SRGBColorSpace
+                checkerTexture.magFilter = THREE.NearestFilter
+                checkerTexture.name = 'checkerTexture'
+                const cube = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.7, 1.7, 1.7),
+                    new THREE.MeshStandardMaterial({ map: checkerTexture, roughness: 0.45 })
+                )
+                cube.name = 'textureDemo'
+                lessonMeshGroup.add(cube)
+
+            } else if (lessonId === '11-materials') {
+                ;[
+                    { x: -1.9, roughness: 0.1, metalness: 0.9, color: 0xa99fff },
+                    { x: 0, roughness: 0.45, metalness: 0.35, color: 0x38bdf8 },
+                    { x: 1.9, roughness: 0.95, metalness: 0, color: 0xf97316 }
+                ].forEach((settings, index) => {
+                    const { x, ...materialSettings } = settings
+                    const sphere = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.72, 48, 32),
+                        new THREE.MeshStandardMaterial(materialSettings)
+                    )
+                    sphere.position.x = x
+                    sphere.name = index === 1 ? 'materialDemo' : 'materialComparison'
+                    lessonMeshGroup.add(sphere)
+                })
+
+            } else if (lessonId === '12-3d-text') {
+                const font = new FontLoader().parse(helvetikerRegular)
+                const geometry = new TextGeometry('Three.js', {
+                    font,
+                    size: 0.72,
+                    height: 0.2,
+                    curveSegments: 10,
+                    bevelEnabled: true,
+                    bevelThickness: 0.035,
+                    bevelSize: 0.025,
+                    bevelSegments: 4
+                })
+                geometry.center()
+                const textMesh = new THREE.Mesh(
+                    geometry,
+                    new THREE.MeshStandardMaterial({ color: 0xa99fff, roughness: 0.28, metalness: 0.45 })
+                )
+                textMesh.name = 'textDemo'
+                lessonMeshGroup.add(textMesh)
+
+            } else if (lessonId === '13-go-live') {
+                const deployGroup = new THREE.Group()
+                deployGroup.name = 'deployGroup'
+
+                const planet = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.85, 40, 28),
+                    new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.28, metalness: 0.45 })
+                )
+                planet.name = 'deployPlanet'
+                deployGroup.add(planet)
+
+                const orbit = new THREE.Mesh(
+                    new THREE.TorusGeometry(1.35, 0.025, 8, 96),
+                    new THREE.MeshBasicMaterial({ color: 0xa99fff })
+                )
+                orbit.rotation.x = Math.PI * 0.5
+                deployGroup.add(orbit)
+
+                ;[-2.1, 0, 2.1].forEach((x, index) => {
+                    const node = new THREE.Mesh(
+                        new THREE.OctahedronGeometry(0.18),
+                        new THREE.MeshBasicMaterial({ color: [0xff6b6b, 0xfacc15, 0x69f0ae][index] })
+                    )
+                    node.position.set(x, index === 1 ? 1.55 : -1.15, 0)
+                    deployGroup.add(node)
+                })
+
+                lessonMeshGroup.add(deployGroup)
+                perspCam.position.set(0, 1.2, 4.5)
+                labControls.update()
+
             } else {
                 // Fallback default
                 const mesh = new THREE.Mesh(
@@ -950,33 +1180,32 @@
             if (lessonId === '01-introduction') {
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
-                        <h2>🚀 GPU Parallel Power Lab</h2>
+                        <h2>🚀 Three.js Journey Preview</h2>
                         <div class="lab-info-box">
-                            GPU သည် တြိဂံနှင့် Particle ထောင်သောင်းချီကို <strong>60 FPS ချောမွေ့စွာ</strong> တစ်ပြိုင်နက်တည်း (Parallel) တွက်ချက်ရေးဆွဲပြသနိုင်စွမ်းရှိသည်။
+                            ဒီ 3D scene လေးက ရှေ့ဆက်လေ့လာရမယ့် creative journey ကို ကိုယ်စားပြုထားပါတယ်။ Lesson တွေကို အစဉ်လိုက်လေ့လာပြီး <strong>ကိုယ်တိုင် code ရေးကာ စမ်းသပ်ပါ</strong>။
                         </div>
                         <div class="lab-control-group" style="margin-top:12px;">
-                            <label>Galaxy Particle Spin Speed: <span id="val-intro-speed" class="val">1.0x</span></label>
+                            <label>3D Preview Speed: <span id="val-intro-speed" class="val">1.0x</span></label>
                             <input type="range" id="param-intro-speed" min="0.1" max="3" step="0.1" value="1">
                         </div>
                     </div>
                 `
                 showcaseContent.innerHTML = `
                     <div class="showcase-item">
-                        <div class="showcase-title">🚗 Bruno Simon Portfolio <a href="https://bruno-simon.com" target="_blank" style="color:#a855f7; text-decoration:none;">View ↗</a></div>
-                        <div class="showcase-desc">Three.js + Physics သုံး၍ 3D ကားလေးကို မောင်းနှင်ကာ စူးစမ်းနိုင်သော ကမ္ဘာကျော် Portfolio။</div>
+                        <div class="showcase-title">🚗 Bruno Simon Portfolio <a href="https://bruno-simon.com" target="_blank" style="color:#a855f7; text-decoration:none;">ကြည့်ရန် ↗</a></div>
+                        <div class="showcase-desc">Three.js နဲ့ physics ကို ပေါင်းစပ်ပြီး ကားလေးမောင်းရင်း project များကို လှည့်လည်ကြည့်ရှုနိုင်တဲ့ creative portfolio။</div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-title">📱 Apple 3D Product Viewers</div>
-                        <div class="showcase-desc">iPhone, AirPods နှင့် Mac များကို ၃၆၀ ဒီဂရီ အလင်းအမှောင် ရောင်ပြန်ဟပ်မှုများဖြင့် ပြသသော စနစ်။</div>
+                        <div class="showcase-title">🧭 ဒီ Lesson ရဲ့ ရည်ရွယ်ချက်</div>
+                        <div class="showcase-desc">ဘာသင်မလဲဆိုတာ သိထားပြီး ကိုယ်နဲ့ကိုက်တဲ့ လေ့လာပုံ၊ အချိန်နဲ့ လေ့ကျင့်မှုစနစ် တည်ဆောက်ဖို့ ဖြစ်ပါတယ်။</div>
                     </div>
                 `
-                labLiveCode.innerText = `// 3,000 GPU Particles Simulation
-const geometry = new THREE.BufferGeometry()
-geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-const material = new THREE.PointsMaterial({ size: 0.04, vertexColors: true })
-const particles = new THREE.Points(geometry, material)
-scene.add(particles)`
+                labLiveCode.innerText = `// Lesson 01 — Learning roadmap
+// 1. Watch or read the lesson
+// 2. Write the code yourself
+// 3. Change one thing and observe
+// 4. Read errors and debug
+// 5. Build and share your own project`
 
                 document.getElementById('param-intro-speed').addEventListener('input', (e) => {
                     animState.speed = Number(e.target.value)
@@ -984,6 +1213,11 @@ scene.add(particles)`
                 })
 
             } else if (lessonId === '02-webgl-and-threejs') {
+                const webglDemo = lessonMeshGroup.getObjectByName('webglDemo')
+                const getTriangleCount = () => webglDemo?.geometry.index
+                    ? webglDemo.geometry.index.count / 3
+                    : (webglDemo?.geometry.attributes.position.count || 0) / 3
+
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
                         <h2>🔺 Triangles & Mesh Inspector</h2>
@@ -993,35 +1227,72 @@ scene.add(particles)`
                                 <input type="checkbox" id="chk-wireframe">
                             </label>
                         </div>
-                        <div class="lab-info-box" style="margin-top:8px;">
-                            3D Model အားလုံးကို ထောင်ပေါင်းများစွာသော <strong>Triangles (တြိဂံများ)</strong> ဖြင့် တည်ဆောက်ထားသည်။
+                        <div class="lab-control-group" style="margin-top:12px;">
+                            <label>Mesh detail <span id="val-tubular-segments" class="val">64 segments</span></label>
+                            <input type="range" id="param-tubular-segments" min="24" max="128" step="8" value="64">
                         </div>
+                        <div class="lab-info-box" style="margin-top:8px;">
+                            လက်ရှိ geometry — <strong><span id="val-triangle-count">${getTriangleCount().toLocaleString()}</span> triangles</strong><br>
+                            Segment တိုးလာရင် ပုံသဏ္ဌာန်ပိုချောလာပေမယ့် GPU တွက်ချက်ရမယ့် data လည်း ပိုများလာပါတယ်။
+                        </div>
+                    </div>
+                    <div class="lab-card">
+                        <h2>⚙️ Rendering Pipeline</h2>
+                        <div class="lab-info-box">JavaScript → Three.js → WebGL → GPU → Canvas</div>
                     </div>
                 `
                 showcaseContent.innerHTML = `
                     <div class="showcase-item">
-                        <div class="showcase-title">🏆 Awwwards 3D Sites</div>
-                        <div class="showcase-desc">Web Designer များ၏ Interactive 3D WebGL Storytelling စာမျက်နှာများ။</div>
+                        <div class="showcase-title">🧪 Three.js Examples <a href="https://threejs.org/examples/" target="_blank" rel="noreferrer" style="color:#a855f7;text-decoration:none;">ကြည့်ရန် ↗</a></div>
+                        <div class="showcase-desc">Effect တစ်ခုချင်းစီရဲ့ live result နဲ့ public source code ကို တိုက်ရိုက်လေ့လာနိုင်ပါတယ်။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">📖 Three.js Documentation <a href="https://threejs.org/docs/" target="_blank" rel="noreferrer" style="color:#a855f7;text-decoration:none;">ဖတ်ရန် ↗</a></div>
+                        <div class="showcase-desc">Class၊ property နဲ့ method အသုံးပြုပုံကို official documentation မှာ ရှာဖွေနိုင်ပါတယ်။</div>
                     </div>
                 `
-                labLiveCode.innerText = `// TorusKnot Mesh (1,024 Triangles)
-const geometry = new THREE.TorusKnotGeometry(0.9, 0.3, 64, 16)
-const material = new THREE.MeshNormalMaterial({ wireframe: false })
+                const updateWebglCode = (segments) => {
+                    const wireframe = webglDemo?.material.wireframe ?? false
+                    labLiveCode.innerText = `// Three.js creates WebGL buffers and shaders for us
+const geometry = new THREE.TorusKnotGeometry(0.9, 0.3, ${segments}, 16)
+const material = new THREE.MeshNormalMaterial({ wireframe: ${wireframe} })
 const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)`
+scene.add(mesh)
+
+// Current detail: ${segments} tubular segments
+// Current triangles: ${getTriangleCount().toLocaleString()}`
+                }
+                updateWebglCode(64)
 
                 document.getElementById('chk-wireframe').addEventListener('change', (e) => {
-                    if (lessonMeshGroup.children[0]) {
-                        lessonMeshGroup.children[0].material.wireframe = e.target.checked
-                    }
+                    if (webglDemo) webglDemo.material.wireframe = e.target.checked
+                    const segments = Number(document.getElementById('param-tubular-segments').value)
+                    updateWebglCode(segments)
+                })
+
+                document.getElementById('param-tubular-segments').addEventListener('input', (event) => {
+                    const segments = Number(event.target.value)
+                    if (!webglDemo) return
+                    webglDemo.geometry.dispose()
+                    webglDemo.geometry = new THREE.TorusKnotGeometry(0.9, 0.3, segments, 16)
+                    document.getElementById('val-tubular-segments').innerText = `${segments} segments`
+                    document.getElementById('val-triangle-count').innerText = getTriangleCount().toLocaleString()
+                    updateWebglCode(segments)
                 })
 
             } else if (lessonId === '03-basic-scene') {
+                const basicSceneCube = lessonMeshGroup.getObjectByName('basicSceneCube')
+                const basicSceneState = {
+                    color: '0xff0000',
+                    cameraZ: 3,
+                    visible: true
+                }
+
                 labDynamicPanel.innerHTML = `
                     <div class="lab-card">
-                        <h2>📦 The Core 4 Elements Studio</h2>
+                        <h2>📦 First Scene Studio</h2>
                         <div class="lab-control-group">
-                            <label>Cube Color Picker</label>
+                            <label>Cube material color</label>
                             <div class="btn-group">
                                 <button class="btn-lab active" id="btn-col-red">Red</button>
                                 <button class="btn-lab" id="btn-col-blue">Blue</button>
@@ -1032,42 +1303,113 @@ scene.add(mesh)`
                             <label>Camera Z Distance: <span id="val-cam-z" class="val">3.0</span></label>
                             <input type="range" id="param-cam-z" min="1.5" max="7" step="0.1" value="3">
                         </div>
+                        <div class="lab-control-group" style="margin-top:10px;">
+                            <label><span>Mesh ကို Scene ထဲမှာ ပြရန်</span><input type="checkbox" id="chk-basic-mesh-visible" checked></label>
+                        </div>
+                        <div class="lab-info-box" style="margin-top:10px;">
+                            Camera ကို cube နဲ့ နေရာတူထားရင် object ကို မှန်ကန်စွာ မမြင်နိုင်ပါ။ Z distance ကို ပြောင်းပြီး အရွယ်အစား ကွာခြားပုံကြည့်ပါ။
+                        </div>
+                    </div>
+                    <div class="lab-card">
+                        <h2>🧱 Core 4 Flow</h2>
+                        <div class="lab-info-box">Scene + Mesh + Camera → Renderer → Canvas</div>
                     </div>
                 `
                 showcaseContent.innerHTML = `
                     <div class="showcase-item">
-                        <div class="showcase-title">🛍️ E-Commerce Product Box</div>
-                        <div class="showcase-desc">Nike, Ikea စသော ကုန်ပစ္စည်း 3D စတင်မိတ်ဆက် Box ပြသမှုများ။</div>
+                        <div class="showcase-title">🟥 Cube က စတုရန်းလို ဘာကြောင့်မြင်ရတာလဲ</div>
+                        <div class="showcase-desc">Camera က cube ရဲ့ မျက်နှာတစ်ဖက်ကို တည့်တည့်ကြည့်နေတာကြောင့်ပါ။ Lab canvas ကို drag လုပ်ပြီး ဘေးမျက်နှာများကို ကြည့်နိုင်ပါတယ်။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">🧪 Lab controls အကြောင်း</div>
+                        <div class="showcase-desc">Drag/zoom controls တွေက concept စမ်းဖို့ Lab က ထပ်ထည့်ထားတာပါ။ မူရင်း Lesson 3 first-render code ထဲမှာ OrbitControls မပါသေးပါဘူး။</div>
                     </div>
                 `
-                labLiveCode.innerText = `// Core 4 Elements
-const scene = new THREE.Scene()
-const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xff0000 }))
-scene.add(mesh)
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
-scene.add(camera)
-const renderer = new THREE.WebGLRenderer({ canvas })
-renderer.render(scene, camera)`
+                const updateBasicSceneCode = () => {
+                    labLiveCode.innerText = `import * as THREE from 'three'
 
-                document.getElementById('btn-col-red').addEventListener('click', () => {
-                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0xff4444)
-                })
-                document.getElementById('btn-col-blue').addEventListener('click', () => {
-                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0x38bdf8)
-                })
-                document.getElementById('btn-col-green').addEventListener('click', () => {
-                    if (lessonMeshGroup.children[0]) lessonMeshGroup.children[0].material.color.set(0x4ade80)
+const canvas = document.querySelector('canvas.webgl')
+const scene = new THREE.Scene()
+
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: ${basicSceneState.color} })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)${basicSceneState.visible ? '' : '\nmesh.visible = false'}
+
+const sizes = { width: 800, height: 600 }
+
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+camera.position.z = ${basicSceneState.cameraZ.toFixed(1)}
+scene.add(camera)
+
+const renderer = new THREE.WebGLRenderer({ canvas })
+renderer.setSize(sizes.width, sizes.height)
+renderer.render(scene, camera)`
+                }
+                updateBasicSceneCode()
+
+                const colorButtons = [
+                    ['btn-col-red', 0xff0000, '0xff0000'],
+                    ['btn-col-blue', 0x38bdf8, '0x38bdf8'],
+                    ['btn-col-green', 0x4ade80, '0x4ade80']
+                ]
+                colorButtons.forEach(([id, color, colorCode]) => {
+                    const button = document.getElementById(id)
+                    button.addEventListener('click', () => {
+                        if (basicSceneCube) basicSceneCube.material.color.setHex(color)
+                        basicSceneState.color = colorCode
+                        colorButtons.forEach(([buttonId]) => {
+                            document.getElementById(buttonId).classList.toggle('active', buttonId === id)
+                        })
+                        updateBasicSceneCode()
+                    })
                 })
                 document.getElementById('param-cam-z').addEventListener('input', (e) => {
                     const z = Number(e.target.value)
                     perspCam.position.z = z
+                    basicSceneState.cameraZ = z
                     document.getElementById('val-cam-z').innerText = z.toFixed(1)
+                    updateBasicSceneCode()
+                })
+                document.getElementById('chk-basic-mesh-visible').addEventListener('change', (event) => {
+                    basicSceneState.visible = event.target.checked
+                    if (basicSceneCube) basicSceneCube.visible = basicSceneState.visible
+                    updateBasicSceneCode()
                 })
 
             } else if (lessonId === '04-transform-objects') {
-                const targetMesh = lessonMeshGroup.children[0]
+                const transformGroup = lessonMeshGroup.getObjectByName('transformDemoGroup')
+                const transformCube = transformGroup?.getObjectByName('transformCube')
+                const transformState = {
+                    cube: {
+                        position: { x: 0, y: 0, z: 0 },
+                        rotation: { x: 0, y: 0 },
+                        scale: { x: 1, y: 1, z: 1 }
+                    },
+                    group: {
+                        position: { x: 0, y: 0, z: 0 },
+                        rotation: { x: 0, y: 0 },
+                        scale: { x: 1, y: 1, z: 1 }
+                    }
+                }
+                let transformTargetKey = 'cube'
+
                 labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🎯 Transform Target</h2>
+                        <div class="btn-group">
+                            <button id="btn-target-cube" class="btn-lab active">Center Cube</button>
+                            <button id="btn-target-group" class="btn-lab">Whole Group</button>
+                        </div>
+                        <div class="lab-control-group" style="margin-top:12px;">
+                            <label><span>AxesHelper ပြရန်</span><input type="checkbox" id="chk-transform-axes" checked></label>
+                        </div>
+                        <button id="btn-transform-reset" class="btn-action-trigger" style="margin-top:10px;">↺ Selected Target ကို Reset လုပ်ရန်</button>
+                        <div class="lab-info-box" id="transform-target-help" style="margin-top:10px;">
+                            Center Cube ကိုပြောင်းရင် child တစ်ခုတည်းသာ ပြောင်းပါတယ်။
+                        </div>
+                    </div>
+
                     <div class="lab-card">
                         <h2>📍 Position (Vector3)</h2>
                         <div class="lab-control-group">
@@ -1078,56 +1420,154 @@ renderer.render(scene, camera)`
                             <label>Position Y: <span id="val-pos-y" class="val">0.0</span></label>
                             <input type="range" id="param-pos-y" min="-2" max="2" step="0.1" value="0">
                         </div>
+                        <div class="lab-control-group">
+                            <label>Position Z: <span id="val-pos-z" class="val">0.0</span></label>
+                            <input type="range" id="param-pos-z" min="-2" max="2" step="0.1" value="0">
+                        </div>
                     </div>
 
                     <div class="lab-card">
                         <h2>🔄 Rotation (Euler Angles)</h2>
                         <div class="lab-control-group">
-                            <label>Rotation Y (Radians): <span id="val-rot-y" class="val">0.0 rad</span></label>
-                            <input type="range" id="param-rot-y" min="0" max="6.28" step="0.1" value="0">
+                            <label>Rotation X: <span id="val-rot-x" class="val">0° / 0.00 rad</span></label>
+                            <input type="range" id="param-rot-x" min="-3.15" max="3.15" step="0.05" value="0">
                         </div>
+                        <div class="lab-control-group">
+                            <label>Rotation Y: <span id="val-rot-y" class="val">0° / 0.00 rad</span></label>
+                            <input type="range" id="param-rot-y" min="-3.15" max="3.15" step="0.05" value="0">
+                        </div>
+                        <div class="lab-info-box">Euler default order — <strong>XYZ</strong>။ Slider value ကို radians နဲ့ code ထဲ ထည့်ထားပါတယ်။</div>
                     </div>
 
                     <div class="lab-card">
                         <h2>🔍 Scale (Vector3)</h2>
                         <div class="lab-control-group">
-                            <label>Scale: <span id="val-scale" class="val">1.0x</span></label>
-                            <input type="range" id="param-scale" min="0.3" max="2.5" step="0.1" value="1">
+                            <label>Scale X: <span id="val-scale-x" class="val">1.0x</span></label>
+                            <input type="range" id="param-scale-x" min="0.3" max="2.5" step="0.1" value="1">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Scale Y: <span id="val-scale-y" class="val">1.0x</span></label>
+                            <input type="range" id="param-scale-y" min="0.3" max="2.5" step="0.1" value="1">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Scale Z: <span id="val-scale-z" class="val">1.0x</span></label>
+                            <input type="range" id="param-scale-z" min="0.3" max="2.5" step="0.1" value="1">
                         </div>
                     </div>
                 `
                 showcaseContent.innerHTML = `
                     <div class="showcase-item">
-                        <div class="showcase-title">🚗 3D Car Disassembly & Hierarchy</div>
-                        <div class="showcase-desc">ကားဘီးများ၊ တံခါးများ၊ စက်အစိတ်အပိုင်းများကို Group ဖြင့် ဖွဲ့စည်း၍ နေရာရွှေ့ပြောင်းခြင်း။</div>
+                        <div class="showcase-title">🌳 Parent / Child Scene Graph</div>
+                        <div class="showcase-desc">Scene → Group → Cubes ဖြစ်ပါတယ်။ Whole Group ကို transform လုပ်ရင် child သုံးခုလုံး လိုက်ပြောင်းပြီး Center Cube ကိုရွေးရင် local transform ပဲ ပြောင်းပါတယ်။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">🧭 Axis Memory</div>
+                        <div class="showcase-desc">အနီ = X၊ အစိမ်း = Y၊ အပြာ = Z။ Canvas ကို drag လုပ်ပြီး depth နဲ့ Z movement ကို ဘေးစောင်းကနေ ကြည့်ပါ။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">🚗 Real-world hierarchy</div>
+                        <div class="showcase-desc">ကား body ကို parent၊ ဘီးနဲ့ တံခါးများကို children အဖြစ်ထားရင် ကားတစ်စီးလုံးကို parent ကနေ ရွှေ့နိုင်ပါတယ်။</div>
                     </div>
                 `
-                labLiveCode.innerText = `// Transform Objects
-mesh.position.set(0.7, -0.6, 1)
-mesh.rotation.reorder('YXZ')
-mesh.rotation.y = Math.PI * 0.5
-mesh.scale.set(1.5, 1.5, 1.5)`
 
-                document.getElementById('param-pos-x').addEventListener('input', (e) => {
-                    const x = Number(e.target.value)
-                    if (targetMesh) targetMesh.position.x = x
-                    document.getElementById('val-pos-x').innerText = x.toFixed(1)
+                const getTransformTarget = () => transformTargetKey === 'cube' ? transformCube : transformGroup
+                const getTransformTargetName = () => transformTargetKey === 'cube' ? 'cube' : 'group'
+                const formatRotation = (value) => `${Math.round(THREE.MathUtils.radToDeg(value))}° / ${value.toFixed(2)} rad`
+
+                const updateTransformCode = () => {
+                    const state = transformState[transformTargetKey]
+                    const targetName = getTransformTargetName()
+                    labLiveCode.innerText = `// Parent / Child scene graph
+const group = new THREE.Group()
+scene.add(group)
+
+const cube = new THREE.Mesh(geometry, material)
+group.add(cube)
+// Two side cubes are children of the same group too.
+
+// Selected target: ${transformTargetKey === 'cube' ? 'Center Cube (child)' : 'Whole Group (parent)'}
+${targetName}.position.set(${state.position.x.toFixed(1)}, ${state.position.y.toFixed(1)}, ${state.position.z.toFixed(1)})
+${targetName}.rotation.x = ${state.rotation.x.toFixed(2)}
+${targetName}.rotation.y = ${state.rotation.y.toFixed(2)}
+${targetName}.scale.set(${state.scale.x.toFixed(1)}, ${state.scale.y.toFixed(1)}, ${state.scale.z.toFixed(1)})
+
+const axesHelper = new THREE.AxesHelper(2)
+axesHelper.visible = ${axesHelper.visible}
+scene.add(axesHelper)`
+                }
+
+                const syncTransformPanel = () => {
+                    const state = transformState[transformTargetKey]
+                    const controls = [
+                        ['param-pos-x', 'val-pos-x', state.position.x, value => value.toFixed(1)],
+                        ['param-pos-y', 'val-pos-y', state.position.y, value => value.toFixed(1)],
+                        ['param-pos-z', 'val-pos-z', state.position.z, value => value.toFixed(1)],
+                        ['param-rot-x', 'val-rot-x', state.rotation.x, formatRotation],
+                        ['param-rot-y', 'val-rot-y', state.rotation.y, formatRotation],
+                        ['param-scale-x', 'val-scale-x', state.scale.x, value => value.toFixed(1) + 'x'],
+                        ['param-scale-y', 'val-scale-y', state.scale.y, value => value.toFixed(1) + 'x'],
+                        ['param-scale-z', 'val-scale-z', state.scale.z, value => value.toFixed(1) + 'x']
+                    ]
+                    controls.forEach(([inputId, valueId, value, formatter]) => {
+                        document.getElementById(inputId).value = value
+                        document.getElementById(valueId).innerText = formatter(value)
+                    })
+                    document.getElementById('btn-target-cube').classList.toggle('active', transformTargetKey === 'cube')
+                    document.getElementById('btn-target-group').classList.toggle('active', transformTargetKey === 'group')
+                    document.getElementById('transform-target-help').innerText = transformTargetKey === 'cube'
+                        ? 'Center Cube ကိုပြောင်းရင် child တစ်ခုတည်းရဲ့ local transform သာ ပြောင်းပါတယ်။'
+                        : 'Whole Group ကိုပြောင်းရင် parent transform ကို children သုံးခုလုံး ဆက်ခံပါတယ်။'
+                    updateTransformCode()
+                }
+
+                const bindTransformInput = (inputId, section, axis, valueId, formatter) => {
+                    document.getElementById(inputId).addEventListener('input', (event) => {
+                        const value = Number(event.target.value)
+                        const state = transformState[transformTargetKey]
+                        const target = getTransformTarget()
+                        state[section][axis] = value
+                        if (target) target[section][axis] = value
+                        document.getElementById(valueId).innerText = formatter(value)
+                        updateTransformCode()
+                    })
+                }
+
+                bindTransformInput('param-pos-x', 'position', 'x', 'val-pos-x', value => value.toFixed(1))
+                bindTransformInput('param-pos-y', 'position', 'y', 'val-pos-y', value => value.toFixed(1))
+                bindTransformInput('param-pos-z', 'position', 'z', 'val-pos-z', value => value.toFixed(1))
+                bindTransformInput('param-rot-x', 'rotation', 'x', 'val-rot-x', formatRotation)
+                bindTransformInput('param-rot-y', 'rotation', 'y', 'val-rot-y', formatRotation)
+                bindTransformInput('param-scale-x', 'scale', 'x', 'val-scale-x', value => value.toFixed(1) + 'x')
+                bindTransformInput('param-scale-y', 'scale', 'y', 'val-scale-y', value => value.toFixed(1) + 'x')
+                bindTransformInput('param-scale-z', 'scale', 'z', 'val-scale-z', value => value.toFixed(1) + 'x')
+
+                document.getElementById('btn-target-cube').addEventListener('click', () => {
+                    transformTargetKey = 'cube'
+                    syncTransformPanel()
                 })
-                document.getElementById('param-pos-y').addEventListener('input', (e) => {
-                    const y = Number(e.target.value)
-                    if (targetMesh) targetMesh.position.y = y
-                    document.getElementById('val-pos-y').innerText = y.toFixed(1)
+                document.getElementById('btn-target-group').addEventListener('click', () => {
+                    transformTargetKey = 'group'
+                    syncTransformPanel()
                 })
-                document.getElementById('param-rot-y').addEventListener('input', (e) => {
-                    const r = Number(e.target.value)
-                    if (targetMesh) targetMesh.rotation.y = r
-                    document.getElementById('val-rot-y').innerText = r.toFixed(2) + ' rad'
+                document.getElementById('chk-transform-axes').addEventListener('change', (event) => {
+                    axesHelper.visible = event.target.checked
+                    updateTransformCode()
                 })
-                document.getElementById('param-scale').addEventListener('input', (e) => {
-                    const s = Number(e.target.value)
-                    if (targetMesh) targetMesh.scale.set(s, s, s)
-                    document.getElementById('val-scale').innerText = s.toFixed(1) + 'x'
+                document.getElementById('btn-transform-reset').addEventListener('click', () => {
+                    const target = getTransformTarget()
+                    const state = transformState[transformTargetKey]
+                    Object.assign(state.position, { x: 0, y: 0, z: 0 })
+                    Object.assign(state.rotation, { x: 0, y: 0 })
+                    Object.assign(state.scale, { x: 1, y: 1, z: 1 })
+                    if (target) {
+                        target.position.set(0, 0, 0)
+                        target.rotation.set(0, 0, 0)
+                        target.scale.set(1, 1, 1)
+                    }
+                    syncTransformPanel()
                 })
+
+                syncTransformPanel()
 
             } else if (lessonId === '05-animations') {
                 labDynamicPanel.innerHTML = `
@@ -1142,7 +1582,7 @@ mesh.scale.set(1.5, 1.5, 1.5)`
                             <label>Animation Speed: <span id="val-anim-speed" class="val">1.0x</span></label>
                             <input type="range" id="param-anim-speed" min="0.2" max="3" step="0.1" value="1">
                         </div>
-                        <button id="btn-gsap-jump" class="btn-action-trigger">⚡ Trigger GSAP Jump Animation</button>
+                        <button id="btn-gsap-jump" class="btn-action-trigger">⚡ Jump Animation ကို စမ်းကြည့်ရန်</button>
                     </div>
                 `
                 showcaseContent.innerHTML = `
@@ -1162,19 +1602,29 @@ const tick = () => {
 }
 tick()`
 
-                document.getElementById('btn-anim-spin').addEventListener('click', () => { animState.type = 'spin' })
-                document.getElementById('btn-anim-wave').addEventListener('click', () => { animState.type = 'wave' })
-                document.getElementById('btn-anim-orbit').addEventListener('click', () => { animState.type = 'orbit' })
+                const setAnimationMode = (type, activeButton) => {
+                    animState.type = type
+                    const animatedMesh = lessonMeshGroup.getObjectByName('animMain')
+                    if (animatedMesh) {
+                        animatedMesh.position.set(0, 0, 0)
+                        animatedMesh.rotation.set(0, 0, 0)
+                    }
+                    document.querySelectorAll('#lab-dynamic-panel [id^="btn-anim-"]').forEach(button => {
+                        button.classList.toggle('active', button === activeButton)
+                    })
+                }
+                const btnAnimSpin = document.getElementById('btn-anim-spin')
+                const btnAnimWave = document.getElementById('btn-anim-wave')
+                const btnAnimOrbit = document.getElementById('btn-anim-orbit')
+                btnAnimSpin.addEventListener('click', () => setAnimationMode('spin', btnAnimSpin))
+                btnAnimWave.addEventListener('click', () => setAnimationMode('wave', btnAnimWave))
+                btnAnimOrbit.addEventListener('click', () => setAnimationMode('orbit', btnAnimOrbit))
                 document.getElementById('param-anim-speed').addEventListener('input', (e) => {
                     animState.speed = Number(e.target.value)
                     document.getElementById('val-anim-speed').innerText = animState.speed.toFixed(1) + 'x'
                 })
                 document.getElementById('btn-gsap-jump').addEventListener('click', () => {
-                    const m = lessonMeshGroup.getObjectByName("animMain")
-                    if (m) {
-                        m.position.y = 2
-                        setTimeout(() => { m.position.y = 0 }, 600)
-                    }
+                    animState.jumpStartedAt = clock.getElapsedTime()
                 })
 
             } else if (lessonId === '06-cameras') {
@@ -1382,11 +1832,363 @@ window.addEventListener('dblclick', () => {
 
                 document.getElementById('btn-toggle-fullscreen').addEventListener('click', () => {
                     if (!document.fullscreenElement) {
-                        labCanvas.requestFullscreen?.() || labContainer.requestFullscreen?.()
+                        labContainer.requestFullscreen?.()
                     } else {
                         document.exitFullscreen?.()
                     }
                 })
+
+            } else if (lessonId === '08-geometries') {
+                animState.speed = 0.4
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🧊 Geometry Inspector</h2>
+                        <div class="lab-control-group">
+                            <label><span>Wireframe ဖြင့် triangles များကြည့်ရန်</span><input type="checkbox" id="chk-geometry-wireframe"></label>
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Rotation speed <span id="val-geometry-speed" class="val">0.4x</span></label>
+                            <input type="range" id="param-geometry-speed" min="0" max="2" step="0.1" value="0.4">
+                        </div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🔺 Geometry = Vertices + Faces</div>
+                        <div class="showcase-desc">Box၊ Sphere နဲ့ TorusKnot တို့ရဲ့ mesh density မတူပုံကို wireframe ဖွင့်ပြီး နှိုင်းယှဉ်ကြည့်ပါ။</div>
+                    </div>`
+                labLiveCode.innerText = `const geometry = new THREE.SphereGeometry(0.75, 32, 20)
+const material = new THREE.MeshStandardMaterial({ color: 0x14b8a6 })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)`
+                document.getElementById('chk-geometry-wireframe').addEventListener('change', (event) => {
+                    lessonMeshGroup.children.forEach(mesh => { mesh.material.wireframe = event.target.checked })
+                })
+                document.getElementById('param-geometry-speed').addEventListener('input', (event) => {
+                    animState.speed = Number(event.target.value)
+                    document.getElementById('val-geometry-speed').innerText = `${animState.speed.toFixed(1)}x`
+                })
+
+            } else if (lessonId === '09-debug-ui') {
+                const debugCube = lessonMeshGroup.getObjectByName('debugCube')
+                const debugState = {
+                    elevation: 0,
+                    visible: true,
+                    wireframe: false,
+                    color: '#7c6df2',
+                    subdivision: 2
+                }
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🛠️ lil-gui Style Debug Panel</h2>
+                        <div class="lab-control-group">
+                            <label>Elevation <span id="val-debug-elevation" class="val">0.00</span></label>
+                            <input type="range" id="param-debug-elevation" min="-2" max="2" step="0.01" value="0">
+                        </div>
+                        <div class="lab-control-group">
+                            <label><span>Visible</span><input type="checkbox" id="chk-debug-visible" checked></label>
+                        </div>
+                        <div class="lab-control-group">
+                            <label><span>Wireframe</span><input type="checkbox" id="chk-debug-wireframe"></label>
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Color <input type="color" id="param-debug-color" value="#7c6df2" aria-label="Cube color"></label>
+                        </div>
+                        <button id="btn-debug-spin" class="btn-action-trigger">↻ Function control — Spin</button>
+                    </div>
+                    <div class="lab-card">
+                        <h2>🔺 Geometry Rebuild</h2>
+                        <div class="lab-control-group">
+                            <label>Subdivision <span id="val-debug-subdivision" class="val">2</span></label>
+                            <input type="range" id="param-debug-subdivision" min="1" max="10" step="1" value="2">
+                        </div>
+                        <div class="lab-info-box">Subdivision ပြောင်းတိုင်း geometry အဟောင်းကို <strong>dispose()</strong> လုပ်ပြီး အသစ်တည်ဆောက်ပါတယ်။ Wireframe ဖွင့်ပြီး ကွာခြားမှုကြည့်ပါ။</div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">⚡ Visual parameter tuning</div>
+                        <div class="showcase-desc">Code ပြန်ပြင်/refresh မလုပ်ဘဲ position၊ boolean၊ color နဲ့ function controls ကို real time စမ်းနိုင်ပါတယ်။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">🧹 Development tool</div>
+                        <div class="showcase-desc">Debug UI က developer အတွက်ဖြစ်ပါတယ်။ Production မှာ conditional ဖွင့်ခြင်း သို့မဟုတ် destroy/hide လုပ်ခြင်းကို စဉ်းစားပါ။</div>
+                    </div>`
+
+                const updateDebugCode = () => {
+                    labLiveCode.innerText = `import GUI from 'lil-gui'
+
+const gui = new GUI({ title: 'Cube lab' })
+const debugObject = {
+  color: '${debugState.color}',
+  subdivision: ${debugState.subdivision},
+  spin: () => { /* animate one full turn */ }
+}
+
+gui.add(mesh.position, 'y', -2, 2, 0.01).name('elevation')
+gui.add(mesh, 'visible')
+gui.add(material, 'wireframe')
+gui.addColor(debugObject, 'color').onChange(() => {
+  material.color.set(debugObject.color)
+})
+gui.add(debugObject, 'spin')
+
+// Current values
+mesh.position.y = ${debugState.elevation.toFixed(2)}
+mesh.visible = ${debugState.visible}
+material.wireframe = ${debugState.wireframe}`
+                }
+
+                document.getElementById('param-debug-elevation').addEventListener('input', (event) => {
+                    debugState.elevation = Number(event.target.value)
+                    if (debugCube) debugCube.position.y = debugState.elevation
+                    document.getElementById('val-debug-elevation').innerText = debugState.elevation.toFixed(2)
+                    updateDebugCode()
+                })
+                document.getElementById('chk-debug-visible').addEventListener('change', (event) => {
+                    debugState.visible = event.target.checked
+                    if (debugCube) debugCube.visible = debugState.visible
+                    updateDebugCode()
+                })
+                document.getElementById('chk-debug-wireframe').addEventListener('change', (event) => {
+                    debugState.wireframe = event.target.checked
+                    if (debugCube) debugCube.material.wireframe = debugState.wireframe
+                    updateDebugCode()
+                })
+                document.getElementById('param-debug-color').addEventListener('input', (event) => {
+                    debugState.color = event.target.value
+                    if (debugCube) debugCube.material.color.set(debugState.color)
+                    updateDebugCode()
+                })
+                document.getElementById('param-debug-subdivision').addEventListener('input', (event) => {
+                    debugState.subdivision = Number(event.target.value)
+                    document.getElementById('val-debug-subdivision').innerText = debugState.subdivision
+                    if (debugCube) {
+                        debugCube.geometry.dispose()
+                        debugCube.geometry = new THREE.BoxGeometry(
+                            1.3, 1.3, 1.3,
+                            debugState.subdivision,
+                            debugState.subdivision,
+                            debugState.subdivision
+                        )
+                    }
+                    updateDebugCode()
+                })
+                document.getElementById('btn-debug-spin').addEventListener('click', () => {
+                    if (!debugCube) return
+                    animState.debugSpinStartedAt = clock.getElapsedTime()
+                    animState.debugSpinBaseRotation = debugCube.rotation.y
+                })
+                updateDebugCode()
+
+            } else if (lessonId === '10-textures') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🧩 Texture Filtering Lab</h2>
+                        <div class="btn-group">
+                            <button id="btn-filter-nearest" class="btn-lab active">Nearest</button>
+                            <button id="btn-filter-linear" class="btn-lab">Linear</button>
+                        </div>
+                        <div class="lab-info-box" style="margin-top:10px;">Nearest က pixel အနားသတ်ကို ထင်ရှားစေပြီး Linear က အရောင်များကို ချောမွေ့စွာ ရောစပ်ပေးပါတယ်။</div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🎮 Pixel art vs realistic texture</div>
+                        <div class="showcase-desc">Texture အမျိုးအစားနဲ့ ကြည့်မယ့်အကွာအဝေးအလိုက် filter ကို မှန်ကန်စွာ ရွေးချယ်ရပါတယ်။</div>
+                    </div>`
+                labLiveCode.innerText = `const texture = new THREE.TextureLoader().load('/texture.png')
+texture.colorSpace = THREE.SRGBColorSpace
+texture.magFilter = THREE.NearestFilter
+material.map = texture`
+                const textureMap = lessonMeshGroup.getObjectByName('textureDemo')?.material.map
+                const btnNearest = document.getElementById('btn-filter-nearest')
+                const btnLinear = document.getElementById('btn-filter-linear')
+                const setTextureFilter = (filter, activeButton) => {
+                    if (textureMap) {
+                        textureMap.magFilter = filter
+                        textureMap.needsUpdate = true
+                    }
+                    btnNearest.classList.toggle('active', activeButton === btnNearest)
+                    btnLinear.classList.toggle('active', activeButton === btnLinear)
+                }
+                btnNearest.addEventListener('click', () => setTextureFilter(THREE.NearestFilter, btnNearest))
+                btnLinear.addEventListener('click', () => setTextureFilter(THREE.LinearFilter, btnLinear))
+
+            } else if (lessonId === '11-materials') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>✨ PBR Material Lab</h2>
+                        <div class="lab-control-group">
+                            <label>Roughness <span id="val-material-roughness" class="val">0.45</span></label>
+                            <input type="range" id="param-material-roughness" min="0" max="1" step="0.05" value="0.45">
+                        </div>
+                        <div class="lab-control-group">
+                            <label>Metalness <span id="val-material-metalness" class="val">0.35</span></label>
+                            <input type="range" id="param-material-metalness" min="0" max="1" step="0.05" value="0.35">
+                        </div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">💡 Light နဲ့ material ဆက်နွယ်မှု</div>
+                        <div class="showcase-desc">အလယ် sphere ရဲ့ roughness နဲ့ metalness ကို ပြောင်းပြီး ဘေးနှစ်လုံးနဲ့ ရောင်ပြန်ဟပ်မှု ကွာခြားပုံကို ကြည့်ပါ။</div>
+                    </div>`
+                labLiveCode.innerText = `const material = new THREE.MeshStandardMaterial({
+  color: 0x38bdf8,
+  roughness: 0.45,
+  metalness: 0.35
+})`
+                const materialDemo = lessonMeshGroup.getObjectByName('materialDemo')?.material
+                document.getElementById('param-material-roughness').addEventListener('input', (event) => {
+                    const value = Number(event.target.value)
+                    if (materialDemo) materialDemo.roughness = value
+                    document.getElementById('val-material-roughness').innerText = value.toFixed(2)
+                })
+                document.getElementById('param-material-metalness').addEventListener('input', (event) => {
+                    const value = Number(event.target.value)
+                    if (materialDemo) materialDemo.metalness = value
+                    document.getElementById('val-material-metalness').innerText = value.toFixed(2)
+                })
+
+            } else if (lessonId === '12-3d-text') {
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🔤 3D Text Studio</h2>
+                        <div class="lab-control-group">
+                            <label>Text color</label>
+                            <div class="btn-group">
+                                <button id="btn-text-purple" class="btn-lab active">Purple</button>
+                                <button id="btn-text-cyan" class="btn-lab">Cyan</button>
+                                <button id="btn-text-orange" class="btn-lab">Orange</button>
+                            </div>
+                        </div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">🪧 TextGeometry</div>
+                        <div class="showcase-desc">Font data ကို geometry အဖြစ် ပြောင်းပြီး depth နဲ့ bevel ထည့်ထားတဲ့ တကယ့် 3D စာသားဖြစ်ပါတယ်။</div>
+                    </div>`
+                labLiveCode.innerText = `const font = fontLoader.parse(fontData)
+const geometry = new TextGeometry('Three.js', {
+  font,
+  size: 0.72,
+  height: 0.2,
+  bevelEnabled: true
+})
+geometry.center()`
+                const textMaterial = lessonMeshGroup.getObjectByName('textDemo')?.material
+                const colorButtons = [
+                    ['btn-text-purple', 0xa99fff],
+                    ['btn-text-cyan', 0x38bdf8],
+                    ['btn-text-orange', 0xf97316]
+                ]
+                colorButtons.forEach(([id, color]) => {
+                    const button = document.getElementById(id)
+                    button.addEventListener('click', () => {
+                        if (textMaterial) textMaterial.color.setHex(color)
+                        colorButtons.forEach(([buttonId]) => document.getElementById(buttonId).classList.toggle('active', buttonId === id))
+                    })
+                })
+
+            } else if (lessonId === '13-go-live') {
+                const releaseState = {
+                    mode: 'git',
+                    phase: 'source',
+                    checks: { build: false, assets: false, mobile: false }
+                }
+                labDynamicPanel.innerHTML = `
+                    <div class="lab-card">
+                        <h2>🚀 Release Pipeline</h2>
+                        <div class="btn-group">
+                            <button id="btn-phase-source" class="btn-lab active">Source</button>
+                            <button id="btn-phase-build" class="btn-lab">Build</button>
+                            <button id="btn-phase-preview" class="btn-lab">Preview</button>
+                            <button id="btn-phase-live" class="btn-lab">Live</button>
+                        </div>
+                        <div id="release-phase-info" class="lab-info-box" style="margin-top:10px;">Source code နဲ့ dependencies ကို ပြင်ဆင်ထားတဲ့အဆင့်ပါ။</div>
+                    </div>
+                    <div class="lab-card">
+                        <h2>🌐 Hosting Workflow</h2>
+                        <div class="btn-group">
+                            <button id="btn-host-git" class="btn-lab active">Git Deploy</button>
+                            <button id="btn-host-static" class="btn-lab">Upload dist/</button>
+                        </div>
+                        <div class="lab-control-group" style="margin-top:12px;"><label><span>Production build passed</span><input type="checkbox" id="chk-release-build"></label></div>
+                        <div class="lab-control-group"><label><span>Assets / Console checked</span><input type="checkbox" id="chk-release-assets"></label></div>
+                        <div class="lab-control-group"><label><span>Mobile resize checked</span><input type="checkbox" id="chk-release-mobile"></label></div>
+                        <button id="btn-simulate-deploy" class="btn-action-trigger" style="margin-top:10px;">✨ Simulate Go Live</button>
+                        <div id="release-result" class="lab-info-box" style="margin-top:10px;">Checklist ပြည့်ပြီးမှ simulated deployment ကို run ပါ။</div>
+                    </div>`
+                showcaseContent.innerHTML = `
+                    <div class="showcase-item">
+                        <div class="showcase-title">📦 Build output</div>
+                        <div class="showcase-desc"><strong>npm run build</strong> က browser-ready files ကို <strong>dist/</strong> ထဲ ထုတ်ပေးပါတယ်။ node_modules ကို static host ဆီ မတင်ပါနဲ့။</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-title">🔍 Preview before deploy</div>
+                        <div class="showcase-desc"><strong>npm run preview</strong> နဲ့ production output ကို local server မှာ စစ်ပြီး asset 404 နဲ့ console errors မရှိမှ deploy လုပ်ပါ။</div>
+                    </div>`
+
+                const releaseDescriptions = {
+                    source: 'Source code နဲ့ dependencies ကို ပြင်ဆင်ထားတဲ့အဆင့်ပါ။',
+                    build: 'npm run build က optimized dist/ output ဖန်တီးပါတယ်။',
+                    preview: 'npm run preview နဲ့ production output ကို local မှာ အတည်ပြုပါတယ်။',
+                    live: 'Hosting က public URL တစ်ခုနဲ့ interactive experience ကို ဖြန့်ဝေပါတယ်။'
+                }
+                const updateReleaseCode = () => {
+                    const deployCommand = releaseState.mode === 'git'
+                        ? '# Push to Git; hosting platform runs npm run build'
+                        : '# Upload the contents of dist/ to your static host'
+                    labLiveCode.innerText = `# Install and verify
+npm install
+npm run build
+npm run preview
+
+${deployCommand}
+
+# Current phase: ${releaseState.phase}
+# Build checked: ${releaseState.checks.build}
+# Assets checked: ${releaseState.checks.assets}
+# Mobile checked: ${releaseState.checks.mobile}`
+                }
+                const setReleasePhase = (phase) => {
+                    releaseState.phase = phase
+                    ;['source', 'build', 'preview', 'live'].forEach((name) => {
+                        document.getElementById(`btn-phase-${name}`).classList.toggle('active', name === phase)
+                    })
+                    document.getElementById('release-phase-info').innerText = releaseDescriptions[phase]
+                    updateReleaseCode()
+                }
+                ;['source', 'build', 'preview', 'live'].forEach((phase) => {
+                    document.getElementById(`btn-phase-${phase}`).addEventListener('click', () => setReleasePhase(phase))
+                })
+                document.getElementById('btn-host-git').addEventListener('click', () => {
+                    releaseState.mode = 'git'
+                    document.getElementById('btn-host-git').classList.add('active')
+                    document.getElementById('btn-host-static').classList.remove('active')
+                    updateReleaseCode()
+                })
+                document.getElementById('btn-host-static').addEventListener('click', () => {
+                    releaseState.mode = 'static'
+                    document.getElementById('btn-host-static').classList.add('active')
+                    document.getElementById('btn-host-git').classList.remove('active')
+                    updateReleaseCode()
+                })
+                ;['build', 'assets', 'mobile'].forEach((checkName) => {
+                    document.getElementById(`chk-release-${checkName}`).addEventListener('change', (event) => {
+                        releaseState.checks[checkName] = event.target.checked
+                        updateReleaseCode()
+                    })
+                })
+                document.getElementById('btn-simulate-deploy').addEventListener('click', () => {
+                    const ready = Object.values(releaseState.checks).every(Boolean)
+                    const result = document.getElementById('release-result')
+                    if (!ready) {
+                        result.innerText = '⚠️ Build၊ assets နဲ့ mobile checklist သုံးခုလုံး အရင်စစ်ပါ။'
+                        return
+                    }
+                    setReleasePhase('live')
+                    result.innerText = '✅ Simulation complete — Public URL အတွက် ready ဖြစ်ပါပြီ။'
+                    animState.deployLaunchedAt = clock.getElapsedTime()
+                })
+                updateReleaseCode()
 
             } else {
                 // Default Controls for other lessons
@@ -1421,6 +2223,7 @@ window.addEventListener('dblclick', () => {
 
             const lesson = LESSONS.find(l => l.id === lessonId)
             if (!lesson) return
+            document.title = `${lesson.number}. ${lesson.title} — Three.js Journey Burmese Hub`
 
             // Rebuild 3D Scene & Sidebar Controls for this specific lesson
             build3DSceneForLesson(lessonId)
@@ -1435,7 +2238,7 @@ window.addEventListener('dblclick', () => {
                     if (res.ok) {
                         const md = await res.text()
                         guideContent.innerHTML = marked.parse(md)
-                        hljs.highlightAll()
+                        guideContent.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block))
                     } else {
                         guideContent.innerHTML = `<div style="padding:20px;"><h2>${lesson.title}</h2><p style="color:#94a3b8;">ဤသင်ခန်းစာအတွက် Guide ကို မကြာမီ ပြုစုတင်ပြပေးပါမည်။</p></div>`
                     }
@@ -1503,6 +2306,10 @@ window.addEventListener('dblclick', () => {
 
                 lessonsContainer.appendChild(group)
             })
+
+            if (!lessonsContainer.children.length) {
+                lessonsContainer.innerHTML = '<div style="padding:28px 18px; color:#94a3b8; text-align:center; line-height:1.6;">ရှာဖွေမှုနှင့် ကိုက်ညီသော lesson မတွေ့ပါ။<br><small>Title သို့မဟုတ် topic keyword တစ်ခု စမ်းရှာပါ။</small></div>'
+            }
         }
 
         // View Tabs Switching
@@ -1512,6 +2319,8 @@ window.addEventListener('dblclick', () => {
             viewGuide.style.display = 'block'
             viewLab.style.display = 'none'
             currentView = "guide"
+            tabBtnGuide.setAttribute('aria-pressed', 'true')
+            tabBtnLab.setAttribute('aria-pressed', 'false')
         })
 
         tabBtnLab.addEventListener('click', () => {
@@ -1520,6 +2329,8 @@ window.addEventListener('dblclick', () => {
             viewGuide.style.display = 'none'
             viewLab.style.display = 'flex'
             currentView = "lab"
+            tabBtnLab.setAttribute('aria-pressed', 'true')
+            tabBtnGuide.setAttribute('aria-pressed', 'false')
 
             requestAnimationFrame(() => {
                 triggerLabResize()
@@ -1530,14 +2341,27 @@ window.addEventListener('dblclick', () => {
             sidebar.classList.toggle('open')
         })
 
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') sidebar.classList.remove('open')
+        })
+
         searchInput.addEventListener('input', (e) => {
             renderSidebar(e.target.value)
+        })
+
+        window.addEventListener('hashchange', () => {
+            const lessonId = window.location.hash.replace('#', '')
+            if (lessonId !== currentLessonId && LESSONS.some(lesson => lesson.id === lessonId)) {
+                selectLesson(lessonId)
+            }
         })
 
         // ==========================================
         // Continuous Animation Loop
         // ==========================================
         const clock = new THREE.Clock()
+        let fpsFrames = 0
+        let fpsLastUpdate = performance.now()
 
         const tick = () => {
             const elapsedTime = clock.getElapsedTime()
@@ -1545,6 +2369,14 @@ window.addEventListener('dblclick', () => {
             // Lesson 01: Rotate Particle Galaxy
             if (currentLessonId === '01-introduction' && animState.particlesMesh) {
                 animState.particlesMesh.rotation.y = elapsedTime * 0.2 * animState.speed
+            }
+
+            if (currentLessonId === '02-webgl-and-threejs') {
+                const webglDemo = lessonMeshGroup.getObjectByName('webglDemo')
+                if (webglDemo) {
+                    webglDemo.rotation.x = Math.sin(elapsedTime * 0.35) * 0.18
+                    webglDemo.rotation.y = elapsedTime * 0.32
+                }
             }
 
             // Lesson 05: Animate Objects
@@ -1555,11 +2387,22 @@ window.addEventListener('dblclick', () => {
                 if (mainObj) {
                     if (animState.type === 'spin') {
                         mainObj.rotation.y = elapsedTime * Math.PI * animState.speed
+                        mainObj.position.y = 0
                     } else if (animState.type === 'wave') {
                         mainObj.position.y = Math.sin(elapsedTime * 3 * animState.speed) * 0.7
                     } else if (animState.type === 'orbit') {
                         mainObj.position.x = Math.cos(elapsedTime * 2 * animState.speed) * 1.5
                         mainObj.position.z = Math.sin(elapsedTime * 2 * animState.speed) * 1.5
+                        mainObj.position.y = 0
+                    }
+
+                    if (animState.jumpStartedAt !== null) {
+                        const jumpProgress = (elapsedTime - animState.jumpStartedAt) / 0.8
+                        if (jumpProgress < 1) {
+                            mainObj.position.y += Math.sin(jumpProgress * Math.PI) * 1.7
+                        } else {
+                            animState.jumpStartedAt = null
+                        }
                     }
                 }
 
@@ -1568,6 +2411,40 @@ window.addEventListener('dblclick', () => {
                     orbitObj.position.z = Math.sin(elapsedTime * 3 * animState.speed) * 2
                     orbitObj.position.y = Math.sin(elapsedTime * 5 * animState.speed) * 0.5
                 }
+            }
+
+            if (currentLessonId === '09-debug-ui' && animState.debugSpinStartedAt !== null) {
+                const debugCube = lessonMeshGroup.getObjectByName('debugCube')
+                const progress = Math.min((elapsedTime - animState.debugSpinStartedAt) / 0.9, 1)
+                const eased = 1 - Math.pow(1 - progress, 3)
+                if (debugCube) {
+                    debugCube.rotation.y = animState.debugSpinBaseRotation + eased * Math.PI * 2
+                }
+                if (progress >= 1) animState.debugSpinStartedAt = null
+            }
+
+            if (currentLessonId === '13-go-live') {
+                const deployGroup = lessonMeshGroup.getObjectByName('deployGroup')
+                if (deployGroup) {
+                    deployGroup.rotation.y = elapsedTime * 0.28
+                    if (animState.deployLaunchedAt !== null) {
+                        const progress = (elapsedTime - animState.deployLaunchedAt) / 1.2
+                        if (progress < 1) {
+                            deployGroup.scale.setScalar(1 + Math.sin(progress * Math.PI) * 0.22)
+                        } else {
+                            deployGroup.scale.setScalar(1)
+                            animState.deployLaunchedAt = null
+                        }
+                    }
+                }
+            }
+
+            if (currentLessonId === '12-3d-text') {
+                lessonMeshGroup.rotation.y = Math.sin(elapsedTime * 0.45) * 0.28
+            } else if (['08-geometries', '10-textures', '11-materials'].includes(currentLessonId)) {
+                lessonMeshGroup.rotation.y = elapsedTime * 0.25 * animState.speed
+            } else {
+                lessonMeshGroup.rotation.y = 0
             }
 
             // Active Lab Controls Loop
@@ -1593,6 +2470,15 @@ window.addEventListener('dblclick', () => {
 
                 statCamPos.innerText = `x: ${activeCam.position.x.toFixed(1)}, y: ${activeCam.position.y.toFixed(1)}, z: ${activeCam.position.z.toFixed(1)}`
                 labRenderer.render(labScene, activeCam)
+
+                fpsFrames += 1
+                const fpsNow = performance.now()
+                if (fpsNow - fpsLastUpdate >= 500) {
+                    const fps = Math.round((fpsFrames * 1000) / (fpsNow - fpsLastUpdate))
+                    statFps.innerText = `${fps} FPS (WebGL)`
+                    fpsFrames = 0
+                    fpsLastUpdate = fpsNow
+                }
             }
 
             window.requestAnimationFrame(tick)

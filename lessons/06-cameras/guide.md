@@ -1,4 +1,16 @@
-# 📸 Lesson 06: ကင်မရာစနစ် အပြည့်အစုံ (Cameras & OrbitControls)
+# Lesson 06 — Cameras (Perspective၊ Orthographic နှင့် Controls)
+
+> **မူရင်းသင်ခန်းစာ** — [Three.js Journey: Cameras](https://threejs-journey.com/lessons/cameras)<br>
+> **သင်ကြားသူ** — Bruno Simon<br>
+> **လေ့လာနည်း** — မူရင်း video ကို ကြည့်ရင်း ဒီ Burmese guide နဲ့ camera parameters တစ်ခုချင်းကို Lab မှာ ပြောင်းစမ်းပါ။
+
+## ဒီသင်ခန်းစာပြီးရင် ဘာလုပ်နိုင်မလဲ
+
+- Perspective နဲ့ Orthographic projection ကွာခြားချက်ကို မျက်မြင်ရှင်းပြနိုင်မယ်
+- FOV၊ aspect၊ near၊ far parameters ကို မှန်ကန်စွာ သတ်မှတ်နိုင်မယ်
+- Mouse coordinates ကို normalized values အဖြစ် ပြောင်းနိုင်မယ်
+- OrbitControls ကို import၊ damping enable နဲ့ animation loop ထဲ update လုပ်နိုင်မယ်
+- Camera clipping နဲ့ depth precision ပြဿနာများကို ရှာဖွေနိုင်မယ်
 
 > **သင်ကြားပြသသူ**: Bruno Simon (Three.js Journey)  
 > **မြန်မာဘာသာ ပြုစုရှင်းလင်းသူ**: Antigravity  
@@ -28,7 +40,7 @@
 
 ---
 
-# ၁။ Camera Space နှင့် Coordinate Transformations
+## ၁။ Camera Space နှင့် Coordinate Transformations
 
 3D ကမ္ဘာထဲရှိ အရာဝတ္ထုများကို ကျွန်ုပ်တို့၏ ၂ ဖက်မြင် ကွန်ပျူတာ ဖန်သားပြင် (2D Screen) ပေါ်သို့ ရောက်ရှိလာစေရန် အဆင့် (၄) ဆင့် ဖြတ်သန်းရသည်:
 
@@ -43,7 +55,7 @@
 
 ---
 
-# ၂။ Three.js ရှိ Camera အမျိုးအစားများ
+## ၂။ Three.js ရှိ Camera အမျိုးအစားများ
 
 `THREE.Camera` သည် အောက်ပါ Class များ၏ Base Class ဖြစ်သည်:
 
@@ -57,7 +69,7 @@
 
 ---
 
-# ၃။ PerspectiveCamera အသေးစိတ် လေ့လာခြင်း
+## ၃။ PerspectiveCamera အသေးစိတ် လေ့လာခြင်း
 
 ```javascript
 const camera = new THREE.PerspectiveCamera(
@@ -97,7 +109,7 @@ const camera = new THREE.PerspectiveCamera(
 
 ---
 
-# ၄။ OrthographicCamera အသေးစိတ် လေ့လာခြင်း
+## ၄။ OrthographicCamera အသေးစိတ် လေ့လာခြင်း
 
 OrthographicCamera သည် အကွာအဝေး မည်မျှပင် ဝေးပါစေ အရွယ်အစား လုံးဝ မပြောင်းလဲဘဲ မူလအတိုင်း တိုင်းတာ ပြသသည်:
 
@@ -119,7 +131,7 @@ const camera = new THREE.OrthographicCamera(
 
 ---
 
-# ၅။ Custom Mouse Controls (ကိုယ်ပိုင် Controller ရေးသားနည်း)
+## ၅။ Custom Mouse Controls (ကိုယ်ပိုင် Controller ရေးသားနည်း)
 
 User ၏ Mouse လှုပ်ရှားမှုအတိုင်း ကင်မရာကို လိုက်ပါ လှည့်ပတ်စေရန် ကိုယ်ပိုင် ကုဒ်ရေးသားနည်း:
 
@@ -151,7 +163,7 @@ tick()
 
 ---
 
-# ၆။ OrbitControls Built-in Controller အပြည့်အစုံ
+## ၆။ OrbitControls Built-in Controller အပြည့်အစုံ
 
 Three.js တွင် အဆင်သင့်ပါဝင်သော **OrbitControls** သည် Mouse Click & Drag ဖြင့် လှည့်ပတ်ခြင်း၊ Right Click ဖြင့် Pan ရွှေ့ခြင်းနှင့် Scroll ဖြင့် Zoom ဆွဲခြင်းများကို အပြည့်အစုံ လုပ်ဆောင်ပေးသည်:
 
@@ -187,10 +199,28 @@ tick()
 
 ---
 
-# ၇။ ဆရာ့ရဲ့ အလွတ်မှတ် မှတ်စုတို (Lesson 06 Memory Hook)
+## ၇။ အလွတ်မှတ် မှတ်စုတို (Lesson 06 Memory Hook)
 
 > 🧠 **ဒီလိုလေး အလွတ်မှတ်ထားလိုက်ပါ**:  
 > * **လူ့မျက်လုံးလို သဘာဝကျချင်ရင်** = `PerspectiveCamera(75, aspect, 0.1, 100)`  
 > * **2D / Isometric ဂိမ်းလို မျဉ်းပြိုင်ကြည့်ချင်ရင်** = `OrthographicCamera`  
 > * **Z-Fighting ကာကွယ်ဖို့** = `near` ကို အရမ်းမသေးစေနဲ့ (`0.1`), `far` ကို အရမ်းမကြီးစေနဲ့ (`100`)  
 > * **Mouse လှည့်ပတ်မှု ချောမွေ့စေဖို့** = `controls.enableDamping = true` (tick loop တွင် `controls.update()` ခေါ်ရန်)
+
+> Three.js version အသစ်များမှာ addon import ကို `three/addons/controls/OrbitControls.js` လို့လည်း ရေးနိုင်ပါတယ်။ Project ရဲ့ Three.js version နဲ့ import style ကို တသမတ်တည်းထားပါ။
+
+---
+
+## လက်တွေ့လေ့ကျင့်ခန်း
+
+1. FOV ကို 25°၊ 75°၊ 110° ပြောင်းပြီး distortion ကို နှိုင်းယှဉ်ပါ
+2. Perspective ကနေ Orthographic ပြောင်းပြီး အဝေးက object မသေးတော့တာကို ကြည့်ပါ
+3. Near ကို အလွန်ကြီးအောင်လုပ်ပြီး camera နားက object ဖြတ်ပျောက်ပုံကို စမ်းပါ
+4. OrbitControls damping ကို ပိတ်/ဖွင့်ပြီး mouse လွှတ်ပြီးနောက် motion ကွာခြားပုံကို ကြည့်ပါ
+
+## ပြဿနာဖြေရှင်းရန်
+
+- Resize ပြီး object ပုံပျက်ရင် `camera.aspect` နဲ့ `updateProjectionMatrix()` ကို update လုပ်ပါ
+- Controls မရွေ့ရင် correct canvas ပေးထားသလား၊ `controls.update()` ခေါ်ထားသလား စစ်ပါ
+- Object ပျောက်ရင် near/far clipping range အတွင်းရှိသလား စစ်ပါ
+- `near` ကို 0 မသတ်မှတ်ပါနဲ့; depth precision အတွက် လိုသလောက်သာ သေးစေပါ

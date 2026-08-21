@@ -1,4 +1,16 @@
-# 🏃 Lesson 05: အရာဝတ္ထုများကို လှုပ်ရှားသက်ဝင်စေခြင်း (Animations)
+# Lesson 05 — Animations (အရာဝတ္ထုများကို လှုပ်ရှားသက်ဝင်စေခြင်း)
+
+> **မူရင်းသင်ခန်းစာ** — [Three.js Journey: Animations](https://threejs-journey.com/lessons/animations)<br>
+> **သင်ကြားသူ** — Bruno Simon<br>
+> **လေ့လာနည်း** — Video/starter files ကို မူရင်း lesson မှာသုံးပြီး ဒီ Burmese guide နဲ့ အယူအဆ၊ code flow နဲ့ debugging ကို တွဲဖက်လေ့လာပါ။
+
+## ဒီသင်ခန်းစာပြီးရင် ဘာလုပ်နိုင်မလဲ
+
+- `requestAnimationFrame()` နဲ့ render loop တည်ဆောက်နိုင်မယ်
+- Frame rate ကွာခြားမှုကြောင့် animation speed မတူနိုင်တာကို ရှင်းပြနိုင်မယ်
+- Elapsed time၊ delta time နဲ့ `THREE.Clock` ကို ခွဲသုံးနိုင်မယ်
+- `Math.sin()` / `Math.cos()` နဲ့ wave၊ orbit motion ဖန်တီးနိုင်မယ်
+- Continuous motion အတွက် native loop နဲ့ timeline animation အတွက် GSAP ကို သင့်တော်သလို ရွေးနိုင်မယ်
 
 > **သင်ကြားပြသသူ**: Bruno Simon (Three.js Journey)  
 > **မြန်မာဘာသာ ပြုစုရှင်းလင်းသူ**: Antigravity  
@@ -23,7 +35,7 @@
 
 ---
 
-# ၁။ Animation ဆိုတာ ဘာလဲ? (Stop-Motion Flipbook သဘောတရား)
+## ၁။ Animation ဆိုတာ ဘာလဲ? (Stop-Motion Flipbook သဘောတရား)
 
 3D Animation ဆိုတာ တကယ်တော့ စာအုပ်ထောင့်လေးတွေမှာ အရုပ်လေးတွေ တစ်မျက်နှာချင်းစီ ဆွဲပြီး လက်မနဲ့ အမြန် လှန်ကြည့်တဲ့ **Flipbook ကာတွန်းစာအုပ်** သို့မဟုတ် **Stop-motion ရုပ်ရှင်** နဲ့ အတူတူပါပဲ။
 
@@ -38,7 +50,7 @@ Frame တိုင်းမှာ အရာဝတ္ထုများ၏ Proper
 
 ---
 
-# ၂။ RequestAnimationFrame Tick Loop အလုပ်လုပ်ပုံ
+## ၂။ RequestAnimationFrame Tick Loop အလုပ်လုပ်ပုံ
 
 Browser များတွင် Animation တစ်ခုကို မျက်နှာပြင် Refresh Rate နှင့် ကိုက်ညီစွာ စွမ်းဆောင်ရည် အကောင်းဆုံး ခေါ်ဆိုနိုင်ရန် **`window.requestAnimationFrame(...)`** Function ကို အသုံးပြုရသည်:
 
@@ -62,7 +74,7 @@ tick() // ပထမဆုံးအကြိမ် စတင် ခေါ်ယ�
 
 ---
 
-# ၃။ FPS ကွာခြားမှု ပြဿနာနှင့် Delta Time
+## ၃။ FPS ကွာခြားမှု ပြဿနာနှင့် Delta Time
 
 အထက်ပါ ကုဒ်တွင် `mesh.rotation.y += 0.01` ဟု ရေးသားထားပါက:
 * **60Hz မျက်နှာပြင်** ရှိသော ကွန်ပျူတာတွင် ၁ စက္ကန့်လျှင် အကြိမ် ၆၀ ခေါ်သဖြင့် $60 \times 0.01 = 0.6$ လည်မည်။
@@ -92,7 +104,7 @@ tick()
 
 ---
 
-# ၄။ THREE.Clock ဖြင့် သဘာဝကျသော လှုပ်ရှားမှုများ ဖန်တီးခြင်း
+## ၄။ THREE.Clock ဖြင့် သဘာဝကျသော လှုပ်ရှားမှုများ ဖန်တီးခြင်း
 
 Three.js တွင် အချိန်ကို ပိုမိုလွယ်ကူ စနစ်တကျ တိုင်းတာနိုင်ရန် **`THREE.Clock`** class ပါရှိသည်:
 
@@ -143,7 +155,7 @@ const tick = () => {
 
 ---
 
-# ၅။ GSAP (GreenSock) Animation Library ပေါင်းစပ် အသုံးပြုခြင်း
+## ၅။ GSAP (GreenSock) Animation Library ပေါင်းစပ် အသုံးပြုခြင်း
 
 ရှုပ်ထွေးသော Keyframes, Chaining Transitions, Bouncing သို့မဟုတ် Elastic Easing များအတွက် **[GSAP](https://greensock.com/gsap/)** ကို တွဲဖက် အသုံးပြုနိုင်သည်:
 
@@ -173,7 +185,7 @@ tick()
 
 ---
 
-# ၆။ မည်သည့်နည်းလမ်းကို မည်သည့်အခါတွင် သုံးသင့်သလဲ?
+## ၆။ မည်သည့်နည်းလမ်းကို မည်သည့်အခါတွင် သုံးသင့်သလဲ?
 
 | လိုအပ်ချက် / အခြေအနေ | အကြံပြု နည်းလမ်း |
 | :--- | :--- |
@@ -183,10 +195,26 @@ tick()
 
 ---
 
-# ၇။ ဆရာ့ရဲ့ အလွတ်မှတ် မှတ်စုတို (Lesson 05 Memory Hook)
+## ၇။ အလွတ်မှတ် မှတ်စုတို (Lesson 05 Memory Hook)
 
 > 🧠 **ဒီလိုလေး အလွတ်မှတ်ထားလိုက်ပါ**:  
 > * **Animation Loop** = `requestAnimationFrame(tick)`  
 > * **စက်တိုင်းမှာ အမြန်နှုန်း တူညီစေဖို့** = `clock.getElapsedTime()` သုံးရမည်  
 > * **အပေါ်အောက် လှိုင်းပုံစံ ပျံဝဲစေဖို့** = `Math.sin(elapsedTime)`  
 > * **စက်ဝိုင်းပတ် လှည့်ပတ်စေဖို့** = `Math.cos()` နဲ့ `Math.sin()` ပေါင်းသုံးပါ
+
+---
+
+## လက်တွေ့လေ့ကျင့်ခန်း
+
+1. Cube ကို တစ်စက္ကန့်လျှင် တစ်ပတ်နှုန်းနဲ့ Y axis ပေါ် လှည့်ပါ
+2. `Math.sin(elapsedTime)` နဲ့ Y position ကို `-1` မှ `1` ကြား ရွှေ့ပါ
+3. `Math.cos()` နဲ့ X၊ `Math.sin()` နဲ့ Z သုံးပြီး စက်ဝိုင်းပတ်ခိုင်းပါ
+4. Lab ထဲမှာ speed ပြောင်းပြီး motion path မပြောင်းဘဲ အမြန်နှုန်းသာ ပြောင်းတာကို စစ်ပါ
+
+## ပြဿနာဖြေရှင်းရန်
+
+- Object မလှုပ်ရင် `tick()` ကို ပထမဆုံးတစ်ခါ ခေါ်ထားသလား စစ်ပါ
+- Frame တစ်ခုပဲပေါ်ရင် `requestAnimationFrame(tick)` ကို loop အတွင်း ထည့်ထားသလား စစ်ပါ
+- Refresh rate မြင့်တဲ့ screen မှာ ပိုမြန်နေရင် frame တိုင်း fixed value မပေါင်းဘဲ elapsed/delta time ကို သုံးပါ
+- GSAP value ပြောင်းနေသော်လည်း မမြင်ရရင် scene ကို frame တိုင်း render ပြန်လုပ်နေသလား စစ်ပါ

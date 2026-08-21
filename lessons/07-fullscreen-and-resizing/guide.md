@@ -1,4 +1,16 @@
-# 🖥️ Lesson 07: ဖန်သားပြင် အပြည့်နှင့် Responsive ချိန်ညှိခြင်း (Fullscreen & Resizing)
+# Lesson 07 — Fullscreen and Resizing (Responsive Canvas နှင့် DPR)
+
+> **မူရင်းသင်ခန်းစာ** — [Three.js Journey: Fullscreen and resizing](https://threejs-journey.com/lessons/fullscreen-and-resizing)<br>
+> **သင်ကြားသူ** — Bruno Simon<br>
+> **လေ့လာနည်း** — Browser window ကို အရွယ်မျိုးစုံပြောင်းပြီး camera၊ renderer နဲ့ pixel ratio သုံးခုလုံး update ဖြစ်ပုံကို စောင့်ကြည့်ပါ။
+
+## ဒီသင်ခန်းစာပြီးရင် ဘာလုပ်နိုင်မလဲ
+
+- Canvas ကို viewport အပြည့် CSS နဲ့ နေရာချနိုင်မယ်
+- Resize event မှာ sizes၊ camera နဲ့ renderer ကို အစဉ်လိုက် update လုပ်နိုင်မယ်
+- Device Pixel Ratio ရဲ့ sharpness/performance trade-off ကို နားလည်မယ်
+- Fullscreen API နဲ့ canvas ကို ဝင်/ထွက် ပြုလုပ်နိုင်မယ်
+- Mobile နဲ့ Retina screen များအတွက် renderer cost ကို ထိန်းနိုင်မယ်
 
 > **သင်ကြားပြသသူ**: Bruno Simon (Three.js Journey)  
 > **မြန်မာဘာသာ ပြုစုရှင်းလင်းသူ**: Antigravity  
@@ -26,7 +38,7 @@
 
 ---
 
-# ၁။ မိတ်ဆက်နှင့် Responsive 3D ၏ အရေးပါပုံ
+## ၁။ မိတ်ဆက်နှင့် Responsive 3D ၏ အရေးပါပုံ
 
 လက်တွေ့ Web Development တွင် 3D Scene များကို Fixed Size (ဥပမာ `800x600`) ဖြင့်သာ ပြသလေ့မရှိဘဲ၊ **Device မျက်နှာပြင် အပြည့် (Full Viewport)** ဖြင့် ပြသကြသည်။
 
@@ -34,7 +46,7 @@ Desktop, Tablet, Mobile စသည့် Screen အမျိုးမျိုး
 
 ---
 
-# ၂။ CSS ဖြင့် Full Viewport အပြည့် နေရာချထားခြင်း
+## ၂။ CSS ဖြင့် Full Viewport အပြည့် နေရာချထားခြင်း
 
 Browser ၏ မူလ Margin, Padding များနှင့် Scrollbar များကို ဖယ်ရှားရန် အောက်ပါ CSS ကို ရေးသားရသည်:
 
@@ -67,7 +79,7 @@ const sizes = {
 
 ---
 
-# ၃။ Window Resize Event ကို ကိုင်တွယ်ဖြေရှင်းခြင်း
+## ၃။ Window Resize Event ကို ကိုင်တွယ်ဖြေရှင်းခြင်း
 
 User သည် Browser Window အရွယ်အစားကို ဆွဲချဲ့/ဆွဲချုံ့လိုက်သည့်အခါ Three.js သည် အလိုအလျောက် မသိရှိပါ။ ထို့ကြောင့် `resize` event ကို နားထောင်၍ အဆင့် (၃) ဆင့် ပြုလုပ်ပေးရသည်:
 
@@ -91,7 +103,7 @@ window.addEventListener('resize', () => {
 
 ---
 
-# ၄။ Device Pixel Ratio (DPR) နှင့် Performance
+## ၄။ Device Pixel Ratio (DPR) နှင့် Performance
 
 ### (က) Pixel Ratio ဆိုတာ ဘာလဲ?
 * `window.devicePixelRatio` သည် Screen ပေါ်ရှိ **CSS Pixel ၁ ခုအတွက် အသုံးပြုသော Physical Pixels အရေအတွက်** ဖြစ်သည်။
@@ -117,7 +129,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 ---
 
-# ၅။ Fullscreen API ဖြင့် မျက်နှာပြင်အပြည့် ဖွင့်ခြင်း
+## ၅။ Fullscreen API ဖြင့် မျက်နှာပြင်အပြည့် ဖွင့်ခြင်း
 
 User က Screen ပေါ်တွင် Double Click နှိပ်လိုက်ပါက Fullscreen Mode သို့ ဝင်/ထွက်နိုင်ရန် ရေးသားနည်း:
 
@@ -146,7 +158,7 @@ window.addEventListener('dblclick', () => {
 
 ---
 
-# ၆။ လက်တွေ့ ကုဒ်အပြည့်အစုံ (`script.js`)
+## ၆။ လက်တွေ့ ကုဒ်အပြည့်အစုံ (`script.js`)
 
 ```javascript
 import * as THREE from 'three'
@@ -219,10 +231,26 @@ tick()
 
 ---
 
-# ၇။ ဆရာ့ရဲ့ အလွတ်မှတ် မှတ်စုတို (Lesson 07 Memory Hook)
+## ၇။ အလွတ်မှတ် မှတ်စုတို (Lesson 07 Memory Hook)
 
 > 🧠 **ဒီလိုလေး အလွတ်မှတ်ထားလိုက်ပါ**:  
 > * **Scrollbar ဖျောက်ဖို့** = `html, body { overflow: hidden; }`  
 > * **Window Resize ဖြစ်တိုင်း မဖြစ်မနေ ခေါ်ရမှာ** = `camera.updateProjectionMatrix()`  
 > * **Retina Screen မှာ ကြည်လင်ပြီး Battery မကုန်စေဖို့** = `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))`  
 > * **ဖန်သားပြင် အပြည့်ဖွင့်ဖို့** = `canvas.requestFullscreen()`
+
+---
+
+## လက်တွေ့လေ့ကျင့်ခန်း
+
+1. Browser ကို အလျားရှည်၊ ဒေါင်လိုက်နဲ့ mobile width များအထိ resize လုပ်ပါ
+2. `updateProjectionMatrix()` ကို ခဏ comment လုပ်ပြီး ပုံပျက်ပုံကို ကြည့်ကာ ပြန်ထည့်ပါ
+3. DPR ကို 1၊ 2၊ 3 ပြောင်းပြီး sharpness နဲ့ FPS ကွာခြားမှုကို Lab မှာ စမ်းပါ
+4. Fullscreen button နဲ့ ဝင်/ထွက်လုပ်ပြီး `document.fullscreenElement` state ကို စစ်ပါ
+
+## ပြဿနာဖြေရှင်းရန်
+
+- Canvas ဘေးမှာ white gap ရှိရင် body margin နဲ့ canvas position ကို စစ်ပါ
+- Resize ပြီး blur ဖြစ်ရင် renderer size နဲ့ pixel ratio နှစ်ခုလုံး update ဖြစ်သလား စစ်ပါ
+- Fullscreen request မအလုပ်လုပ်ရင် user click/double-click event အတွင်းက ခေါ်ထားသလား စစ်ပါ
+- DPR အလွန်မြင့်တာက GPU render pixels ကို အများကြီးတိုးစေတယ်; ပုံမှန်အားဖြင့် `Math.min(devicePixelRatio, 2)` သုံးပါ
